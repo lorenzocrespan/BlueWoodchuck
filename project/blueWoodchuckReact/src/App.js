@@ -72,9 +72,9 @@ function App() {
         .on('error', console.error);
 
     return (
-        <div>
+        <div class= "bg-slate-200">
             Your account is: {account}
-            <h1>Contacts</h1>
+            <h1 class="title">Blue Woodchuck</h1>
             <button onClick={addForm}>Add Form</button>
             <button onClick={readForm}>Read Form</button>
         </div>
