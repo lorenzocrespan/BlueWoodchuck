@@ -1,63 +1,87 @@
-pragma solidity >= 0.5.0 < 0.6.0;
 
-contract Forms {
-    event newForm(uint caseNumber, uint id); // if more needed, change emit in createForm
+// SPDX-License-Identifier: MIT
 
+// Pragma indicates the version of Solidity compiler to be used for compilation.
+// In truffle, the version of Solidity compiler is specified in truffle-config.js, 
+// if not specified, the default version is 0.5.16. 
+pragma solidity ^0.8.17;
+
+// Contract is a collection of functions and data (its state) that resides at a specific address on the Ethereum blockchain.
+// The following contract is used to create a form for the evidence.
+contract Form {
+
+    // Events are a way for contract to communicate that something happened on the blockchain to your app front-end, 
+    // which can be 'listening' for certain events and take action when they happen.
+
+    // newForm: Event to be emitted when a new form is created.
+    // NOTE: If more fields are needed, change the emit in createForm.
+    event newForm(uint caseNumber, address caseAddress);
+
+    // Struct to store the information of the chain of custody.
     struct Log {
-        uint trackingNumber;
-        uint dateTime;
-        address releasedBy;
-        address receivedBy;
-        string reasonForChange;
+        uint trackingNumber;        // Tracking number of the form
+        uint timestamp;             // Epoch time of the change 
+        address releasedBy;         // Address of the entity that released the form
+        address receivedBy;         // Address of the entity that received the form
+        string reasonForChange;     // Reason for the change
     }
 
-    struct Form {// add all fields (check on word file)
-        string caseName;
-        uint caseNumber;
-        // string reasonObtained;
-        uint itemNumber;
-        // string evidenceType_Manufacturer;
-        uint modelNumber;
-        uint serialNumber;
-        // string contentOwner;
-        // string contentDescription;
-        // uint contentOwnerContactInformation;
-        // string forensicAgent;
-        // string creationMethod;
-        bytes32 hashValue;
-        uint date;
-        // uint forensicAgentContactInformation;
-        Log[] chainOfCustody;
+
+    // Struct to store the information of the form.
+    struct formData {
+        string caseName;                        // Name of the case
+        uint caseNumber;                        // Number of the case
+        // string reasonObtained;                  // Reason for obtaining the evidence (?)
+        // uint itemNumber;                        // Number of the item
+        // string evidenceTypeManufacturer;        // Type of the evidence and manufacturer
+        // uint Owner;                             // Name of the owner of the evidence
+        // string contentDescription;              // Description of the evidence
+        // uint contentOwnerContactInformation;    // Contact information of the owner of the evidence
+        // string forensicAgent;                   // Name of the forensic agent
+        // string creationMethod;                  // Method of creation of the evidence
+        // bytes32 hashValue;                      // Hash value of the evidence
+        // uint date;                              // Date of the evidence           
+        // uint forensicAgentContactInformation;   // Contact information of the forensic agent
+        Log[] chainOfCustody;                  // Chain of custody of the evidence
     }
 
-    Form[] private forms;
-    mapping (uint => address) public lastAccess; // from id of form to who is the last access (address)
+    // Mapping to store the forms for the evidence of the cases.
+    mapping (address => formData) public listFormMap;
+    // Array to store the address of the forms for the evidence of the cases.
+    address[] public listFormAddress;
 
-    function createForm(string memory _caseName, uint _caseNumber, uint _itemNumber, uint _modelNumber, uint _serialnumber, bytes32 _hashValue, uint _date){
-        uint idx = forms.push(
-            Form(_caseName, _caseNumber, _itemNumber, _modelNumber, _serialnumber, _hashValue, _date)
-        ) - 1; // push returns the new length of the array
-        forms[idx].chainOfCustody.push(
-            Log(1, now, msg.sender, msg.sender, "Creation")
-        ); // released and received by factory contract
-        lastAccess[idx] = msg.sender;
-        emit newForm(_caseNumber, idx); // idk what is needed, in case add here
+    /**
+    *   @dev Function to create a new form for the evidence of the case.
+    *
+    *   @param _caseName Name of the case
+    *   @param _caseNumber Number of the case
+    */
+    function createForm(string memory _caseName, uint _caseNumber) public returns (address) {
+        // Generation of new address for the form.
+        address entityAddress = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)))));
+        listFormMap[entityAddress].caseName = _caseName;
+        listFormMap[entityAddress].caseNumber = _caseNumber;
+        listFormMap[entityAddress].chainOfCustody.push(Log(0, block.timestamp, msg.sender, msg.sender, "Form created"));
+        listFormAddress.push(entityAddress);
+        // Emit the event newForm.
+        emit newForm(_caseNumber, entityAddress);
+        return entityAddress;
     }
 
-    function readForm(uint _id, string memory _reasons) returns (Form) {
-        // if there is need of less memory usage, put everything in a line, otherwise, pls don't
-        uint trackingNumber = forms[_id].chainOfCustody.length;
-        address lastAccess = forms[_id].chainOfCustody[trackingNumber - 1].receivedBy;
-        forms[_id].chainOfCustody.push(
-            Log(trackingNumber, now, lastAccess, msg.sender, _reasons)
-        );
-        lastAccess[_id] = msg.sender;
-        return forms[_id];
+    /** 
+    *   @dev Function to read the form for the evidence of the case.
+    *
+    *   @param _address Address of the form
+    *
+    *   @return formData Struct containing the information of the form
+    */
+    function readForm(address _address) public view returns (formData memory) {
+        return (listFormMap[_address]);
     }
 
     /*
-    function getLastAccess(uint _id) view returns (address) { // no need for a mapping if forms are public
-        return forms[_id].chainOfCustody[chainOfCustody.length - 1].receivedBy;
-    }
+        function getLastAccess(uint _id) view returns (address) { // no need for a mapping if forms are public
+            return forms[_id].chainOfCustody[chainOfCustody.length - 1].receivedBy;
+        }
     */
 }

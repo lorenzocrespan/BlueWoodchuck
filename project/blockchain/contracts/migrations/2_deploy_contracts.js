@@ -1,6 +1,6 @@
 
-const Contacts = artifacts.require("./Contacts.sol");
+const Form = artifacts.require("./form.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Contacts);
+  deployer.deploy(Form);
 };
