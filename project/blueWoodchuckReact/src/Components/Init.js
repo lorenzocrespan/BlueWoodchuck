@@ -1,22 +1,22 @@
-import Routes from "./Routing";
 import React, { useEffect } from "react";
 
-function App() {
+function Init() {
 
     useEffect(() => {
         onLoad();
     }, []);
 
+
+
     async function onLoad() {
-        document.body.style = 'background: red;';
+        document.body.style = 'background: #161616;';
     }
 
     return (
         <div className="App">
-            <h1>App</h1>
-            <Routes />
+            <h1>Init</h1>
         </div>
     );
 }
 
-export default App;
+export default Init;
