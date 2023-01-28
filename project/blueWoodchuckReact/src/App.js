@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';            // React hooks.
 import Web3 from 'web3';                                // Web3 library.
-import { FORM_ADDRESS, FORM_ABI } from './abi/abi';     // Smart contract ABI.
+import { getFormAddress, getFormABI } from './abi/abi';     // Smart contract ABI.
 
 function App() {
 
@@ -9,8 +9,9 @@ function App() {
     //          It is used to check the entire application for potential problems.
 
     const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7575');   // Connect to blockchain.
-    const FormContract = new web3.eth.Contract(FORM_ABI, FORM_ADDRESS);     // Connect to smart contract.
+    const FormContract = new web3.eth.Contract(getFormABI(), getFormAddress());     // Connect to smart contract.
     const [account, setAccount] = useState();                               // Account address.
+    const [contract, setContract] = useState();                                     // Contract data.
 
     // useEffect hook to load the account address.
     // It is called only once when the component is mounted.
@@ -20,6 +21,9 @@ function App() {
             const accounts = await web3.eth.requestAccounts();
             setAccount(accounts[0]);
             if (isConsoleActive) console.debug("account", accounts[0]);
+            // Get contract address.
+            const contractAddress = await FormContract.options.address;
+            setContract(contractAddress);
         }
         loadAccountAddress();
     }, []);
@@ -74,6 +78,8 @@ function App() {
     return (
         <div>
             Your account is: {account}
+            <br />
+            Your contract is: {contract}
             <h1>Contacts</h1>
             <button onClick={addForm}>Add Form</button>
             <button onClick={readForm}>Read Form</button>
