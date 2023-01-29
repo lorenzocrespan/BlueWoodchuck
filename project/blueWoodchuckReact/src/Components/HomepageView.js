@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';            // React hooks.
 import Web3 from 'web3';                                // Web3 library.
 import { FORM_ADDRESS, FORM_ABI } from '../abi/abi';     // Smart contract ABI.
 
-function App() {
+function HomepageView() {
 
     const isConsoleActive = true;                                           // Enable/Disable console debug.
     // NOTE:    The double print of log is due to "React.StrictMode" in index.js.
@@ -72,7 +72,7 @@ function App() {
         .on('error', console.error);
 
     return (
-        <div>
+        <div className='bg-slate-400'>
             Your account is: {account}
             <h1>Contacts</h1>
             <button onClick={addForm}>Add Form</button>
@@ -80,4 +80,4 @@ function App() {
         </div>
     );
 }
-export default App;
+export default HomepageView;
