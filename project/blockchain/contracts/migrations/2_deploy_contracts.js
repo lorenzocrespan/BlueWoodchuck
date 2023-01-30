@@ -1,8 +1,9 @@
 
-const Form = artifacts.require("./form.sol");
+//const Form = artifacts.require("./form.sol");
+const FormFactory = artifacts.require("./formFactory.sol");
 
 module.exports = function (deployer) {
-  deployer.deploy(Form)
+  deployer.deploy(FormFactory)
     .then(function () {
       // Write the contract address to a file
       var fs = require('fs');
@@ -18,4 +19,3 @@ module.exports = function (deployer) {
       fs.writeFileSync(path.resolve(__dirname, '..', '..', '..', 'blueWoodchuckReact', 'src', 'abi', 'FormDataDeploy.json'), json);
     })
 };
-
