@@ -9,8 +9,8 @@ module.exports = function (deployer) {
       var fs = require('fs');
       const path = require('path');
       var data = {
-        address: Form.address,
-        abi: Form.abi
+        address: FormFactory.address,
+        abi: FormFactory.abi
       };
       var json = JSON.stringify(data);
       // Path: BlueWoodchuck/project/blockchain/contracts/build/contracts/FormDataDeploy.json (MacOS or Linux)
