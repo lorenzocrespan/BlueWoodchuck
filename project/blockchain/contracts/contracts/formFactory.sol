@@ -12,7 +12,7 @@ contract FormFactory {
 
     // newForm: Event to be emitted when a new form is created.
     // NOTE: If more fields are needed, change the emit in createForm.
-    event newForm(uint caseNumber, address caseAddress);
+    event newForm(uint caseNumber, address caseAddress, FormData data);
 
 
     // Mapping to store the forms for the evidence of the cases.
@@ -23,18 +23,19 @@ contract FormFactory {
     /**
     *   @dev Function to create a new form for the evidence of the case.
     *
-    *   @param _caseName Name of the case
-    *   @param _caseNumber Number of the case
+    *   @param _numbers All numerical information in the form
+    *   @param _strings All textual information in the form
+    *   @param _hashValue Hash value of the evidence
     */
-    function createForm(string memory _caseName, uint _caseNumber) public returns (address) {
+    function createForm(uint[] memory _numbers, string[] memory _strings, bytes32 _hashValue) public returns (address) {
         // Generation of new address for the form.
         address entityAddress = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)))));
         // creation of the new Form directly in the mapping object
-        listFormMap[entityAddress] = new Form(_caseName, _caseNumber);
+        listFormMap[entityAddress] = new Form(_numbers, _strings, _hashValue);
         listFormMap[entityAddress].pushLog(Log(0, block.timestamp, msg.sender, msg.sender, "Form created"));
         listFormAddress.push(entityAddress);
         // Emit the event newForm.
-        emit newForm(_caseNumber, entityAddress);
+        emit newForm(_numbers[0], entityAddress, readFormAddress(entityAddress));
         return entityAddress;
     }
 

@@ -44,7 +44,13 @@ function HomepageView() {
         // call() is used to read data from the blockchain.
         // send() is used to write data to the blockchain.
         // estimateGas() is used to estimate the gas needed to write data to the blockchain.
-        const result = await FormContract.methods.createForm("Pippo", 10).send({ from: account });
+        const result = await FormContract.methods.createForm(
+            Array.from([10, 2, 3388796778, 1675156832, 3244098990]),
+            Array.from([ "Spam delivery", "Found in office", "HDD", "John Evil Smith",
+                "The HDD contains a database of email addresses and a message from a Nigerian prince",
+                "Matilde Savior Jackson", "Cloning"]),
+            web3.utils.asciiToHex("idk")
+        ).send({ from: account });
         if (isConsoleActive) console.debug("Result of createForm: ", result);
     }
 
@@ -56,7 +62,7 @@ function HomepageView() {
         const accounts = await web3.eth.requestAccounts();
         const account = accounts[0];
         console.debug("account", account);
-        const result = await FormContract.methods.readForm(addressForm).call({ from: account });
+        const result = await FormContract.methods.readFormAddress(addressForm).call({ from: account });
         console.debug("result", result);
     }
 

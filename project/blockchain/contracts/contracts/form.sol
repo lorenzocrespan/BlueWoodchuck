@@ -22,26 +22,46 @@ pragma solidity ^0.8.17;
     struct FormData {
         string caseName;                        // Name of the case
         uint caseNumber;                        // Number of the case
-        // string reasonObtained;                  // Reason for obtaining the evidence (?)
-        // uint itemNumber;                        // Number of the item
-        // string evidenceTypeManufacturer;        // Type of the evidence and manufacturer
-        // uint Owner;                             // Name of the owner of the evidence
-        // string contentDescription;              // Description of the evidence
-        // uint contentOwnerContactInformation;    // Contact information of the owner of the evidence
-        // string forensicAgent;                   // Name of the forensic agent
-        // string creationMethod;                  // Method of creation of the evidence
-        // bytes32 hashValue;                      // Hash value of the evidence
-        // uint date;                              // Date of the evidence
-        // uint forensicAgentContactInformation;   // Contact information of the forensic agent
-        Log[] chainOfCustody;                  // Chain of custody of the evidence
+        string reasonObtained;                  // Reason for obtaining the evidence (?)
+        uint itemNumber;                        // Number of the item
+        string evidenceTypeManufacturer;        // Type of the evidence and manufacturer
+        string owner;                           // Name of the owner of the evidence
+
+        string contentDescription;              // Description of the evidence
+        uint contentOwnerContactInformation;    // Contact information of the owner of the evidence
+        string forensicAgent;                     // Name of the forensic agent
+        string creationMethod;                    // Method of creation of the evidence
+
+        bytes32 hashValue;                      // Hash value of the evidence
+        uint date;                              // Date of the evidence
+        uint forensicAgentContactInformation;   // Contact information of the forensic agent
+
+        Log[] chainOfCustody;                   // Chain of custody of the evidence
     }
 
 contract Form {
     FormData private data;
 
-    constructor (string memory _caseName, uint _caseNumber) {
-        data.caseName = _caseName;
-        data.caseNumber = _caseNumber;
+    constructor (uint[] memory _numbers, string[] memory _strings, bytes32 _hashValue) {
+        // _numbers = [_caseNumber, _itemNumber, _contentOwnerContactInformation, _date,
+        //             _forensicAgentContactInformation]
+        // _strings = [_caseName, _reasonObtained, _evidenceTypeManufacturer, _owner, _contentDescription,
+        //             _forensicAgent, _creationMethod]
+        data.caseName = _strings[0];
+        data.reasonObtained = _strings[1];
+        data.evidenceTypeManufacturer = _strings[2];
+        data.owner = _strings[3];
+        data.contentDescription = _strings[4];
+        data.forensicAgent = _strings[5];
+        data.creationMethod = _strings[6];
+
+        data.caseNumber = _numbers[0];
+        data.itemNumber = _numbers[1];
+        data.contentOwnerContactInformation = _numbers[2];
+        data.date = _numbers[3];
+        data.forensicAgentContactInformation = _numbers[4];
+
+        data.hashValue = _hashValue;
     }
 
     /**
