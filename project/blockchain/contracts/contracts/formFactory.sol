@@ -13,6 +13,7 @@ contract FormFactory {
     // newForm: Event to be emitted when a new form is created.
     // NOTE: If more fields are needed, change the emit in createForm.
     event newForm(uint caseNumber, address caseAddress, FormData data);
+    event formFound(address caseAddress, FormData data);
 
 
     // Mapping to store the forms for the evidence of the cases.
@@ -34,6 +35,7 @@ contract FormFactory {
         listFormMap[entityAddress] = new Form(_numbers, _strings, _hashValue);
         listFormMap[entityAddress].pushLog(Log(0, block.timestamp, msg.sender, msg.sender, "Form created"));
         listFormAddress.push(entityAddress);
+        searchCaseNumber(uint(10));
         // Emit the event newForm.
         emit newForm(_numbers[0], entityAddress, readFormAddress(entityAddress));
         return entityAddress;
@@ -80,15 +82,33 @@ contract FormFactory {
     */
     function createAddress() private view returns (address) {
         if(listFormAddress.length == 0){
-            return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)))));
+            return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)))));
         }
 
-        address toCheck = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)))));
+        address toCheck = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)))));
         uint i = 0;
         while(readFormAddress(toCheck).caseNumber != 0){
             i = i + 1;
-            toCheck = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp + i, block.difficulty, msg.sender)))));
+            toCheck = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp + i, block.prevrandao, msg.sender)))));
         }
         return toCheck;
+    }
+
+    /**
+    *   @dev Function that search for a form with a certain case number.
+    *
+    *   @param _caseNumber number of the case
+    *
+    *   @return Form requested
+    */
+    function searchCaseNumber(uint _caseNumber) public returns (Form) {
+        require(listFormAddress.length > 0);
+        for(uint i=0; i<listFormAddress.length; i++){
+            if(readFormAddress(listFormAddress[i]).caseNumber == _caseNumber){
+                emit formFound(listFormAddress[i], readFormAddress(listFormAddress[i])); // for debugging, delete and the function can be 'view'
+                return listFormMap[listFormAddress[i]];
+            }
+        }
+        revert("Non existent");
     }
 }
