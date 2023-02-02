@@ -3,8 +3,8 @@
 pragma solidity ^0.8.17;
 import "./form.sol";
 
-// Contract is a collection of functions and data (its state) that resides at a specific address on the Ethereum blockchain.
-// The following contract is used to create a form for the evidence.
+// This is a special contract that generates Form contracts, that have their own methods to generate and update their
+// attributes, while keeping track of all the forms in the blockchain.
 
 contract FormFactory {
     // Events are a way for contract to communicate that something happened on the blockchain to your app front-end,
@@ -16,9 +16,9 @@ contract FormFactory {
 
 
     // Mapping to store the forms for the evidence of the cases.
-    mapping(address => Form) public listFormMap;
+    mapping(address => Form) private listFormMap;
     // Array to store the address of the forms for the evidence of the cases.
-    address[] public listFormAddress; // TODO: private?
+    address[] private listFormAddress; // TODO: private?
 
     /**
     *   @dev Function to create a new form for the evidence of the case.
@@ -29,7 +29,7 @@ contract FormFactory {
     */
     function createForm(uint[] memory _numbers, string[] memory _strings, bytes32 _hashValue) public returns (address) {
         // Generation of new address for the form.
-        address entityAddress = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)))));
+        address entityAddress = createAddress();
         // creation of the new Form directly in the mapping object
         listFormMap[entityAddress] = new Form(_numbers, _strings, _hashValue);
         listFormMap[entityAddress].pushLog(Log(0, block.timestamp, msg.sender, msg.sender, "Form created"));
@@ -71,5 +71,24 @@ contract FormFactory {
 
     function readFormAddress(address _caseAddress) public view returns (FormData memory) {
         return readForm(findForm(_caseAddress));
+    }
+
+    /**
+    *   @dev Function that compute a random address.
+    *
+    *   @return address randomly generated
+    */
+    function createAddress() private view returns (address) {
+        if(listFormAddress.length == 0){
+            return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)))));
+        }
+
+        address toCheck = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)))));
+        uint i = 0;
+        while(readFormAddress(toCheck).caseNumber != 0){
+            i = i + 1;
+            toCheck = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp + i, block.difficulty, msg.sender)))));
+        }
+        return toCheck;
     }
 }
