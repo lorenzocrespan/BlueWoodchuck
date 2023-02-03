@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';                // React hooks.
 import Web3 from 'web3';                                    // Web3 library.
 import { getFormAddress, getFormABI } from '../../abi/abi';    // Smart contract ABI.
-import Header from '../BaseComponent/Header';                // Header component.
-import Footer from '../BaseComponent/Footer';                // Footer component.
-import Link1 from './Link1';                   // Link1 component.
-
 
 function HomepageView() {
 
