@@ -13,10 +13,10 @@ function Header() {
         navigator("/")
     }
 
-    async function linkOne() {
+    async function navigateNewForm() {
         // Modify style of the button
 
-        navigator("/link")
+        navigator("/NewForm")
     }
 
     return (
@@ -25,7 +25,7 @@ function Header() {
                 <div className="flex">
                     <ul className="items-stretch hidden space-x-4 lg:flex">
                         <li className="flex">
-                            <button className="flex items-center px-4 border-b-[1px] border-hidden" onClick={linkOne}>Link 1</button>
+                            <button className="flex items-center px-4 border-b-[1px] border-hidden" onClick={navigateNewForm}>Nuovo Form</button>
                         </li>
                         <li className="flex">
                             <button className="flex items-center px-4 border-b-[1px] border-hidden">Link 2</button>
