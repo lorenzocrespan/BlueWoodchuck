@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.17;
+
 import "./form.sol";
 
 // This is a special contract that generates Form contracts, that have their own methods to generate and update their
@@ -17,8 +18,10 @@ contract FormFactory {
 
 
     // Mapping to store the forms for the evidence of the cases.
-    mapping(address => Form) private listFormMap;
-    // Array to store the address of the forms for the evidence of the cases.
+    mapping(address => Form) private addressToForm;
+    // Mapping to store the addresses of the forms currently in charge of every user.
+    mapping(address => address[]) private userToFormAddresses;
+    // Array to store the addresses of the forms for the evidence of the cases.
     address[] private listFormAddress; // TODO: private?
 
     /**
@@ -31,10 +34,10 @@ contract FormFactory {
     function createForm(uint[] memory _numbers, string[] memory _strings, bytes32 _hashValue) public returns (address) {
         // Generation of new address for the form.
         address entityAddress = createAddress();
-        // creation of the new Form directly in the mapping object
-        listFormMap[entityAddress] = new Form(_numbers, _strings, _hashValue);
-        listFormMap[entityAddress].pushLog(Log(0, block.timestamp, msg.sender, msg.sender, "Form created"));
-        listFormAddress.push(entityAddress);
+        // Creation of the new Form directly in the mapping object
+        addressToForm[entityAddress] = new Form(_numbers, _strings, _hashValue);
+        addressToForm[entityAddress].pushLog(Log(0, block.timestamp, msg.sender, msg.sender, "Form created"));
+        userToFormAddresses[msg.sender].push(entityAddress);
         searchCaseNumber(uint(10));
         // Emit the event newForm.
         emit newForm(_numbers[0], entityAddress, readFormAddress(entityAddress));
@@ -49,7 +52,7 @@ contract FormFactory {
     *   @return Form form required
     */
     function findForm(address _caseAddress) public view returns (Form) {
-        return listFormMap[_caseAddress];
+        return addressToForm[_caseAddress];
     }
 
     /**
@@ -70,7 +73,6 @@ contract FormFactory {
     *
     *   @return FormData Struct that contains the data of the form required
     */
-
     function readFormAddress(address _caseAddress) public view returns (FormData memory) {
         return readForm(findForm(_caseAddress));
     }
@@ -84,6 +86,15 @@ contract FormFactory {
         return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)))));
     }
 
+    function getForm(address _formAddress, string memory _reason) public {
+        uint chainLength = readFormAddress(_formAddress).chainOfCustody.length;
+        address previousUser = readFormAddress(_formAddress).chainOfCustody[chainLength - 1].receivedBy;
+        uint previousNumber = readFormAddress(_formAddress).chainOfCustody[chainLength - 1].trackingNumber;
+        findForm(_formAddress).pushLog(Log(previousNumber + 1, block.timestamp, previousUser, msg.sender, _reason));
+        userToFormAddresses[msg.sender].push(_formAddress);
+        removeAddressInAUserList(previousUser, _formAddress);
+    }
+
     /**
     *   @dev Function that search for a form with a certain case number.
     *
@@ -93,12 +104,33 @@ contract FormFactory {
     */
     function searchCaseNumber(uint _caseNumber) public returns (Form) {
         require(listFormAddress.length > 0);
-        for(uint i=0; i<listFormAddress.length; i++){
-            if(readFormAddress(listFormAddress[i]).caseNumber == _caseNumber){
-                emit formFound(listFormAddress[i], readFormAddress(listFormAddress[i])); // for debugging, delete and the function can be 'view'
-                return listFormMap[listFormAddress[i]];
+        for (uint i = 0; i < listFormAddress.length; i++) {
+            if (readFormAddress(listFormAddress[i]).caseNumber == _caseNumber) {
+                emit formFound(listFormAddress[i], readFormAddress(listFormAddress[i]));
+                return addressToForm[listFormAddress[i]];
             }
         }
         revert("Non existent");
+    }
+
+    /**
+    *   @dev Function that removes a certain address of a certain user.
+    *
+    *   @param _userAddress address of the user we want to take the evidence from
+    *
+    *   @param _formAddress address of the form we want to remove from _userAddress
+    */
+    function removeAddressInAUserList(address _userAddress, address _formAddress) private {
+        require(userToFormAddresses[_userAddress].length > 0);
+
+        uint userAddressesLength = userToFormAddresses[_userAddress].length;
+
+        for (uint i = 0; i < userAddressesLength; i++) {// look into the addresses linked to _userAddress
+            if (userToFormAddresses[_userAddress][i] == _formAddress) {
+                userToFormAddresses[_userAddress][i] = userToFormAddresses[_userAddress][userAddressesLength - 1];
+                // copy the last element in the index we want to remove
+                userToFormAddresses[_userAddress].pop(); // remove the last element
+            }
+        }
     }
 }
