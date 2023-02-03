@@ -81,17 +81,7 @@ contract FormFactory {
     *   @return address randomly generated
     */
     function createAddress() private view returns (address) {
-        if(listFormAddress.length == 0){
-            return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)))));
-        }
-
-        address toCheck = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)))));
-        uint i = 0;
-        while(readFormAddress(toCheck).caseNumber != 0){
-            i = i + 1;
-            toCheck = address(uint160(uint(keccak256(abi.encodePacked(block.timestamp + i, block.prevrandao, msg.sender)))));
-        }
-        return toCheck;
+        return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)))));
     }
 
     /**
