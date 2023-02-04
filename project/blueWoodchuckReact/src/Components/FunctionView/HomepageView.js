@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';            // React hooks.
-import Web3 from 'web3';                                // Web3 library.
-import { getFormAddress, getFormABI } from '../abi/abi';     // Smart contract ABI.
+import { useEffect, useState } from 'react';                // React hooks.
+import Web3 from 'web3';                                    // Web3 library.
+import { getFormAddress, getFormABI } from '../../abi/abi';    // Smart contract ABI.
 
 function HomepageView() {
 
@@ -82,6 +82,7 @@ function HomepageView() {
         .on('error', console.error);
 
     return (
+        // Add the Header component.
         <div className='bg-slate-400'>
             Your account is: {account}
             <br />
@@ -90,6 +91,7 @@ function HomepageView() {
             <h1>Contacts</h1>
             <button onClick={addForm}>Add Form</button>
             <button onClick={readForm}>Read Form</button>
+
         </div>
     );
 }

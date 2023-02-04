@@ -18,7 +18,7 @@ function LoginForm() {
                     <span className="font-bold text-blue-600">Blue</span>
                     <span className="font-semibold text-amber-600">Woodchuck</span>
                 </p>
-                <button className="w-1/2 h-12 self-center font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                <button className="w-1/2 h-12 self-center font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-800"
                     onClick={login}> Login with Metamask</button>
             </div>
 

@@ -6,5 +6,8 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    // npm install -D @tailwindcss/forms
+    require('@tailwindcss/forms'),
+  ],
 }
