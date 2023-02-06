@@ -3,6 +3,7 @@ import Web3 from 'web3';                                    // Web3 library.
 import { getFormAddress, getFormABI } from '../../abi/abi';    // Smart contract ABI.
 import ListContract from './ListContract';
 import RecentActivity from './RecentActivity';
+import UserInfo from './UserInfo';
 
 function HomepageView() {
 
@@ -85,18 +86,13 @@ function HomepageView() {
 
     return (
         <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12 dark:bg-gray-900 dark:text-gray-100 ">
-            <div className="container flex justify-between h-16 mx-auto bg-red-500">
-                <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
-                    <img src={require("../../Asset/Images/blueWoodchuckLogo.jpg")} alt="" className="self-center flex-shrink-0 w-24 h-24 border rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-700" />
-                    <div className="flex flex-col">
-                        <h4 className="text-lg font-semibold text-center md:text-left">Utente: {account}</h4>
-                        <h4 className="text-lg font-semibold text-center md:text-left">Contratto: {contract}</h4>
-                    </div>
-                </div>
-            </div>
 
+            <UserInfo
+                account={account}
+                contract={contract}
+            />
 
-            <ListContract   />
+            <ListContract />
 
             <RecentActivity />
 
