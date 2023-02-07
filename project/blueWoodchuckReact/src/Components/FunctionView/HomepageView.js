@@ -13,8 +13,11 @@ function HomepageView() {
 
     const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7575');       // Connect to blockchain.
     const FormContract = new web3.eth.Contract(getFormABI(), getFormAddress()); // Connect to smart contract.
+
     const [account, setAccount] = useState();                                   // Account address.
     const [contract, setContract] = useState();                                 // Contract data.
+    const [balance, setBalance] = useState();                                   // Balance data.
+    const [networkId, setNetworkId] = useState();                                   // Network data.
 
     // useEffect hook to load the account address.
     // It is called only once when the component is mounted.
@@ -27,6 +30,13 @@ function HomepageView() {
             // Get contract address.
             const contractAddress = await FormContract.options.address;
             setContract(contractAddress);
+            // Get balance in wei and convert it to ether.
+            const balance = await web3.eth.getBalance(accounts[0]);
+            setBalance(web3.utils.fromWei(balance, 'ether'));
+            // Get network name.
+            const networkId = await web3.eth.net.getId();
+            console.log(networkId);
+            setNetworkId(networkId);
         }
         loadAccountAddress();
     }, []);
@@ -90,6 +100,8 @@ function HomepageView() {
             <UserInfo
                 account={account}
                 contract={contract}
+                balance={balance}
+                networkId={networkId}
             />
 
             <ListContract />

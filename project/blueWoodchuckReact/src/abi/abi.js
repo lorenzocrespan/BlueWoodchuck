@@ -1,6 +1,5 @@
 // Relative path: ../../../blockchain/contracts/build/contracts/FormDataDeploy.json (MacOS or Linux)
 // Relative path: ..\..\..\blockchain\contracts\build\contracts\FormDataDeploy.json (Windows)
-// TODO: Check change the path based on your computer operating system
 
 /**
  * Get the data of the deployed contract
