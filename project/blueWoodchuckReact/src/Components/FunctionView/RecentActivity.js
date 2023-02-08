@@ -5,6 +5,7 @@ function RecentActivity() {
 
     const [inputList, setInputList] = useState([]);
 
+
     const onAddBtnClick = event => {
         console.log("Add button clicked");
         setInputList(inputList.concat(

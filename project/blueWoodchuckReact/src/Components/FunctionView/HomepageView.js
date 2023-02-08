@@ -104,7 +104,10 @@ function HomepageView() {
                 networkId={networkId}
             />
 
-            <ListContract />
+            <ListContract
+                FormContract={FormContract}
+                account={account}
+            />
 
             <RecentActivity />
 

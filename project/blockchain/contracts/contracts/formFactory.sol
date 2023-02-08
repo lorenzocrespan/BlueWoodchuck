@@ -83,7 +83,7 @@ contract FormFactory {
     *   @return address randomly generated
     */
     function createAddress() private view returns (address) {
-        return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)))));
+        return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)))));
     }
 
     /**
@@ -91,15 +91,16 @@ contract FormFactory {
     *
     *   @return address array with addresses of forms in charge of an user
     */
-    function getUserFormAddresses(address _userAddress) private view returns (address[]) {
+    function getUserFormAddresses(address _userAddress) public view returns (address[] memory) {
         return userToFormAddresses[_userAddress];
     }
 
     function getForm(address _formAddress, string memory _reason) public {
+        address previousUser = findForm(_formAddress).lastLog().receivedBy;
         findForm(_formAddress).pushLog(Log(
                 findForm(_formAddress).lastLog().trackingNumber + 1,
                 block.timestamp,
-                findForm(_formAddress).lastLog().receivedBy,
+                previousUser,
                 msg.sender,
                 _reason)
         );
