@@ -22,13 +22,14 @@ function LoginForm() {
             setErrorPopup(true);
             return;
         }
+        window.ethereum.request({ method: 'eth_requestAccounts' });
+        await connect();
         if (status === "notConnected") {
             setTitle("Accesso negato");
             setBody("Per un corretto funzionamento del sito è necessario accedere al proprio account.");
             setErrorPopup(true);
             return;
         }
-        await connect();
         navigator("/Homepage")
     }
 
