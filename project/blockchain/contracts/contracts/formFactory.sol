@@ -86,11 +86,23 @@ contract FormFactory {
         return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)))));
     }
 
+    /**
+    *   @dev Function that returns the forms in charge of an user.
+    *
+    *   @return address array with addresses of forms in charge of an user
+    */
+    function getUserFormAddresses(address _userAddress) private view returns (address[]) {
+        return userToFormAddresses[_userAddress];
+    }
+
     function getForm(address _formAddress, string memory _reason) public {
-        uint chainLength = readFormAddress(_formAddress).chainOfCustody.length;
-        address previousUser = readFormAddress(_formAddress).chainOfCustody[chainLength - 1].receivedBy;
-        uint previousNumber = readFormAddress(_formAddress).chainOfCustody[chainLength - 1].trackingNumber;
-        findForm(_formAddress).pushLog(Log(previousNumber + 1, block.timestamp, previousUser, msg.sender, _reason));
+        findForm(_formAddress).pushLog(Log(
+                findForm(_formAddress).lastLog().trackingNumber + 1,
+                block.timestamp,
+                findForm(_formAddress).lastLog().receivedBy,
+                msg.sender,
+                _reason)
+        );
         userToFormAddresses[msg.sender].push(_formAddress);
         removeAddressInAUserList(previousUser, _formAddress);
     }
@@ -127,9 +139,9 @@ contract FormFactory {
 
         for (uint i = 0; i < userAddressesLength; i++) {// look into the addresses linked to _userAddress
             if (userToFormAddresses[_userAddress][i] == _formAddress) {
-                userToFormAddresses[_userAddress][i] = userToFormAddresses[_userAddress][userAddressesLength - 1];
                 // copy the last element in the index we want to remove
-                userToFormAddresses[_userAddress].pop(); // remove the last element
+                userToFormAddresses[_userAddress][i] = userToFormAddresses[_userAddress][userAddressesLength - 1];
+                userToFormAddresses[_userAddress].pop();  // remove the last element
             }
         }
     }

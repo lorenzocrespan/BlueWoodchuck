@@ -77,4 +77,8 @@ contract Form {
     function pushLog(Log memory _log) public {
         data.chainOfCustody.push(_log);
     }
+
+    function lastLog() public view returns (Log memory) {
+        return data.chainOfCustody[data.chainOfCustody.length - 1];
+    }
 }
