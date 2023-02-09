@@ -18,10 +18,12 @@ function HomepageView() {
     const [contract, setContract] = useState();                                 // Contract data.
     const [balance, setBalance] = useState();                                   // Balance data.
     const [networkId, setNetworkId] = useState();                                   // Network data.
+    const [isChange, setIsChange] = useState(false);                      // Connection status.
 
     // useEffect hook to load the account address.
     // It is called only once when the component is mounted.
     useEffect(() => {
+        console.log("useEffect");
         const loadAccountAddress = async () => {
             // Request and set account access if needed.
             const accounts = await web3.eth.requestAccounts();
@@ -39,12 +41,11 @@ function HomepageView() {
             setNetworkId(networkId);
         }
         loadAccountAddress();
-    }, []);
+    }, [isChange]);
 
     // Listen metamask account change.
-    window.ethereum.on('accountsChanged', (accounts) => {
-        setAccount(accounts[0]);
-        if (isConsoleActive) console.debug("account", accounts[0]);
+    window.ethereum.on('accountsChanged', () => {
+        setIsChange(!isChange);
     });
 
     let addressForm;

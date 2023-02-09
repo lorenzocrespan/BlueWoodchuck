@@ -9,18 +9,15 @@ function ListContract(props) {
     const [contractsInCharge, setContractsInCharge] = useState([]);
 
     useEffect(() => {
-        getUserFormsAddresses();
-    }, []);
+        if(props.account !== undefined) getUserFormsAddresses();
+    }, [props.account]);
 
     const onAddBtnClick = event => {
-        console.log(props.account);
-        getUserFormsAddresses();
         setInputList(inputList.concat(
-            <ContractEntry 
-                key={inputList.length} 
-                id = {inputList.length}
+            <ContractEntry
+                key={inputList.length}
+                id={inputList.length}
             />));
-
     };
 
 
@@ -42,8 +39,6 @@ function ListContract(props) {
                 Add User
             </button>
             {inputList}
-
-
         </ul>
     )
 }

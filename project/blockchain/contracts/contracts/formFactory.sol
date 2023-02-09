@@ -38,7 +38,6 @@ contract FormFactory {
         addressToForm[entityAddress] = new Form(_numbers, _strings, _hashValue);
         addressToForm[entityAddress].pushLog(Log(0, block.timestamp, msg.sender, msg.sender, "Form created"));
         userToFormAddresses[msg.sender].push(entityAddress);
-        searchCaseNumber(uint(10));
         // Emit the event newForm.
         emit newForm(_numbers[0], entityAddress, readFormAddress(entityAddress));
         return entityAddress;
