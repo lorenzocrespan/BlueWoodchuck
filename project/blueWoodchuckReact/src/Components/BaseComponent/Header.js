@@ -6,7 +6,7 @@ function Header() {
 
     const navigator = useNavigate();
     const { status } = useMetaMask();
-    
+
     useEffect(() => {
         // Check if the user is not logged in with MetaMask.
         if (status === "notConnected") rederLoginPage();
@@ -21,7 +21,7 @@ function Header() {
         activePageButtonSetup("HomeButton");
         navigator("/Homepage")
     }
-    
+
     async function renderListFormPage() {
         activePageButtonSetup("ListFormButton");
         navigator("/ListForm")
@@ -31,23 +31,23 @@ function Header() {
         activePageButtonSetup("NewFormButton");
         navigator("/NewForm")
     }
-    
+
     async function renderRequestPage() {
         activePageButtonSetup("RequestButton");
         navigator("/Request")
     }
-    
+
     async function renderAdvanceSearchPage() {
         activePageButtonSetup("AdvanceSearchButton");
         navigator("/advanceSearchPage")
     }
-    
+
     async function renderSearchResultPage() {
         activePageButtonSetup("AdvanceSearchButton");
         navigator("/advanceSearchPage")
     }
 
-    function activePageButtonSetup(idElement) {        
+    function activePageButtonSetup(idElement) {
         // TODO: Find a better way to do this.
         // Reset all the button style of the last button active.
         document.getElementById("HomeButton").classList.remove("text-green-500");
@@ -57,6 +57,21 @@ function Header() {
         document.getElementById("AdvanceSearchButton").classList.remove("text-green-500");
         // Change tailwindcss style of the button.
         document.getElementById(idElement).classList.add("text-green-500");
+    }
+
+
+    
+    const handleKeyDown = event => {
+        console.log('User pressed: ', event.key);
+        
+        if (event.key === 'Enter') {
+            console.log('Enter pressed');
+            renderSearchResultPage(document.getElementById("Search").value);
+        }
+    };
+    
+    function renderSearchResultPage(id) {
+        navigator('/ListForm/ContractShow/' + id);
     }
 
     return (
@@ -90,7 +105,7 @@ function Header() {
                                 </svg>
                             </button>
                         </span>
-                        <input type="search" name="Search" placeholder="Search..." className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900" />
+                        <input type="text" onKeyDown={handleKeyDown} name="Search" id="Search" placeholder="Search..." className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900" />
                     </div>
                 </div>
             </div>
