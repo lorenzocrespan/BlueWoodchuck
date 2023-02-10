@@ -3,9 +3,10 @@ import LoginView from "../Components/LoginView";
 import HomepageView from "../Components/FunctionView/HomepageView";
 import Header from "../Components/BaseComponent/Header";
 import Footer from "../Components/BaseComponent/Footer";
-import Link1 from "../Components/FunctionView/Link1";
 import NewForm from "../Components/FunctionView/NewForm";
+import ShowContractInfo from "../Components/FunctionView/ShowContractInfo";
 import View404 from "../Components/404View";
+import ListContractPageView from "../Components/FunctionView/ListContractpageView";
 
 const Layout = () => {
   return (
@@ -26,7 +27,8 @@ export default function Routing() {
         <Route path="/" element={<LoginView />} />
         <Route path="/" element={<Layout />}>
           <Route path="/Homepage" element={<HomepageView />} />
-          <Route path="/link" element={<Link1 />} />
+          <Route path="/ListForm" element={<ListContractPageView />} />
+          <Route path="/ListForm/ContractShow/:id" element={<ShowContractInfo />} />
           <Route path="/newForm" element={<NewForm />} />
         </Route>
         <Route path="*" element={<View404 />} />
