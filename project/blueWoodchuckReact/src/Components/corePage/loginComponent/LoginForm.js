@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // Import - Components
-import Modal from "../../popupComponent/ErrorModal";
+import ErrorPopup from "../../popupComponent/ErrorPopup";
 
 function LoginForm() {
 
@@ -15,6 +15,7 @@ function LoginForm() {
 
     // Function to connect to MetaMask.
     async function login() {
+        if (isConsoleActive) console.log("Verifica presenza di MetaMask");
         // Check if MetaMask is installed.
         if (typeof window.ethereum === 'undefined') {
             setTitle("Errore di connessione");
@@ -44,13 +45,13 @@ function LoginForm() {
     }
 
     // Function to close the popup modal.
-    const popupCloseHandler = (e) => {
-        setErrorPopup(e);
+    const popupCloseHandler = (dataHandler) => {
+        setErrorPopup(dataHandler);
     };
 
     return (
-        <div className="w-fit h-fit flex rounded bg-white bg-opacity-50">
-            <Modal
+        <div className="w-fit h-fit flex rounded bg-white bg-opacity-60">
+            <ErrorPopup
                 onClose={popupCloseHandler}
                 errorPopup={errorPopup}
                 title={title}
@@ -59,13 +60,12 @@ function LoginForm() {
             <div name="leftSideLoginForm" className="w-1/2 h-full flex p-4 rounded-l bg-white">
                 <img src={require("../../../Asset/Images/blueWoodchuckLogo.jpg")} alt="blueWoodchuckLogo" />
             </div>
-            <div name="rightSideLoginForm" className="w-1/2 h-full flex flex-col p-4 text-center self-center rounded-r">
-                <p className="pb-12 text-3xl">
-                    <span className="font-bold text-blue-600">Blue</span>
-                    <span className="font-semibold text-amber-600">Woodchuck</span>
+            <div name="rightSideLoginForm" className="w-1/2 h-full flex flex-col p-4 rounded-r self-center text-center">
+                <p name="title" className="pb-12 text-3xl font-bold">
+                    <span className="text-blue-800">Blue</span>
+                    <span className="text-amber-600">Woodchuck</span>
                 </p>
-                <button className="w-1/2 h-12 self-center font-semibold rounded-md text-white bg-blue-600 hover:bg-blue-800"
-                    onClick={login}> Login with Metamask</button>
+                <button className="w-1/2 h-12 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600  ease-out duration-500" onClick={login}> Login con Metamask</button>
             </div>
         </div>
     );
