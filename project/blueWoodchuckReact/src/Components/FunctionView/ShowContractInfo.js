@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';                    // React hooks.
 import Web3 from 'web3';                                        // Web3 library.
 import { getFormAddress, getFormABI } from '../../abi/abi';    // Smart contract ABI.
 import ListContract from './ListContract';
-import RecentActivity from './RecentActivity';
-import UserInfo from './UserInfo';
+import { useParams } from 'react-router-dom';
 
-function HomepageView() {
+function ShowContractInfo() {
 
     const isConsoleActive = true;                                               // Enable/Disable console debug.
     // NOTE:    The double print of log is due to "React.StrictMode" in index.js.
@@ -18,7 +17,7 @@ function HomepageView() {
     const [contract, setContract] = useState();                                 // Contract data.
     const [balance, setBalance] = useState();                                   // Balance data.
     const [networkId, setNetworkId] = useState();                                   // Network data.
-    const [isChange, setIsChange] = useState(false);                      // Connection status.
+    const [form, setForm] = useState([]);                      // Connection status.
 
     // useEffect hook to load the account address.
     // It is called only once when the component is mounted.
@@ -41,33 +40,8 @@ function HomepageView() {
             setNetworkId(networkId);
         }
         loadAccountAddress();
-    }, [isChange]);
-
-    // Listen metamask account change.
-    window.ethereum.on('accountsChanged', () => {
-        setIsChange(!isChange);
-    });
-
-    let addressForm;
-
-    // Button to add a new form to the blockchain.
-    const addForm = async () => {
-        // Add form to blockchain.
-        if (isConsoleActive) console.debug("Add new form request from account: ", account);
-        // call(), send() and estimateGas() are the three methods to interact with the blockchain.
-        // call() is used to read data from the blockchain.
-        // send() is used to write data to the blockchain.
-        // estimateGas() is used to estimate the gas needed to write data to the blockchain.
-        const result = await FormContract.methods.createForm(
-            Array.from([10, 2, 3388796778, 1675156832, 3244098990]),
-            Array.from(["Spam delivery", "Found in office", "HDD", "John Evil Smith",
-                "The HDD contains a database of email addresses and a message from a Nigerian prince",
-                "Matilde Savior Jackson", "Cloning"]),
-            web3.utils.asciiToHex("idk")
-        ).send({ from: account });
-        if (isConsoleActive) console.debug("Result of createForm: ", result);
-    }
-
+        readForm();
+    }, []);
 
     // Button to read a form from the blockchain.
     const readForm = async () => {
@@ -76,46 +50,43 @@ function HomepageView() {
         const accounts = await web3.eth.requestAccounts();
         const account = accounts[0];
         console.debug("account", account);
-        const result = await FormContract.methods.readFormAddress(addressForm).call({ from: account });
-        console.debug("result", result);
+        setForm(await FormContract.methods.readFormAddress(id).call({ from: account }));
+        console.debug("form", form);
     }
-
-    // Subscribe to events.
-    FormContract.events.newForm()
-        .on("connected", (subscriptionId) => {
-            // https://web3js.readthedocs.io/en/v1.2.11/web3-eth-subscribe.html#
-            // console.log(subscriptionId);
-        })
-        .on('data', (event) => {
-            console.debug("FormCreated", event.returnValues);
-            addressForm = event.returnValues[1];
-        })
-        .on('changed', (event) => {
-            // remove event from local database
-        })
-        .on('error', console.error);
+        
+    let { id } = useParams();
 
     return (
         <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12 dark:bg-gray-900 dark:text-gray-100 ">
-
-            <UserInfo
-                account={account}
-                contract={contract}
-                balance={balance}
-                networkId={networkId}
-            />
-
-            <ListContract
-                FormContract={FormContract}
-                account={account}
-            />
-
-            <RecentActivity />
-
+            <h1 className="text-4xl font-semibold">Dettaglio contratto</h1>
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                    <h2 className="text-2xl font-semibold">Nome del caso</h2>
+                    <p className="text-lg">{form.caseName}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                    <h2 className="text-2xl font-semibold">Contratto</h2>
+                    <p className="text-lg">{form.caseNumber}</p>
+                </div>
+                <div className="flex flex-col gap-2">
+                    <h2 className="text-2xl font-semibold">Other info</h2>
+                    <p className="text-lg">{form.contentDescription}</p>
+                    <p className="text-lg">{form.contentOwnerContactInformation}</p>
+                    <p className="text-lg">{form.creationMethod}</p>
+                    <p className="text-lg">{form.date}</p>
+                    <p className="text-lg">{form.evidenceTypeManufacturer}</p>
+                    <p className="text-lg">{form.forensicAgent}</p>
+                    <p className="text-lg">{form.forensicAgentContactInformation}</p>
+                    <p className="text-lg">{form.hashValue}</p>
+                    <p className="text-lg">{form.itemNumber}</p>
+                    <p className="text-lg">{form.owner}</p>
+                    <p className="text-lg">{form.reasonObtained}</p>
+                    <p className="text-lg">{form.chainOfCustody}</p>
+                </div>
+            </div>
         </div>
-
     );
 
 
 }
-export default HomepageView;
+export default ShowContractInfo;

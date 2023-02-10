@@ -5,7 +5,7 @@ import ListContract from './ListContract';
 import RecentActivity from './RecentActivity';
 import UserInfo from './UserInfo';
 
-function HomepageView() {
+function ListContractPageView() {
 
     const isConsoleActive = true;                                               // Enable/Disable console debug.
     // NOTE:    The double print of log is due to "React.StrictMode" in index.js.
@@ -97,25 +97,14 @@ function HomepageView() {
 
     return (
         <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12 dark:bg-gray-900 dark:text-gray-100 ">
-
-            <UserInfo
-                account={account}
-                contract={contract}
-                balance={balance}
-                networkId={networkId}
-            />
-
             <ListContract
                 FormContract={FormContract}
                 account={account}
             />
-
-            <RecentActivity />
-
         </div>
 
     );
 
 
 }
-export default HomepageView;
+export default ListContractPageView;

@@ -38,7 +38,6 @@ contract FormFactory {
         addressToForm[entityAddress] = new Form(_numbers, _strings, _hashValue);
         addressToForm[entityAddress].pushLog(Log(0, block.timestamp, msg.sender, msg.sender, "Form created"));
         userToFormAddresses[msg.sender].push(entityAddress);
-        searchCaseNumber(uint(10));
         // Emit the event newForm.
         emit newForm(_numbers[0], entityAddress, readFormAddress(entityAddress));
         return entityAddress;
@@ -83,14 +82,27 @@ contract FormFactory {
     *   @return address randomly generated
     */
     function createAddress() private view returns (address) {
-        return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.prevrandao, msg.sender)))));
+        return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp, block.difficulty, msg.sender)))));
+    }
+
+    /**
+    *   @dev Function that returns the forms in charge of an user.
+    *
+    *   @return address array with addresses of forms in charge of an user
+    */
+    function getUserFormAddresses(address _userAddress) public view returns (address[] memory) {
+        return userToFormAddresses[_userAddress];
     }
 
     function getForm(address _formAddress, string memory _reason) public {
-        uint chainLength = readFormAddress(_formAddress).chainOfCustody.length;
-        address previousUser = readFormAddress(_formAddress).chainOfCustody[chainLength - 1].receivedBy;
-        uint previousNumber = readFormAddress(_formAddress).chainOfCustody[chainLength - 1].trackingNumber;
-        findForm(_formAddress).pushLog(Log(previousNumber + 1, block.timestamp, previousUser, msg.sender, _reason));
+        address previousUser = findForm(_formAddress).lastLog().receivedBy;
+        findForm(_formAddress).pushLog(Log(
+                findForm(_formAddress).lastLog().trackingNumber + 1,
+                block.timestamp,
+                previousUser,
+                msg.sender,
+                _reason)
+        );
         userToFormAddresses[msg.sender].push(_formAddress);
         removeAddressInAUserList(previousUser, _formAddress);
     }
@@ -127,9 +139,9 @@ contract FormFactory {
 
         for (uint i = 0; i < userAddressesLength; i++) {// look into the addresses linked to _userAddress
             if (userToFormAddresses[_userAddress][i] == _formAddress) {
-                userToFormAddresses[_userAddress][i] = userToFormAddresses[_userAddress][userAddressesLength - 1];
                 // copy the last element in the index we want to remove
-                userToFormAddresses[_userAddress].pop(); // remove the last element
+                userToFormAddresses[_userAddress][i] = userToFormAddresses[_userAddress][userAddressesLength - 1];
+                userToFormAddresses[_userAddress].pop();  // remove the last element
             }
         }
     }

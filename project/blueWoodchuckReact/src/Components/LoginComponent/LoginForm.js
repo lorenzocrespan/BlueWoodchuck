@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMetaMask } from "metamask-react";
 import Modal from "../ErrorComponent/ErrorModal";
+import { useEffect } from "react";
 
 function LoginForm() {
 
@@ -15,6 +16,12 @@ function LoginForm() {
     const [title, setTitle] = useState("Titolo del popup");
     const [body, setBody] = useState("Corpo del popup");
 
+    const [isConnected, setIsConnected] = useState(false);
+
+    useEffect(() => {
+        if (isConnected) navigator("/Homepage");
+    }, [isConnected]);
+
     async function login() {
         if (status === "unavailable") {
             setTitle("MetaMask non installato");
@@ -22,14 +29,14 @@ function LoginForm() {
             setErrorPopup(true);
             return;
         }
+        window.ethereum.request({ method: 'eth_requestAccounts' });
+        setIsConnected(await connect());
         if (status === "notConnected") {
             setTitle("Accesso negato");
             setBody("Per un corretto funzionamento del sito è necessario accedere al proprio account.");
             setErrorPopup(true);
             return;
-        }
-        await connect();
-        navigator("/Homepage")
+        } 
     }
 
     const popupCloseHandler = (e) => {

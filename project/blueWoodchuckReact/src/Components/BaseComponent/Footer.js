@@ -8,10 +8,6 @@ function Footer() {
         navigator("/Homepage")
     }
 
-    async function linkOne() {
-        navigator("/link")
-    }
-
     return (
         <footer className="py-6 bg-blue-600 text-gray-100">
             <div className="container px-6 mx-auto space-y-6 divide-y divide-gray-400 md:space-y-12 divide-opacity-50">
@@ -28,9 +24,6 @@ function Footer() {
                     <div className="col-span-9 text-center md:text-left md:col-span-1">
                         <p className="pb-1 text-lg font-medium">Categorie</p>
                         <ul>
-                            <li>
-                                <a className="hover:text-amber-600" onClick={linkOne}>Link 1</a>
-                            </li>
                             <li>
                                 <a href="#" className="hover:text-amber-600">Link</a>
                             </li>
