@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 
-function View404() {
+function Core404() {
 
     const navigator = useNavigate()
 
@@ -25,4 +25,4 @@ function View404() {
     );
 }
 
-export default View404;
+export default Core404;

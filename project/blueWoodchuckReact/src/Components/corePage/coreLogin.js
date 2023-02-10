@@ -1,7 +1,7 @@
+// Import - Components
 import LoginForm from "./loginComponent/LoginForm";
 
-function LoginView() {
-
+function CoreLogin() {
     return (
         <div className="h-screen w-screen flex justify-center items-center bg-blue-500">
             <LoginForm />
@@ -9,4 +9,4 @@ function LoginView() {
     );
 }
 
-export default LoginView;
+export default CoreLogin;

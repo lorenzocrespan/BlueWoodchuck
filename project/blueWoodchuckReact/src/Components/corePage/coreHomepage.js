@@ -5,7 +5,7 @@ import ListContract from './commonComponent/formListSection';
 import RecentActivity from './homeComponent/activitySection';
 import UserInfo from './homeComponent/infoUserSection';
 
-function HomepageView() {
+function CoreHomepage() {
 
     const isConsoleActive = true;                                               // Enable/Disable console debug.
     // NOTE:    The double print of log is due to "React.StrictMode" in index.js.
@@ -118,4 +118,4 @@ function HomepageView() {
 
 
 }
-export default HomepageView;
+export default CoreHomepage;
