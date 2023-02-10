@@ -1,25 +1,30 @@
-import { BrowserRouter as Router, Route, Routes, Outlet, Link } from "react-router-dom";
-import LoginView from "../Components/LoginView";
-import HomepageView from "../Components/FunctionView/HomepageView";
-import Header from "../Components/BaseComponent/Header";
-import Footer from "../Components/BaseComponent/Footer";
-import NewForm from "../Components/FunctionView/NewForm";
-import ShowContractInfo from "../Components/FunctionView/ShowContractInfo";
-import View404 from "../Components/404View";
-import ListContractPageView from "../Components/FunctionView/ListContractpageView";
+// Import - Routing
+import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom";
+// Import - Components
+import LoginView from "../Components/corePage/coreLogin";
+import HomepageView from "../Components/corePage/coreHomepage";
+import NewForm from "../Components/corePage/coreFormGenerate";
+import ShowContractInfo from "../Components/corePage/coreFormShow";
+import ListContractPageView from "../Components/corePage/coreFormList";
+// Import - Default Components (Header and Footer)
+import Header from "../Components/defaultComponent/Header";
+import Footer from "../Components/defaultComponent/Footer";
+// Import - 404 View
+import View404 from "../Components/corePage/core404";
 
+// Layout component, used to wrap Header and Footer around the content.
+// The content is defined by the <Outlet /> component.
 const Layout = () => {
   return (
     <>
       <Header />
-
       <Outlet />
-
       <Footer />
     </>
   )
 };
 
+// Routing component, used to define the routes of the application.
 export default function Routing() {
   return (
     <Router>

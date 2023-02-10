@@ -1,4 +1,4 @@
-import { BodyEntry, TitleEntry } from "./ActivityEntry";
+import { BodyEntry, TitleEntry } from "./activityEntry";
 import { useState } from "react";
 
 function RecentActivity() {

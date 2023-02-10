@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMetaMask } from "metamask-react";
-import Modal from "../ErrorComponent/ErrorModal";
+import Modal from "../../popupComponent/ErrorModal";
 import { useEffect } from "react";
 
 function LoginForm() {
@@ -52,7 +52,7 @@ function LoginForm() {
                 body={body}
             />
             <div name="leftSideLoginForm" className="w-1/2 h-full flex p-4 rounded-l bg-white">
-                <img src={require("../../Asset/Images/blueWoodchuckLogo.jpg")} alt="blueWoodchuckLogo" />
+                <img src={require("../../../Asset/Images/blueWoodchuckLogo.jpg")} alt="blueWoodchuckLogo" />
             </div>
             <div name="rightSideLoginForm" className="w-1/2 h-full flex flex-col p-4 text-center self-center rounded-r">
                 <p className="pb-12 text-3xl">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';                    // React hooks.
 import Web3 from 'web3';                                        // Web3 library.
 import { getFormAddress, getFormABI } from '../../abi/abi';    // Smart contract ABI.
-import ListContract from './ListContract';
+import ListContract from './commonComponent/formListSection';
 import { useParams } from 'react-router-dom';
 
 function ShowContractInfo() {
@@ -53,7 +53,7 @@ function ShowContractInfo() {
         setForm(await FormContract.methods.readFormAddress(id).call({ from: account }));
         console.debug("form", form);
     }
-        
+
     let { id } = useParams();
 
     return (

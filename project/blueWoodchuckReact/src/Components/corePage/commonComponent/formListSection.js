@@ -1,4 +1,4 @@
-import ContractEntry from "./ContractEntry";
+import ContractEntry from "./formListEntry";
 import React, { useState, useEffect } from 'react';
 
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';                    // React hooks.
 import Web3 from 'web3';                                        // Web3 library.
 import { getFormAddress, getFormABI } from '../../abi/abi';    // Smart contract ABI.
-import ListContract from './ListContract';
-import RecentActivity from './RecentActivity';
-import UserInfo from './UserInfo';
+import ListContract from './commonComponent/formListSection';
+import RecentActivity from './homeComponent/activitySection';
+import UserInfo from './homeComponent/infoUserSection';
 
 function ListContractPageView() {
 

@@ -66,7 +66,7 @@ function NewForm() {
             ]),
             web3.utils.asciiToHex("idk")
         ).send({ from: account });
-        
+
         // if (isConsoleActive) console.debug("Result of createForm: ", result);
     }
 
