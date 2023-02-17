@@ -41,6 +41,7 @@ pragma solidity ^0.8.17;
 
 contract Form {
     FormData private data;
+    bool private available;
 
     constructor (uint[] memory _numbers, string[] memory _strings, bytes32 _hashValue) {
         // _numbers = [_caseNumber, _itemNumber, _contentOwnerContactInformation, _date,
@@ -80,5 +81,17 @@ contract Form {
 
     function lastLog() public view returns (Log memory) {
         return data.chainOfCustody[data.chainOfCustody.length - 1];
+    }
+
+    function isAvailable() public view returns(bool) {
+        return available;
+    }
+
+    function setAvailable() public {
+        available = true;
+    }
+
+    function setTaken() public {
+        available = true;
     }
 }
