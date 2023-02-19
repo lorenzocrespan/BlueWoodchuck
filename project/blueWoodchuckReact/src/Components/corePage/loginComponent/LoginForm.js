@@ -29,7 +29,7 @@ function LoginForm() {
             .then(() => {
                 if (isConsoleActive) console.log("Accesso avvenuto con successo");
                 // If the connection is successful, navigate to the homepage.
-                navigator("/Homepage");
+                navigator("/homepage");
             })
             .catch((err) => {
                 if (err.code === -32002) {

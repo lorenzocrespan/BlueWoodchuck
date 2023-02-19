@@ -15,29 +15,29 @@ import Core404 from "../Components/corePage/core404";
 // Layout component, used to wrap Header and Footer around the content.
 // The content is defined by the <Outlet /> component.
 const DefaultLayout = () => {
-  return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
-  )
+    return (
+        <>
+            <Header />
+            <Outlet />
+            <Footer />
+        </>
+    )
 };
 
 // Routing component, used to define the routes of the application.
 export default function Routing() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<CoreLogin />} />
-        <Route path="/" element={<DefaultLayout />}>
-          <Route path="/homepage" element={<CoreHomepage />} />
-          <Route path="/ListForm" element={<ListContractPageView />} />
-          <Route path="/ListForm/ContractShow/:id" element={<ShowContractInfo />} />
-          <Route path="/newForm" element={<NewForm />} />
-        </Route>
-        <Route path="*" element={<Core404 />} />
-      </Routes>
-    </Router>
-  )
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<CoreLogin />} />
+                <Route path="/" element={<DefaultLayout />}>
+                    <Route path="/homepage" element={<CoreHomepage />} />
+                    <Route path="/ListForm" element={<ListContractPageView />} />
+                    <Route path="/ListForm/ContractShow/:id" element={<ShowContractInfo />} />
+                    <Route path="/newForm" element={<NewForm />} />
+                </Route>
+                <Route path="*" element={<Core404 />} />
+            </Routes>
+        </Router>
+    )
 }
