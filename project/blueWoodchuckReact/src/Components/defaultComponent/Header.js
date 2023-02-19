@@ -55,48 +55,55 @@ function Header() {
         }
     }
 
-    // Function to render the login page.
+    // Functions to render the page and set the style of the button.
     async function rederLoginPage() {
         if (isConsoleActive) console.log("Render della pagina di login.");
         navigator("/");
     }
 
+    // Functions to render the page and set the style of the button.
     async function renderHomePage() {
         activePageButtonSetup("Button001");
         if (isConsoleActive) console.log("Render della pagina di home");
         navigator("/homepage")
     }
 
+    // Functions to render the page and set the style of the button.
     async function renderListFormPage() {
         activePageButtonSetup("Button002");
         if (isConsoleActive) console.log("Render della pagina di lista form");
         navigator("/listForm")
     }
 
+    // Functions to render the page and set the style of the button.
     async function renderNewFormPage() {
         activePageButtonSetup("Button003");
         if (isConsoleActive) console.log("Render della pagina di nuovo form");
         navigator("/NewForm")
     }
 
+    // Functions to render the page and set the style of the button.
     async function renderRequestPage() {
         activePageButtonSetup("Button004");
         if (isConsoleActive) console.log("Render della pagina di richieste");
         navigator("/Request")
     }
 
+    // Functions to render the page and set the style of the button.
     async function renderAdvanceSearchPage() {
         activePageButtonSetup("Button005");
         if (isConsoleActive) console.log("Render della pagina di ricerca avanzata");
         navigator("/advanceSearchPage")
     }
 
+    // Functions to render the page and set the style of the button.
     async function renderSearchResultPage() {
         activePageButtonSetup("Button005");
         if (isConsoleActive) console.log("Render della pagina di ricerca avanzata");
         navigator("/advanceSearchPage")
     }
 
+    // Function to set the style of the navbar.
     function activePageButtonSetup(idElement) {
         // Change tailwindcss style of the last button active.
         document.getElementById(lastButtonActive).classList.remove(styleButton);
