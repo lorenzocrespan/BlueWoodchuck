@@ -32,8 +32,8 @@ export default function Routing() {
                 <Route path="/" element={<CoreLogin />} />
                 <Route path="/" element={<DefaultLayout />}>
                     <Route path="/homepage" element={<CoreHomepage />} />
-                    <Route path="/ListForm" element={<ListContractPageView />} />
-                    <Route path="/ListForm/ContractShow/:id" element={<ShowContractInfo />} />
+                    <Route path="/listForm" element={<ListContractPageView />} />
+                    <Route path="/listForm/contractShow/:id" element={<ShowContractInfo />} />
                     <Route path="/newForm" element={<NewForm />} />
                 </Route>
                 <Route path="*" element={<Core404 />} />

@@ -1,113 +1,147 @@
+// Import - React and React Router
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from 'react';                // React hooks.
+// Import - MetaMask React
 import { useMetaMask } from "metamask-react";
 
 function Header() {
 
-    const navigator = useNavigate();
-    const { status } = useMetaMask();
+    const isConsoleActive = true;                           // Enable/Disable console debug.
+
+    const navigator = useNavigate();                        // Variable to navigate to another page.
+    const { status } = useMetaMask();                       // Variable to connect to MetaMask.
+
+    const styleButton = "text-amber-500";                                   // Variable to customize the style of the button.
+    const [lastButtonActive, setLastButtonActive] = useState("Button001"); // Variable to save the last button active.
 
     useEffect(() => {
-        // Check if the user is not logged in with MetaMask.
-        if (status === "notConnected") rederLoginPage();
-        else activePageButtonSetup("HomeButton");
+        // Check if MetaMask account is not connected, in case try to reconnect.
+        if (status === "notConnected") {
+            window.ethereum.request({ method: 'eth_requestAccounts' })
+                .then(() => {
+                    if (isConsoleActive) console.log("Accesso avvenuto con successo");
+                    renderHomePage();
+                })
+                .catch(() => {
+                    if (isConsoleActive) console.log("Account MetaMask non connesso");
+                    rederLoginPage();
+                });
+        }
+        // Update the state of navigation buttons, based on the current page loaded.
+        activePageButtonOnLoad();
     }, [status]);
 
+    function activePageButtonOnLoad() {
+        if (isConsoleActive) console.log("Aggiornamento pagina attiva");
+        // Based on the current page, set the button style.
+        switch (window.location.pathname) {
+            case "/homepage":
+                activePageButtonSetup("Button001");
+                break;
+            case "/listForm":
+                activePageButtonSetup("Button002");
+                break;
+            case "/NewForm":
+                activePageButtonSetup("Button003");
+                break;
+            case "/Request":
+                activePageButtonSetup("Button004");
+                break;
+            case "/advanceSearchPage":
+                activePageButtonSetup("Button005");
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Function to render the login page.
     async function rederLoginPage() {
+        if (isConsoleActive) console.log("Render della pagina di login.");
         navigator("/");
     }
 
     async function renderHomePage() {
-        activePageButtonSetup("HomeButton");
-        navigator("/Homepage")
+        activePageButtonSetup("Button001");
+        if (isConsoleActive) console.log("Render della pagina di home");
+        navigator("/homepage")
     }
 
     async function renderListFormPage() {
-        activePageButtonSetup("ListFormButton");
-        navigator("/ListForm")
+        activePageButtonSetup("Button002");
+        if (isConsoleActive) console.log("Render della pagina di lista form");
+        navigator("/listForm")
     }
 
     async function renderNewFormPage() {
-        activePageButtonSetup("NewFormButton");
+        activePageButtonSetup("Button003");
+        if (isConsoleActive) console.log("Render della pagina di nuovo form");
         navigator("/NewForm")
     }
 
     async function renderRequestPage() {
-        activePageButtonSetup("RequestButton");
+        activePageButtonSetup("Button004");
+        if (isConsoleActive) console.log("Render della pagina di richieste");
         navigator("/Request")
     }
 
     async function renderAdvanceSearchPage() {
-        activePageButtonSetup("AdvanceSearchButton");
+        activePageButtonSetup("Button005");
+        if (isConsoleActive) console.log("Render della pagina di ricerca avanzata");
         navigator("/advanceSearchPage")
     }
 
     async function renderSearchResultPage() {
-        activePageButtonSetup("AdvanceSearchButton");
+        activePageButtonSetup("Button005");
+        if (isConsoleActive) console.log("Render della pagina di ricerca avanzata");
         navigator("/advanceSearchPage")
     }
 
     function activePageButtonSetup(idElement) {
-        // TODO: Find a better way to do this.
-        // Reset all the button style of the last button active.
-        document.getElementById("HomeButton").classList.remove("text-green-500");
-        document.getElementById("ListFormButton").classList.remove("text-green-500");
-        document.getElementById("NewFormButton").classList.remove("text-green-500");
-        document.getElementById("RequestButton").classList.remove("text-green-500");
-        document.getElementById("AdvanceSearchButton").classList.remove("text-green-500");
+        // Change tailwindcss style of the last button active.
+        document.getElementById(lastButtonActive).classList.remove(styleButton);
         // Change tailwindcss style of the button.
-        document.getElementById(idElement).classList.add("text-green-500");
+        document.getElementById(idElement).classList.add(styleButton);
+        // Save the last button active.
+        setLastButtonActive(idElement);
     }
 
-
-    
     const handleKeyDown = event => {
         console.log('User pressed: ', event.key);
-        
+
         if (event.key === 'Enter') {
             console.log('Enter pressed');
             renderSearchResultPage(document.getElementById("Search").value);
         }
     };
-    
+
     function renderSearchResultPage(id) {
         navigator('/ListForm/ContractShow/' + id);
     }
 
     return (
-        <header className="p-4 bg-blue-600 text-gray-100">
+        <header className="p-4 bg-blue-900 text-gray-200">
             <div className="container flex justify-between mx-auto">
                 <div className="flex">
                     <ul className="items-stretch hidden space-x-4 lg:flex">
                         <li className="flex">
-                            <button id="HomeButton" className="flex items-center px-4 border-b-[1px] border-hidden" onClick={renderHomePage}>Homepage</button>
+                            <button id="Button001" className="flex items-center px-4 border-b-[1px] border-hidden hover:text-amber-500 ease-out duration-500" onClick={renderHomePage}>Homepage</button>
                         </li>
                         <li className="flex">
-                            <button id="ListFormButton" className="flex items-center px-4 border-b-[1px] border-hidden" onClick={renderListFormPage}>Lista Form</button>
+                            <button id="Button002" className="flex items-center px-4 border-b-[1px] border-hidden hover:text-amber-500 ease-out duration-500" onClick={renderListFormPage}>Lista Form</button>
                         </li>
                         <li className="flex">
-                            <button id="NewFormButton" className="flex items-center px-4 border-b-[1px] border-hidden" onClick={renderNewFormPage}>Nuovo Form</button>
+                            <button id="Button003" className="flex items-center px-4 border-b-[1px] border-hidden hover:text-amber-500 ease-out duration-500" onClick={renderNewFormPage}>Nuovo Form</button>
                         </li>
                         <li className="flex">
-                            <button id="RequestButton" className="flex items-center px-4 border-b-[1px] border-hidden" onClick={renderRequestPage}>Richieste</button>
+                            <button id="Button004" className="flex items-center px-4 border-b-[1px] border-hidden hover:text-amber-500 ease-out duration-500" onClick={renderRequestPage}>Richieste</button>
                         </li>
                         <li className="flex">
-                            <button id="AdvanceSearchButton" className="flex items-center px-4 border-b-[1px] border-hidden" onClick={renderAdvanceSearchPage}>Ricerca Avanzata</button>
+                            <button id="Button005" className="flex items-center px-4 border-b-[1px] border-hidden hover:text-amber-500 ease-out duration-500" onClick={renderAdvanceSearchPage}>Ricerca Avanzata</button>
                         </li>
                     </ul>
                 </div>
-                <div className="items-center flex-shrink-0 hidden lg:flex gap-3">
-                    <div className="relative">
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-2">
-                            <button type="submit" title="Search" className="p-1 focus:outline-none focus:ring">
-                                <svg fill="currentColor" viewBox="0 0 512 512" className="w-4 h-4 dark:text-gray-100">
-                                    <path d="M479.6,399.716l-81.084-81.084-62.368-25.767A175.014,175.014,0,0,0,368,192c0-97.047-78.953-176-176-176S16,94.953,16,192,94.953,368,192,368a175.034,175.034,0,0,0,101.619-32.377l25.7,62.2L400.4,478.911a56,56,0,1,0,79.2-79.195ZM48,192c0-79.4,64.6-144,144-144s144,64.6,144,144S271.4,336,192,336,48,271.4,48,192ZM456.971,456.284a24.028,24.028,0,0,1-33.942,0l-76.572-76.572-23.894-57.835L380.4,345.771l76.573,76.572A24.028,24.028,0,0,1,456.971,456.284Z"></path>
-                                </svg>
-                            </button>
-                        </span>
-                        <input type="text" onKeyDown={handleKeyDown} name="Search" id="Search" placeholder="Search..." className="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 dark:text-gray-100 focus:dark:bg-gray-900" />
-                    </div>
-                </div>
+                <input type="text" onKeyDown={handleKeyDown} name="Search" id="Search" placeholder="Search..." className="w-32 py-2 text-sm rounded-md focus:border-amber-500 border-white sm:w-auto focus:outline-none dark:bg-blue-900 focus:ring-amber-500 focus:ring-2 focus:text-blue-900 focus:dark:bg-gray-200 placeholder:focus:text-amber-500 placeholder:text-gray-200 ease-out duration-500" />
             </div>
         </header>
     );
