@@ -127,7 +127,7 @@ function Header() {
     }
 
     return (
-        <header className="p-4 bg-blue-900 text-gray-200">
+        <header className="p-4 bg-blue-900 text-gray-100">
             <div className="container flex justify-between mx-auto">
                 <div className="flex">
                     <ul className="items-stretch hidden space-x-4 lg:flex">
@@ -148,7 +148,7 @@ function Header() {
                         </li>
                     </ul>
                 </div>
-                <input type="text" onKeyDown={handleKeyDown} name="Search" id="Search" placeholder="Search..." className="w-32 py-2 text-sm rounded-md focus:border-amber-500 border-white sm:w-auto focus:outline-none dark:bg-blue-900 focus:ring-amber-500 focus:ring-2 focus:text-blue-900 focus:dark:bg-gray-200 placeholder:focus:text-amber-500 placeholder:text-gray-200 ease-out duration-500" />
+                <input type="text" onKeyDown={handleKeyDown} name="Search" id="Search" placeholder="Search..." className="w-32 py-2 sm:w-auto text-sm rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
             </div>
         </header>
     );

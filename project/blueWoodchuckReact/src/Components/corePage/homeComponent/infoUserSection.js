@@ -28,26 +28,26 @@ function UserInfo(props) {
     }
 
     return (
-        <div className="container flex justify-between h-auto mx-auto">
+        <div className="container flex justify-between h-auto mx-auto bg-blue-900 p-10 rounded-md">
             <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
-                <img src={require("../../../Asset/Images/blueWoodchuckLogo.jpg")} alt="" className="self-center flex-shrink-0 w-24 h-24 border rounded-full md:justify-self-start dark:bg-gray-500 dark:border-gray-700" />
+                <img src={require("../../../Asset/Images/blueWoodchuckLogo.jpg")} alt="" className="self-center flex-shrink-0 w-24 h-24 rounded-full md:justify-self-start dark:bg-gray-500 dark:border-amber-600 border-2" />
                 <table className="min-w-full">
                     <tbody className="text-lg font-semibold text-center md:text-left">
                         <tr>
                             <td className="text-xl">Utente: </td>
-                            <td className="px-3 hover:text-gray-200 dark:hover:text-white" onClick={() => copyToClipboard(props.account)}>{props.account}</td>
+                            <td className="px-3 hover:text-amber-500 ease-out duration-500" onClick={() => copyToClipboard(props.account)}>{props.account}</td>
                         </tr>
                         <tr>
                             <td className="text-xl">Rete attuale: </td>
-                            <td className="px-3 hover:text-gray-200 dark:hover:text-white" onClick={() => copyToClipboard(props.networkId)}> {getNetworkName(props.networkId)}</td>
+                            <td className="px-3 hover:text-amber-500 ease-out duration-500" onClick={() => copyToClipboard(props.networkId)}> {getNetworkName(props.networkId)}</td>
                         </tr>
                         <tr>
                             <td className="text-xl">Bilancio attuale: </td>
-                            <td className="px-3 hover:text-gray-200 dark:hover:text-white" onClick={() => copyToClipboard(props.balance)}>{props.balance} ETH</td>
+                            <td className="px-3 hover:text-amber-500 ease-out duration-500" onClick={() => copyToClipboard(props.balance)}>{props.balance} ETH</td>
                         </tr>
                         <tr>
                             <td className="text-xl">Contratto di riferimento: </td>
-                            <td className="px-3 hover:text-gray-200 dark:hover:text-white" onClick={() => copyToClipboard(props.contract)}>{props.contract}</td>
+                            <td className="px-3 hover:text-amber-500 ease-out duration-500" onClick={() => copyToClipboard(props.contract)}>{props.contract}</td>
                         </tr>
                     </tbody>
                 </table>

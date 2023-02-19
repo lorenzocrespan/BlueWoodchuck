@@ -1,5 +1,6 @@
-import ContractEntry from "./formListEntry";
 import React, { useState, useEffect } from 'react';
+import ContractEntry from "./formListEntry";
+import EmptyContractList from './formListEmpty';
 
 
 function ListContract(props) {
@@ -31,9 +32,13 @@ function ListContract(props) {
     }
 
     return (
-        <ul className="flex flex-col container justify-between mx-auto p-4 lg:p-8 dark:bg-gray-800 dark:text-gray-100">
+        <ul className="flex flex-col container justify-between mx-auto lg:p-8 bg-blue-900 p-10 rounded-md">
             <h2 className="mb-4 text-2xl font-semibold">Lista contratti in carico</h2>
-            {listItems}
+            {
+                contractsInCharge.length === 0
+                    ? <EmptyContractList />
+                    : listItems
+            }
         </ul>
     )
 }

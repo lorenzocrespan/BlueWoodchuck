@@ -14,7 +14,7 @@ function TitleEntry() {
 function BodyEntry(props) {
 
     return (
-        <tr className="border-b border-opacity-20 dark:border-gray-700 dark:bg-gray-900">
+        <tr className="border-b border-opacity-20 dark:border-gray-700 ">
             <td className="p-3">INV-0001</td>
             <td className="p-3">John Doe</td>
             <td className="p-3">2020-01-01</td>

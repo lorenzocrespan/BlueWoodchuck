@@ -44,17 +44,16 @@ function NewForm() {
         // _strings = [_caseName, _reasonObtained, _evidenceTypeManufacturer, _owner, _contentDescription,
         //             _forensicAgent, _creationMethod]
         // Add form to blockchain.
-        console.debug("Type Numero caso: ", typeof document.getElementById("NumeroCaso").value);
         const result = await FormContract.methods.createForm(
             Array.from([
-                document.getElementById("NumeroCaso").value,
+                document.getElementById("caseNumber").value,
                 document.getElementById("NumeroOggetto").value,
                 document.getElementById("ContattiProprietario").value,
                 Math.floor(Date.now() / 1000),
                 document.getElementById("ContattiPerito").value
             ]),
             Array.from([
-                document.getElementById("NomeCaso").value,
+                document.getElementById("caseName").value,
                 document.getElementById("RagioniAcquisizione").value,
                 document.getElementById("TipoOggetto").value,
                 document.getElementById("NominativoProprietario").value,
@@ -72,93 +71,93 @@ function NewForm() {
 
     return (
         // Add the Header component.
-        <div className='bg-slate-400 min-h-screen'>
-            <section className="p-6 bg-blue-800 dark:text-gray-50">
-                <form className="container flex flex-col mx-auto space-y-6 p-6 rounded-md bg-blue-500 ng-untouched ng-pristine ng-valid">
-                    <fieldset className="grid grid-cols-4 gap-2 p-6 rounded-md shadow-sm dark:bg-gray-900">
-                        <div className="space-y-2 col-span-full lg:col-span-1">
-                            <p className="font-medium">Informazioni caso</p>
+        <div className='bg-gray-100'>
+            <section className="p-6 dark:text-gray-50">
+                <form className="container flex flex-col mx-auto space-y-6 rounded-md ng-untouched ng-pristine ng-valid">
+                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm dark:bg-blue-900">
+                        <div className="space-y-2 space-x-8 col-span-full lg:col-span-1">
+                            <p className="font-bold underline decoration-2 decoration-amber-500 underline-offset-4">Informazioni caso</p>
                             <p className="text-sm">Inserire le informazioni inerenti al caso di riferimento. Le informazioni richieste sono obbligatorie.</p>
                         </div>
                         <div className="grid grid-cols-6 gap-6 col-span-full lg:col-span-3">
                             <div className="space-y-2 col-span-full sm:col-span-3">
-                                <label className="font-medium">Nome caso</label>
-                                <input id="NomeCaso" type="text" placeholder="Pippo contro Topolino" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" />
+                                <label className="font-semibold text-amber-500">Nome caso</label>
+                                <input id="caseName" type="text" placeholder="Pippo contro Topolino" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
                             </div>
                             <div className="space-y-2 col-span-full sm:col-span-3">
-                                <label className="font-medium">Numero caso</label>
-                                <input id="NumeroCaso" type="number" placeholder="20220103001" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" required />
+                                <label className="font-semibold text-amber-500">Numero caso</label>
+                                <input id="caseNumber" type="number" placeholder="20220103001" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset className="grid grid-cols-4 gap-2 p-6 rounded-md shadow-sm dark:bg-gray-900">
-                        <div className="space-y-2 col-span-full lg:col-span-1">
-                            <p className="font-medium">Informazioni oggetto acquisito</p>
+                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm dark:bg-blue-900">
+                        <div className="space-y-2 space-x-8 col-span-full lg:col-span-1">
+                            <p className="font-bold underline decoration-2 decoration-amber-500 underline-offset-4">Informazioni oggetto acquisito</p>
                             <p className="text-sm">Inserire le informazioni inerenti all'oggetto acquisito. Le informazioni richieste sono obbligatorie.</p>
                         </div>
                         <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div className="space-y-2 col-span-full sm:col-span-3">
-                                <label className="font-medium">Identificativo numerico dell'oggetto</label>
-                                <input id="NumeroOggetto" type="number" placeholder="34" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" />
+                                <label className="font-semibold text-amber-500">Identificativo numerico dell'oggetto</label>
+                                <input id="NumeroOggetto" type="number" placeholder="34" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
                             </div>
                             <div className="space-y-2 col-span-full sm:col-span-3">
-                                <label className="font-medium">Tipologia dell'oggetto</label>
-                                <input id="TipoOggetto" type="text" placeholder="Last name" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" />
+                                <label className="font-semibold text-amber-500">Tipologia dell'oggetto</label>
+                                <input id="TipoOggetto" type="text" placeholder="Last name" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
                             </div>
                             <div className="space-y-2 col-span-full sm:col-span-3">
-                                <label className="font-medium">Numero modello</label>
-                                <input id="NumeroModello" type="text" placeholder="0000A12012B32C" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" />
+                                <label className="font-semibold text-amber-500">Numero modello</label>
+                                <input id="NumeroModello" type="text" placeholder="0000A12012B32C" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
                             </div>
                             <div className="space-y-2 col-span-full sm:col-span-3">
-                                <label className="font-medium">Numero seriale</label>
-                                <input id="NumeroSeriale" type="text" placeholder="A320020A12012B32C" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" />
+                                <label className="font-semibold text-amber-500">Numero seriale</label>
+                                <input id="NumeroSeriale" type="text" placeholder="A320020A12012B32C" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
                             </div>
                             <div className="space-y-2 col-span-full">
-                                <label className="font-medium">Ragioni dell'acquisizione</label>
-                                <textarea id="RagioniAcquisizione" placeholder="Il dispositivo è stato acquisito perché ..." className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" />
+                                <label className="font-semibold text-amber-500">Ragioni dell'acquisizione</label>
+                                <textarea id="RagioniAcquisizione" placeholder="Il dispositivo è stato acquisito perché ..." className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
                             </div>
                             <div className="space-y-2 col-span-full">
-                                <label className="font-medium">Descrizione oggetto acquisito</label>
-                                <textarea id="DescrizioneAcquisizione" placeholder="È stato acquisito il seguente materiale: ..." className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" />
+                                <label className="font-semibold text-amber-500">Descrizione oggetto acquisito</label>
+                                <textarea id="DescrizioneAcquisizione" placeholder="È stato acquisito il seguente materiale: ..." className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset className="grid grid-cols-4 gap-2 p-6 rounded-md shadow-sm dark:bg-gray-900">
-                        <div className="space-y-2 col-span-full lg:col-span-1">
-                            <p className="font-medium">Informazioni proprietario dell'oggetto</p>
+                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm dark:bg-blue-900">
+                        <div className="space-y-2 space-x-8 col-span-full lg:col-span-1">
+                            <p className="font-bold underline decoration-2 decoration-amber-500 underline-offset-4">Informazioni proprietario dell'oggetto</p>
                             <p className="text-sm">Inserire le informazioni inerenti all'oggetto acquisito. Le informazioni richieste sono obbligatorie.</p>
                         </div>
                         <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div className="space-y-2 col-span-full sm:col-span-3">
-                                <label className="font-medium">Nominativo proprietario</label>
-                                <input id="NominativoProprietario" type="text" placeholder="Pippo" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" />
+                                <label className="font-semibold text-amber-500">Nominativo proprietario</label>
+                                <input id="NominativoProprietario" type="text" placeholder="Pippo" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
                             </div>
                             <div className="space-y-2 col-span-full">
-                                <label className="font-medium">Contatti proprietario</label>
-                                <input id="ContattiProprietario" type="number" placeholder="20220103001" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" required />
+                                <label className="font-semibold text-amber-500">Contatti proprietario</label>
+                                <input id="ContattiProprietario" type="number" placeholder="20220103001" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset className="grid grid-cols-4 gap-2 p-6 rounded-md shadow-sm dark:bg-gray-900">
-                        <div className="space-y-2 col-span-full lg:col-span-1">
-                            <p className="font-medium">Informazioni perito</p>
+                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm dark:bg-blue-900">
+                        <div className="space-y-2 space-x-8 col-span-full lg:col-span-1">
+                            <p className="font-bold underline decoration-2 decoration-amber-500 underline-offset-4">Informazioni perito</p>
                             <p className="text-sm">Inserire le informazioni inerenti all'oggetto acquisito. Le informazioni richieste sono obbligatorie.</p>
                         </div>
                         <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                             <div className="space-y-2 col-span-full sm:col-span-3">
-                                <label className="font-medium">Nominativo perito</label>
-                                <input id="NominativoPerito" type="text" placeholder="Pippo" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" />
+                                <label className="font-semibold text-amber-500">Nominativo perito</label>
+                                <input id="NominativoPerito" type="text" placeholder="Pippo" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" />
                             </div>
                             <div className="space-y-2 col-span-full">
-                                <label className="font-medium">Contatti perito</label>
-                                <input id="ContattiPerito" type="number" placeholder="20220103001" className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-blue-600 dark:border-gray-700 dark:text-gray-900" required />
+                                <label className="font-semibold text-amber-500">Contatti perito</label>
+                                <input id="ContattiPerito" type="number" placeholder="20220103001" className="w-full rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
                             </div>
                         </div>
                     </fieldset>
+                    <div className="flex justify-end">
+                        <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={addForm}>Registrazione contratto</button>
+                    </div>
                 </form>
-                <div className="flex justify-end p-6 space-x-3">
-                    <button className="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-blue-600 border border-transparent rounded-md active:bg-blue-600 hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue" onClick={addForm}>Save</button>
-                </div>
             </section>
         </div>
     );

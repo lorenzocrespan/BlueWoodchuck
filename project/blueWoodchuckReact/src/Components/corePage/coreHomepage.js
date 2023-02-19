@@ -46,40 +46,19 @@ function CoreHomepage() {
         setIsChange(!isChange);
     });
 
-    let addressForm;
-
-    // Subscribe to events.
-    FormContract.events.newForm()
-        .on("connected", (subscriptionId) => {
-            // https://web3js.readthedocs.io/en/v1.2.11/web3-eth-subscribe.html#
-            // console.log(subscriptionId);
-        })
-        .on('data', (event) => {
-            console.debug("FormCreated", event.returnValues);
-            addressForm = event.returnValues[1];
-        })
-        .on('changed', (event) => {
-            // remove event from local database
-        })
-        .on('error', console.error);
-
     return (
-        <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12 dark:bg-gray-900 dark:text-gray-100 ">
-
+        <div className="min-h-screen flex flex-col gap-3 sm:p-4 dark:bg-gray-100 dark:text-gray-100 ">
             <UserInfo
                 account={account}
                 contract={contract}
                 balance={balance}
                 networkId={networkId}
             />
-
             <ListContract
                 FormContract={FormContract}
                 account={account}
             />
-
             <RecentActivity />
-
         </div>
 
     );
