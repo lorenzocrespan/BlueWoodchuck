@@ -10,15 +10,14 @@ function Core404() {
     }
 
     return (
-        <section className="flex items-center h-screen p-16 dark:bg-gray-900 dark:text-gray-100">
+        <section className="flex items-center h-screen p-16 dark:bg-blue-900 dark:text-gray-200">
             <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
                 <div className="max-w-md text-center">
-                    <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-600">
-                        <span className="sr-only">Error</span>404
+                    <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-200">
+                        <span className="sr-only">Errore</span>404
                     </h2>
-                    <p className="text-2xl font-semibold md:text-3xl">Sorry, we couldn't find this page.</p>
-                    <p className="mt-4 mb-8 dark:text-gray-400">But dont worry, you can find plenty of other things on our homepage.</p>
-                    <button className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900" onClick={redirectDefaultPage}>Back</button>
+                    <p className="mb-8 text-2xl font-semibold md:text-3xl">Ci dispiace, ma la pagina che stai cercando non esiste.</p>
+                    <button className="w-1/2 h-12 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600  ease-out duration-500" onClick={redirectDefaultPage}>Torna indietro</button>
                 </div>
             </div>
         </section>

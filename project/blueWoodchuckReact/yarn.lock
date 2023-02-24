@@ -1845,6 +1845,54 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@supabase/functions-js@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/@supabase/functions-js/-/functions-js-2.0.0.tgz"
+  integrity sha512-ozb7bds2yvf5k7NM2ZzUkxvsx4S4i2eRKFSJetdTADV91T65g4gCzEs9L3LUXSrghcGIkUaon03VPzOrFredqg==
+  dependencies:
+    cross-fetch "^3.1.5"
+
+"@supabase/gotrue-js@^2.12.0":
+  version "2.12.1"
+  resolved "https://registry.npmjs.org/@supabase/gotrue-js/-/gotrue-js-2.12.1.tgz"
+  integrity sha512-r8Jfq8FvP6q4kp7sI33X1RWfEEHzJFu9uM1Q6HgiDVkY89NNgqYy2kxaRGtidPFllND7vpcJUcpoWS5oq+4u0g==
+  dependencies:
+    cross-fetch "^3.1.5"
+
+"@supabase/postgrest-js@^1.1.1":
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/@supabase/postgrest-js/-/postgrest-js-1.4.0.tgz"
+  integrity sha512-Qwk7T/thG4gtVjxxVGlnhH9tPWXyBGIpQMxNUtAIyASgJoEEuUFS/Wx/GqGDIfwRtrn1qqZjE6sZon5ULAdRLQ==
+  dependencies:
+    cross-fetch "^3.1.5"
+
+"@supabase/realtime-js@^2.4.0":
+  version "2.6.0"
+  resolved "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-2.6.0.tgz"
+  integrity sha512-tOVulMobhpxyDuu8VIImpL8FXmZOKsGNOSyS5ihJdj2xYmPPvYG+D2J51Ewfl+MFF65tweiB6p9N9bNIW1cDNA==
+  dependencies:
+    "@types/phoenix" "^1.5.4"
+    websocket "^1.0.34"
+
+"@supabase/storage-js@^2.1.0":
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/@supabase/storage-js/-/storage-js-2.3.0.tgz"
+  integrity sha512-YGWVCEYYYF3+UiyL8O4xC78N9n9paLbT0hHl8dmYAtd3DqyWtu5Eph9JTu0PWm+/29Zhns5TbhUZW4xpWjJfPQ==
+  dependencies:
+    cross-fetch "^3.1.5"
+
+"@supabase/supabase-js@^2.8.0":
+  version "2.8.0"
+  resolved "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.8.0.tgz"
+  integrity sha512-uzf4J+qAKdUMhB2tnJl6BrQRUQBinwjJ2eWo2ZsDw9EUUP5JcHsxTamiq6p91DpqzmTIRg3xRAT+bItTzbfa0w==
+  dependencies:
+    "@supabase/functions-js" "^2.0.0"
+    "@supabase/gotrue-js" "^2.12.0"
+    "@supabase/postgrest-js" "^1.1.1"
+    "@supabase/realtime-js" "^2.4.0"
+    "@supabase/storage-js" "^2.1.0"
+    cross-fetch "^3.1.5"
+
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
   resolved "https://registry.npmjs.org/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-2.2.3.tgz"
@@ -2263,6 +2311,11 @@
   integrity sha512-Cf63Rv7jCQ0LaL8tNXmEyqTHuIJxRdlS5vMh1mj5voN4+QFhVZnlZruezqpWYDiJ8UTzhP0VmeLXCmBk66YrMQ==
   dependencies:
     "@types/node" "*"
+
+"@types/phoenix@^1.5.4":
+  version "1.5.5"
+  resolved "https://registry.npmjs.org/@types/phoenix/-/phoenix-1.5.5.tgz"
+  integrity sha512-1eWWT19k0L4ZiTvdXjAvJ9KvW0B8SdiVftQmFPJGTEx78Q4PCSIQDpz+EfkFVR1N4U9gREjlW4JXL8YCIlY0bw==
 
 "@types/prettier@^2.1.5":
   version "2.7.1"
@@ -3926,7 +3979,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-cross-fetch@^3.1.4:
+cross-fetch@^3.1.4, cross-fetch@^3.1.5:
   version "3.1.5"
   resolved "https://registry.npmjs.org/cross-fetch/-/cross-fetch-3.1.5.tgz"
   integrity sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==
@@ -8803,6 +8856,11 @@ q@^1.1.2:
   resolved "https://registry.npmjs.org/q/-/q-1.5.1.tgz"
   integrity sha512-kV/CThkXo6xyFEZUugw/+pIOywXcDbFYgSct5cT3gqlbkBE1SJdwy6UQoZvodiWF/ckQLZyDE/Bu1M6gVu5lVw==
 
+qr.js@0.0.0:
+  version "0.0.0"
+  resolved "https://registry.npmjs.org/qr.js/-/qr.js-0.0.0.tgz"
+  integrity sha512-c4iYnWb+k2E+vYpRimHqSu575b1/wKl4XFeJGpFmrJQz5I88v9aY2czh7s0w36srfCM1sXgC/xpoJz5dJfq+OQ==
+
 qs@~6.5.2:
   version "6.5.3"
   resolved "https://registry.npmjs.org/qs/-/qs-6.5.3.tgz"
@@ -8946,6 +9004,14 @@ react-is@^18.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
+react-qr-code@^2.0.11:
+  version "2.0.11"
+  resolved "https://registry.npmjs.org/react-qr-code/-/react-qr-code-2.0.11.tgz"
+  integrity sha512-P7mvVM5vk9NjGdHMt4Z0KWeeJYwRAtonHTghZT2r+AASinLUUKQ9wfsGH2lPKsT++gps7hXmaiMGRvwTDEL9OA==
+  dependencies:
+    prop-types "^15.8.1"
+    qr.js "0.0.0"
+
 react-refresh@^0.11.0, "react-refresh@>=0.10.0 <1.0.0":
   version "0.11.0"
   resolved "https://registry.npmjs.org/react-refresh/-/react-refresh-0.11.0.tgz"
@@ -9021,7 +9087,7 @@ react-scripts@5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
-react@^18.0.0, react@^18.2.0, "react@>= 16", react@>=16.8:
+"react@^16.x || ^17.x || ^18.x", react@^18.0.0, react@^18.2.0, "react@>= 16", react@>=16.8:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -10925,7 +10991,7 @@ websocket-extensions@>=0.1.1:
   resolved "https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.4.tgz"
   integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
-websocket@^1.0.32:
+websocket@^1.0.32, websocket@^1.0.34:
   version "1.0.34"
   resolved "https://registry.npmjs.org/websocket/-/websocket-1.0.34.tgz"
   integrity sha512-PRDso2sGwF6kM75QykIesBijKSVceR6jL2G8NGYyq2XrItNC2P5/qL5XeR056GhA+Ly7JMFvJb9I312mJfmqnQ==

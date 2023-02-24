@@ -62,7 +62,7 @@ function LoginForm() {
             </div>
             <div name="rightSideLoginForm" className="w-1/2 h-full flex flex-col p-4 rounded-r self-center text-center">
                 <p name="title" className="pb-12 text-3xl font-bold">
-                    <span className="text-blue-800">Blue</span>
+                    <span className="text-blue-600">Blue</span>
                     <span className="text-amber-600">Woodchuck</span>
                 </p>
                 <button className="w-1/2 h-12 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600  ease-out duration-500" onClick={login}> Login con Metamask</button>
