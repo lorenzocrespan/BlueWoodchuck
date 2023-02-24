@@ -1,22 +1,60 @@
 // Import - React 
 import { useState, useEffect } from "react";
+import { Canvg } from 'canvg';
 
 function DownloadPopup(props) {
 
-    const [errorPopup, setErrorPopup] = useState(false);
+    const [downloadPopup, setDownloadPopup] = useState(false);
 
-    const closeHandler = (dataHandler) => {
-        setErrorPopup(false);
+    const closeHandler = () => {
+        setDownloadPopup(false);
         props.onClose(false);
     };
 
     useEffect(() => {
-        setErrorPopup(props.errorPopup);
-    }, [props.errorPopup]);
+        setDownloadPopup(props.downloadPopup);
+    }, [props.downloadPopup]);
+
+    const downloadQRCode = () => {
+        const svg = document.getElementById("QRCodeForm");
+        // Canvg library
+        const oldCanvas = document.createElement("canvas");
+        const ctx = oldCanvas.getContext("2d");
+        const v = Canvg.fromString(ctx, svg.outerHTML);
+        v.start();
+
+        const newCanvas = document.createElement('canvas');
+        const context = newCanvas.getContext('2d');
+
+        newCanvas.width = 320;
+        newCanvas.height = 320;
+
+        // create white background and center the text
+        context.font = '14px Roboto';
+        context.fillStyle = 'white';
+        context.textBaseline = 'middle';
+        context.textAlign = 'center';
+        context.fillRect(0, 0, 320, 320);
+
+        // create style for text inside canvas
+        context.fillStyle = '#4A4A4A';
+        context.fillText('Scan Here to Order', newCanvas.width / 2, 20);
+        // copy oldCanvas to newCanvas
+        context.drawImage(oldCanvas, 35, 35, 250, 250);
+        context.fillText('Thank You, Have a nice day ', newCanvas.width / 2, 305);
+
+        const image = newCanvas.toDataURL('image/png');
+        const anchor = document.createElement('a');
+        anchor.href = image;
+        anchor.download = `qr-code.png`;
+        document.body.appendChild(anchor);
+        anchor.click();
+        document.body.removeChild(anchor);
+    };
 
     return (
         <div>
-            {errorPopup ? (
+            {downloadPopup ? (
                 <div>
                     <div className="opacity-90 fixed inset-0 z-10 bg-black" />
                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -30,8 +68,8 @@ function DownloadPopup(props) {
                             <p className=" font-medium dark:text-blue-800">
                                 Quale formato preferisci?
                             </p>
-                                <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={closeHandler}>Scarica il QR Code</button>
-                                <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={closeHandler}>Scarica il documento in PDF</button>
+                            <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={downloadQRCode}>Scarica il QR Code</button>
+                            <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" >Scarica il documento in PDF</button>
                             <div className="flex flex-col justify-end gap-3 mt-6 sm:flex-row">
                                 <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={closeHandler}>Chiudi</button>
                             </div>

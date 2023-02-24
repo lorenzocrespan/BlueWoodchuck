@@ -5,7 +5,8 @@ import { useParams } from 'react-router-dom';
 // Import - Components
 import DownloadPopup from "./formShowComponent/DownloadPopup";
 import FreeFormPopup from './formShowComponent/FreeFormPopup';
-import QRCode from "react-qr-code";
+import QRCodeCanvas from "qrcode.react";
+
 
 function ShowContractInfo() {
 
@@ -68,12 +69,24 @@ function ShowContractInfo() {
         console.debug("form", form);
     }
 
+
     let { id } = useParams();
+
+
+    // Function to show and close the download popup modal.
+    const showDownloadPopup = () => {
+        setDownloadPopup(true);
+    }
+
+    const popupCloseDownloadHandler = () => {
+        setDownloadPopup(false);
+    }
 
     return (
         <div className="min-h-screen flex flex-col gap-3 sm:p-4 dark:bg-gray-100 dark:text-gray-100 ">
             <DownloadPopup
-                errorPopup={downloadPopup}
+                onClose={popupCloseDownloadHandler}
+                downloadPopup={downloadPopup}
             />
             <FreeFormPopup
                 errorPopup={freeFormPopup}
@@ -89,10 +102,16 @@ function ShowContractInfo() {
                     </div>
                 </div>
                 <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
-                    
-
-                    <QRCode value={"Ciao lorenzo questo che leggi è il messaggio che il tuo io del passato ti ha lasciato...Such a failure"} fgColor='#F59E0B' className='self-top flex-shrink-0 md:justify-self-start dark:border-blue-800 border-2' />
-
+                    <QRCodeCanvas
+                        id="QRCodeForm"
+                        className='self-top flex-shrink-0 md:justify-self-start dark:border-blue-800 border-2'
+                        size={256}
+                        level={"H"}
+                        fgColor='#F59E0B'
+                        includeMargin={true}
+                        renderAs='svg'
+                        value={"https://bluewoodchuck.com/form/" + id}
+                    />
                     <table className="min-w-full">
                         <tbody className="text-lg font-semibold text-center md:text-left">
                             <h2 className="text-2xl font-semibold pb-4 text-amber-500">Informazioni form</h2>
@@ -164,7 +183,7 @@ function ShowContractInfo() {
             </div>
             <div className="container justify-between h-auto mx-auto flex flex-row space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
                 <div className='basis-1/2'>
-                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500">Scarica</button>
+                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500" onClick={showDownloadPopup}>Scarica</button>
                 </div>
                 <div className='basis-1/2 flex flex-row justify-end gap-2'>
                     <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500">Rendi disponibile</button>
