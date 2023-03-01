@@ -82,6 +82,15 @@ function ShowContractInfo() {
         setDownloadPopup(false);
     }
 
+    // Function to show and close the download popup modal.
+    const showFreeFormPopup = () => {
+        setFreeFormPopup(true);
+    }
+
+    const popupCloseFreeFormHandler = () => {
+        setFreeFormPopup(false);
+    }
+
     return (
         <div className="min-h-screen flex flex-col gap-3 sm:p-4 dark:bg-gray-100 dark:text-gray-100 ">
             <DownloadPopup
@@ -89,6 +98,7 @@ function ShowContractInfo() {
                 downloadPopup={downloadPopup}
             />
             <FreeFormPopup
+                onClose={popupCloseFreeFormHandler}
                 errorPopup={freeFormPopup}
             />
             <div className="container flex flex-col justify-between h-auto mx-auto bg-blue-900 p-10 gap-5 rounded-md">
@@ -97,8 +107,13 @@ function ShowContractInfo() {
                         <p>Scheda form</p>
                     </div>
                     <div className='basis-1/2 flex flex-row justify-end gap-2'>
-                        <p>Informazione 1</p>
-                        <p>Informazione 2</p>
+                        <span className="px-3 py-1 font-semibold rounded-xl dark:bg-amber-500 dark:text-gray-900">
+                            <span>Disponibile</span>
+                        </span>
+                        o
+                        <span className="px-3 py-1 font-semibold rounded-xl dark:bg-amber-500 dark:text-gray-900">
+                            <span>Non disponibile</span>
+                        </span>
                     </div>
                 </div>
                 <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
@@ -114,33 +129,65 @@ function ShowContractInfo() {
                     />
                     <table className="min-w-full">
                         <tbody className="text-lg font-semibold text-center md:text-left">
-                            <h2 className="text-2xl font-semibold pb-4 text-amber-500">Informazioni form</h2>
-                            <div className="flex gap-2">
-                                <p className="text-lg">Numero caso:</p>
-                                <p className="text-lg">{form.caseNumber}</p>
-                            </div>
-                            <h2 className="text-2xl font-semibold py-4 text-amber-500">Informazioni ulteriori</h2>
+                            <h2 className="text-2xl font-semibold py-4 text-amber-500">Informazioni caso</h2>
                             <div className="flex flex-col gap-2">
                                 <div className="flex gap-2">
-                                    <p className="text-lg">Descrizione oggetto:</p>
-                                    <p className="text-lg">{form.contentDescription}</p>
+                                    <p className="text-lg">Nome caso:</p>
+                                    <p className="text-lg">{form.caseName}</p>
                                 </div>
                                 <div className="flex gap-2">
-                                    <p className="text-lg">Contatti proprietario:</p>
-                                    <p className="text-lg">{form.contentOwnerContactInformation}</p>
-                                </div>
-                                <div className="flex gap-2">
-                                    <p className="text-lg">Metodo di creazione:</p>
-                                    <p className="text-lg">{form.creationMethod}</p>
+                                    <p className="text-lg">Numero caso:</p>
+                                    <p className="text-lg">{form.caseNumber}</p>
                                 </div>
                                 <div className="flex gap-2">
                                     <p className="text-lg">Data:</p>
                                     <p className="text-lg">{form.date}</p>
                                 </div>
+                            </div>
+                            <h2 className="text-2xl font-semibold py-4 text-amber-500">Informazioni oggetto acquisito</h2>
+                            <div className="flex flex-col gap-2">
+                                <div className="flex gap-2">
+                                    <p className="text-lg">Identificativo numerico dell'oggetto:</p>
+                                    <p className="text-lg">{form.itemNumber}</p>
+                                </div>
                                 <div className="flex gap-2">
                                     <p className="text-lg">Tipologia oggetto:</p>
                                     <p className="text-lg">{form.evidenceTypeManufacturer}</p>
                                 </div>
+                                <div className="flex gap-2">
+                                    <p className="text-lg">Numero modello:</p>
+                                    <p className="text-lg">???</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <p className="text-lg">Numero seriale:</p>
+                                    <p className="text-lg">???</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <p className="text-lg">Ragioni dell'acquisizione:</p>
+                                    <p className="text-lg">{form.reasonObtained}</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <p className="text-lg">Descrizione oggetto acquisito:</p>
+                                    <p className="text-lg">{form.contentDescription}</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <p className="text-lg">Metodo di creazione:</p>
+                                    <p className="text-lg">{form.creationMethod}</p>
+                                </div>
+                            </div>
+                            <h2 className="text-2xl font-semibold py-4 text-amber-500">Informazioni proprietario dell'oggetto</h2>
+                            <div className="flex flex-col gap-2">
+                                <div className="flex gap-2">
+                                    <p className="text-lg">Proprietario:</p>
+                                    <p className="text-lg">{form.owner}</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <p className="text-lg">Contatti proprietario:</p>
+                                    <p className="text-lg">{form.contentOwnerContactInformation}</p>
+                                </div>
+                            </div>
+                            <h2 className="text-2xl font-semibold py-4 text-amber-500">Informazioni proprietario dell'oggetto</h2>
+                            <div className="flex flex-col gap-2">
                                 <div className="flex gap-2">
                                     <p className="text-lg">Agente:</p>
                                     <p className="text-lg">{form.forensicAgent}</p>
@@ -149,19 +196,6 @@ function ShowContractInfo() {
                                     <p className="text-lg">Contatti agente:</p>
                                     <p className="text-lg">{form.forensicAgentContactInformation}</p>
                                 </div>
-                                <div className="flex gap-2">
-                                    <p className="text-lg">Numero oggetto:</p>
-                                    <p className="text-lg">{form.itemNumber}</p>
-                                </div>
-                                <div className="flex gap-2">
-                                    <p className="text-lg">Proprietario:</p>
-                                    <p className="text-lg">{form.owner}</p>
-                                </div>
-                                <div className="flex gap-2">
-                                    <p className="text-lg">Ragioni acquisizioni:</p>
-                                    <p className="text-lg">{form.reasonObtained}</p>
-                                </div>
-
                             </div>
                             <h2 className="text-2xl font-semibold py-4 text-amber-500">Catena di custodia</h2>
                             <div className="container max-w-5xl mx-auto">
@@ -186,11 +220,11 @@ function ShowContractInfo() {
                     <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500" onClick={showDownloadPopup}>Scarica</button>
                 </div>
                 <div className='basis-1/2 flex flex-row justify-end gap-2'>
-                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500">Rendi disponibile</button>
-                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500">Invia contratto</button>
+                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500" onClick={showFreeFormPopup}>Rendi disponibile</button>
+                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500" >Invia contratto</button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

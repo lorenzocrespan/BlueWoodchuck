@@ -1,6 +1,7 @@
 // Import - React 
 import { useState, useEffect } from "react";
 import { Canvg } from 'canvg';
+import { Page, Text, View, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
 
 function DownloadPopup(props) {
 
@@ -52,6 +53,33 @@ function DownloadPopup(props) {
         document.body.removeChild(anchor);
     };
 
+    // Create styles
+    const styles = StyleSheet.create({
+        page: {
+            flexDirection: 'row',
+            backgroundColor: '#E4E4E4'
+        },
+        section: {
+            margin: 10,
+            padding: 10,
+            flexGrow: 1
+        }
+    });
+
+    // Create Document Component
+    const MyDocument = () => (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                <View style={styles.section}>
+                    <Text>Section #1</Text>
+                </View>
+                <View style={styles.section}>
+                    <Text>Section #2</Text>
+                </View>
+            </Page>
+        </Document>
+    );
+
     return (
         <div>
             {downloadPopup ? (
@@ -69,7 +97,10 @@ function DownloadPopup(props) {
                                 Quale formato preferisci?
                             </p>
                             <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={downloadQRCode}>Scarica il QR Code</button>
-                            <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" >Scarica il documento in PDF</button>
+                            <PDFDownloadLink document={<MyDocument />} fileName="somename.pdf">
+                                {({ blob, url, loading, error }) => ( <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500">Scarica il documento in PDF</button> )
+                                }
+                            </PDFDownloadLink>
                             <div className="flex flex-col justify-end gap-3 mt-6 sm:flex-row">
                                 <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={closeHandler}>Chiudi</button>
                             </div>
