@@ -1,7 +1,8 @@
 // Import - React 
 import { useState, useEffect } from "react";
 import { Canvg } from 'canvg';
-import { Page, Text, View, Document, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PDFBlueWoodchuck from './PDFBlueWoodchuck';
 
 function DownloadPopup(props) {
 
@@ -53,32 +54,6 @@ function DownloadPopup(props) {
         document.body.removeChild(anchor);
     };
 
-    // Create styles
-    const styles = StyleSheet.create({
-        page: {
-            flexDirection: 'row',
-            backgroundColor: '#E4E4E4'
-        },
-        section: {
-            margin: 10,
-            padding: 10,
-            flexGrow: 1
-        }
-    });
-
-    // Create Document Component
-    const MyDocument = () => (
-        <Document>
-            <Page size="A4" style={styles.page}>
-                <View style={styles.section}>
-                    <Text>Section #1</Text>
-                </View>
-                <View style={styles.section}>
-                    <Text>Section #2</Text>
-                </View>
-            </Page>
-        </Document>
-    );
 
     return (
         <div>
@@ -97,7 +72,7 @@ function DownloadPopup(props) {
                                 Quale formato preferisci?
                             </p>
                             <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={downloadQRCode}>Scarica il QR Code</button>
-                            <PDFDownloadLink document={<MyDocument />} fileName="somename.pdf">
+                            <PDFDownloadLink document={<PDFBlueWoodchuck />} fileName="somename.pdf">
                                 {({ blob, url, loading, error }) => ( <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500">Scarica il documento in PDF</button> )
                                 }
                             </PDFDownloadLink>
@@ -105,6 +80,7 @@ function DownloadPopup(props) {
                                 <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={closeHandler}>Chiudi</button>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             ) : null}

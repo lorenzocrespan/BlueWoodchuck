@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom
 import CoreLogin from "../Components/corePage/coreLogin";
 import CoreHomepage from "../Components/corePage/coreHomepage";
 import NewForm from "../Components/corePage/coreFormGenerate";
+import SendRequest from "../Components/corePage/coreSendRequest";
 import ShowContractInfo from "../Components/corePage/coreFormShow";
 import ListContractPageView from "../Components/corePage/coreFormList";
 // Import - Default Components (Header and Footer)
@@ -35,6 +36,7 @@ export default function Routing() {
                     <Route path="/listForm" element={<ListContractPageView />} />
                     <Route path="/listForm/contractShow/:id" element={<ShowContractInfo />} />
                     <Route path="/newForm" element={<NewForm />} />
+                    <Route path="/SendRequest" element={<SendRequest />} />
                 </Route>
                 <Route path="*" element={<Core404 />} />
             </Routes>

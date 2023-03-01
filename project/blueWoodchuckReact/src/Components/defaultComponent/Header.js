@@ -86,7 +86,7 @@ function Header() {
     async function renderRequestPage() {
         activePageButtonSetup("Button004");
         if (isConsoleActive) console.log("Render della pagina di richieste");
-        navigator("/Request")
+        navigator("/SendRequest")
     }
 
     // Functions to render the page and set the style of the button.
