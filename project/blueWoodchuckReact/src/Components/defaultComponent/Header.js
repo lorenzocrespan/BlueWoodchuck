@@ -93,7 +93,7 @@ function Header() {
     async function renderAdvanceSearchPage() {
         activePageButtonSetup("Button005");
         if (isConsoleActive) console.log("Render della pagina di ricerca avanzata");
-        navigator("/advanceSearchPage")
+        navigator("/Search")
     }
 
     // Functions to render the page and set the style of the button.
