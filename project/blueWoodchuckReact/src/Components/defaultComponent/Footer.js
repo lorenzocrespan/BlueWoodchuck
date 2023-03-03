@@ -1,7 +1,9 @@
+// Import - React Router
 import { useNavigate } from "react-router-dom";
 
 function Footer() {
 
+    // Variable to navigate to another page.
     const navigator = useNavigate()
 
     async function login() {
@@ -13,33 +15,12 @@ function Footer() {
             <div className="container px-6 mx-auto space-y-6 divide-y divide-gray-400 md:space-y-12 divide-opacity-50">
                 <div className="grid grid-cols-9">
                     <div className="pb-6 col-span-full md:pb-0 md:col-span-7">
-                        <a className="flex justify-center space-x-3 md:justify-start" onClick={login}>
+                        <a className="flex justify-center cursor-pointer space-x-3 md:justify-start" onClick={login}>
                             <p className="text-3xl">
                                 <span className="font-bold text-blue-500">Blue</span>
                                 <span className="font-semibold text-amber-500">Woodchuck</span>
                             </p>
                         </a>
-                    </div>
-
-                    <div className="col-span-9 text-center md:text-left md:col-span-1">
-                        <p className="pb-2 font-bold underline decoration-2 decoration-amber-500 underline-offset-8">Categorie</p>
-                        <ul>
-                            <li>
-                                <a href="#" className="hover:text-amber-500">Homepage</a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-amber-500">Lista Form</a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-amber-500">Nuovo Form</a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-amber-500">Richieste</a>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:text-amber-500">Ricerca avanzata</a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
                 <div className="grid justify-center pt-6 lg:justify-between">
