@@ -1,16 +1,18 @@
-import ContractEntry from './sendRequestComponent/formSendEntry';
-import React, { useState, useEffect } from 'react';
-import { getFormAddress, getFormABI } from '../../abi/abi';
+// Import - React 
+import { useState, useEffect } from 'react';
+// Import - Web3 & ABI library
 import Web3 from 'web3';
+import { getFormAddress, getFormABI } from '../../abi/abi';
+// Import - Components
+import ContractEntry from './sendRequestComponent/formSendEntry';
 
 function SendRequest() {
 
-    const isConsoleActive = true;                                               // Enable/Disable console debug.
-    // NOTE:    The double print of log is due to "React.StrictMode" in index.js.
-    //          It is used to check the entire application for potential problems.
-
-    const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7575');       // Connect to blockchain.
-    const FormContract = new web3.eth.Contract(getFormABI(), getFormAddress()); // Connect to smart contract.
+    // Enable/Disable console debug.
+    const isConsoleActive = true;
+    // Connect to blockchain and smart contract.
+    const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7575');
+    const FormContract = new web3.eth.Contract(getFormABI(), getFormAddress());
 
     const [contractsInCharge, setContractsInCharge] = useState([]);
     const [account, setAccount] = useState();
@@ -41,44 +43,67 @@ function SendRequest() {
         // Get the list of contracts in charge.
         const contractsInCharge = await FormContract.methods.getUserFormAddresses(account).call();
         if (isConsoleActive) console.debug("Contracts in charge: ", contractsInCharge);
-
         // Set the list of contracts in charge.
         setContractsInCharge(contractsInCharge);
     }
 
+    const checkDataUser = async () => {
+        // Get input value
+        const sender = document.getElementById("sender").value;
+        const receiver = document.getElementById("receiver").value;
+
+    }
+
+    const sendContract = async () => {
+
+        // Get contractEntry checked
+        const contractsInChargeSelected = document.querySelectorAll('input[type=checkbox]:checked');
+        // filter input 
+        const contractsInChargeSelectedFiltered = Array.from(contractsInChargeSelected).map((data) => {
+            return { id: data.value }
+        });
+        if (checkDataUser) {
+            // Error
+        }
+        // Send request of exchange to the receiver
+        // const sendRequest = await FormContract.methods.sendRequest(contractsInChargeSelectedFiltered, sender, receiver).send({ from: account });
+        // if (isConsoleActive) console.debug("Send request: ", sendRequest);
+    }
+
+
     return (
         <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12 dark:bg-gray-100 dark:text-gray-100 ">
-            <div className="container flex flex-col justify-between h-auto mx-auto bg-blue-900 p-10 rounded-md">
+            <form>
+                <div className="container flex flex-col justify-between h-auto mx-auto bg-blue-900 p-10 rounded-md">
 
-                <div className="flex flex-col mx-auto space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
-                    <div class="p-6">
-                        <input type="text" id="success" class="bg-green-50 border border-green-500 text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500 text-md rounded-lg focus:ring-green-500 focus:border-green-500 w-full p-2.5 dark:bg-gray-700 dark:border-green-500" placeholder="0x547A000305A9628cef33cE993CE5a9254512c42e" />
-                        <p class="mt-2 text-sm text-green-600 dark:text-green-500"><span class="font-medium">Well done!</span> Some success message.</p>
-                    </div>
-                    <div class="self-center">
-                        <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4">
-                            <path d="M1 1L7 7L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
-                        </svg>
-                    </div>
-                    <div class="p-6">
-
-                        <input type="text" id="error" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-md rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" placeholder="Error input" />
-                        <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oh, snapp!</span> Some error message.</p>
+                    <div className="flex flex-col mx-auto space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
+                        <div class=" w-96 p-6">
+                            <input type="text" name="sender" id="sender" placeholder="0x547A000305A9628cef33cE993CE5a9254512c42" className="w-full py-2 text-sm rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
+                        </div>
+                        <div class="self-center">
+                            <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-4 h-4">
+                                <path d="M1 1L7 7L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+                            </svg>
+                        </div>
+                        <div class="w-96 p-6">
+                            <input type="text" name="receiver" id="receiver" placeholder="0x547A000305A9628cef33cE993CE5a9254512c42" className="w-full py-2 text-sm rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
+                        </div>
                     </div>
 
+                    <h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">Contratti:</h3>
+
+                    <ul class="flex flex-col w-full gap-6">
+                        {
+                            contractsInCharge.length === 0
+                                ? <p> Ciao </p>
+                                : listItems
+                        }
+                    </ul>
                 </div>
-
-                <h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">Contratti:</h3>
-
-                <ul class="flex flex-col w-full gap-6">
-                    {
-                        contractsInCharge.length === 0
-                            ? <p> Ciao </p>
-                            : listItems
-                    }
-                </ul>
-
-            </div>
+                <div className="container flex justify-end p-4">
+                    <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={sendContract}>Invia contratti</button>
+                </div>
+            </form>
         </div>
 
     );

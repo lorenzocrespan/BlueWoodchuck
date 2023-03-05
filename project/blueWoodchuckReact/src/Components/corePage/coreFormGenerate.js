@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react';                // React hooks.
-import Web3 from 'web3';                                    // Web3 library.
-import { getFormAddress, getFormABI } from '../../abi/abi';    // Smart contract ABI.
+// Import - React
+import { useEffect, useState } from 'react';
+// Import - Web3 and Smart Contract
+import Web3 from 'web3';                                    
+import { getFormAddress, getFormABI } from '../../abi/abi';
 
 function NewForm() {
-
-    const isConsoleActive = true;                                               // Enable/Disable console debug.
-    // NOTE:    The double print of log is due to "React.StrictMode" in index.js.
-    //          It is used to check the entire application for potential problems.
-
+    // Enable/Disable console debug.
+    const isConsoleActive = false;
+    // Connect to blockchain.
     const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7575');       // Connect to blockchain.
     const FormContract = new web3.eth.Contract(getFormABI(), getFormAddress()); // Connect to smart contract.
     const [account, setAccount] = useState();                                   // Account address.
-    const [contract, setContract] = useState();                                 // Contract data.
-
+    
     // useEffect hook to load the account address.
     // It is called only once when the component is mounted.
     useEffect(() => {
@@ -21,9 +20,6 @@ function NewForm() {
             const accounts = await web3.eth.requestAccounts();
             setAccount(accounts[0]);
             if (isConsoleActive) console.debug("account", accounts[0]);
-            // Get contract address.
-            const contractAddress = await FormContract.options.address;
-            setContract(contractAddress);
         }
         loadAccountAddress();
     }, []);
