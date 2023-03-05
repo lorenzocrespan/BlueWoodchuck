@@ -94,17 +94,37 @@ contract FormFactory {
         return userToFormAddresses[_userAddress];
     }
 
+    /**
+    *   @dev Function that makes msg.sender the new owner of a free form.
+    *
+    *   @param _formAddress address of the form
+    *
+    *   @param _reason reason for taking the form (necessary in the chain of custody)
+    *
+    */
     function getForm(address _formAddress, string memory _reason) public {
-        address previousUser = findForm(_formAddress).lastLog().receivedBy;
-        findForm(_formAddress).pushLog(Log(
+        require(findForm(_formAddress).isAvailable()); // the form must be available in order to be taken
+        findForm(_formAddress).pushLog(Log(     // push of a new log in the chain of custody
                 findForm(_formAddress).lastLog().trackingNumber + 1,
                 block.timestamp,
-                previousUser,
+                findForm(_formAddress).lastLog().receivedBy,
                 msg.sender,
                 _reason)
         );
-        userToFormAddresses[msg.sender].push(_formAddress);
-        removeAddressInAUserList(previousUser, _formAddress);
+        userToFormAddresses[msg.sender].push(_formAddress); // the form is now added to msg.sender owned forms
+        findForm(_formAddress).setTaken(); // and is marked as not available, no one could take it now
+    }
+
+    /**
+    *   @dev Function that makes a form available, if msg.sender is the current owner.
+    *
+    *   @param _formAddress address of the form to free
+    *
+    */
+    function releaseForm(address _formAddress) public {
+        require(findForm(_formAddress).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
+        findForm(_formAddress).setAvailable();              // form is now marked as available
+        removeAddressInAUserList(msg.sender, _formAddress); // and its address is removed from msg.sender list
     }
 
     /**
