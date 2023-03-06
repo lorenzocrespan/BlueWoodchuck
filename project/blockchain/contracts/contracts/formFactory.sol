@@ -128,22 +128,51 @@ contract FormFactory {
     }
 
     /**
-    *   @dev Function that search for a form with a certain case number.
+    *   @dev Function that makes a form available for a given user, if msg.sender is the current owner.
     *
-    *   @param _caseNumber number of the case
+    *   @param _formAddress address of the form to give to a user
     *
-    *   @return Form requested
+    *   @param _taker address of the future owner of the form
     */
-    function searchCaseNumber(uint _caseNumber) public returns (Form) {
-        require(listFormAddress.length > 0);
-        for (uint i = 0; i < listFormAddress.length; i++) {
-            if (readFormAddress(listFormAddress[i]).caseNumber == _caseNumber) {
-                emit formFound(listFormAddress[i], readFormAddress(listFormAddress[i]));
-                return addressToForm[listFormAddress[i]];
-            }
-        }
-        revert("Non existent");
+    function giveForm(address _formAddress, address _taker) public {
+        require(findForm(_formAddress).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
+        findForm(_formAddress).setGiverTaker(_taker);
+        // mandare un evento??
     }
+
+
+    /**
+    *   @dev Function that accept a form that has been sent to them.
+    *
+    *   @param _formAddress address of the form to accept
+    *
+    *   @param _reason reason to accept the form
+    */
+    function acceptForm(address _formAddress, string memory _reason) public {
+        require(findForm(_formAddress).getTaker() == msg.sender); // run only if current owner is msg.sender
+        userToFormAddresses[msg.sender].push(_formAddress);  // the form is now added to msg.sender owned forms
+        findForm(_formAddress).pushLog(Log(     // push of a new log in the chain of custody
+                findForm(_formAddress).lastLog().trackingNumber + 1,
+                block.timestamp,
+                findForm(_formAddress).lastLog().receivedBy,
+                msg.sender,
+                _reason)
+        );
+        removeAddressInAUserList(findForm(_formAddress).getGiver(), _formAddress);
+        findForm(_formAddress).resetGiverTaker();
+    }
+
+
+    /**
+    *   @dev Function that rejects a form that has been sent to them.
+    *
+    *   @param _formAddress form to reject
+    */
+    function rejectForm(address _formAddress) public {
+        require(findForm(_formAddress).getTaker() == msg.sender);
+        findForm(_formAddress).resetGiverTaker();
+    }
+
 
     /**
     *   @dev Function that removes a certain address of a certain user.

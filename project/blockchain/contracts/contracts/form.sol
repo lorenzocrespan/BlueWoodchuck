@@ -40,6 +40,8 @@ pragma solidity ^0.8.17;
     }
 
 contract Form {
+    address taker;
+    address giver;
     FormData private data;
     bool private available;
 
@@ -93,5 +95,25 @@ contract Form {
 
     function setTaken() public {
         available = true;
+    }
+
+    function setGiverTaker(address _taker) public {
+        require(msg.sender == lastLog().receivedBy);
+        giver = msg.sender;
+        taker = _taker;
+    }
+
+    function resetGiverTaker() public{
+        require(giver == msg.sender || taker == msg.sender);
+        giver = address(0);
+        taker = address(0);
+    }
+
+    function getTaker() view public returns(address){
+        return taker;
+    }
+
+    function getGiver() view public returns(address){
+        return giver;
     }
 }
