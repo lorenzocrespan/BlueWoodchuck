@@ -194,4 +194,8 @@ contract FormFactory {
             }
         }
     }
+
+    function isAFormAvailable(address _formAddress) view public returns(bool) {
+        return findForm(_formAddress).isAvailable();
+    }
 }

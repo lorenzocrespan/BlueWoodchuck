@@ -22,7 +22,7 @@ pragma solidity ^0.8.17;
     struct FormData {
         string caseName;                        // Name of the case
         uint caseNumber;                        // Number of the case
-        string reasonObtained;                  // Reason for obtaining the evidence (?)
+        string reasonObtained;                  // Reason for obtaining the evidence
         uint itemNumber;                        // Number of the item
         string evidenceTypeManufacturer;        // Type of the evidence and manufacturer
         string owner;                           // Name of the owner of the evidence
@@ -40,8 +40,8 @@ pragma solidity ^0.8.17;
     }
 
 contract Form {
-    address taker;
-    address giver;
+    address private taker;
+    address private giver;
     FormData private data;
     bool private available;
 
@@ -72,7 +72,6 @@ contract Form {
     *
     *   @return FormData Struct containing the information of the form
     */
-
     function readForm() public view returns (FormData memory) {
         return data;
     }
@@ -90,6 +89,7 @@ contract Form {
     }
 
     function setAvailable() public {
+        require(lastLog().receivedBy == msg.sender);
         available = true;
     }
 
