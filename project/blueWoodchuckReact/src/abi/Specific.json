@@ -1,0 +1,290 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "_numbers",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "string[]",
+          "name": "_strings",
+          "type": "string[]"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "_hashValue",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
+      "name": "readForm",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "caseName",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "caseNumber",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "reasonObtained",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "itemNumber",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "evidenceTypeManufacturer",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "owner",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "contentDescription",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "contentOwnerContactInformation",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "forensicAgent",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "creationMethod",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "hashValue",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "date",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "forensicAgentContactInformation",
+              "type": "uint256"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "uint256",
+                  "name": "trackingNumber",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "timestamp",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "releasedBy",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "receivedBy",
+                  "type": "address"
+                },
+                {
+                  "internalType": "string",
+                  "name": "reasonForChange",
+                  "type": "string"
+                }
+              ],
+              "internalType": "struct Log[]",
+              "name": "chainOfCustody",
+              "type": "tuple[]"
+            }
+          ],
+          "internalType": "struct FormData",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "trackingNumber",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "releasedBy",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receivedBy",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "reasonForChange",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Log",
+          "name": "_log",
+          "type": "tuple"
+        }
+      ],
+      "name": "pushLog",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "lastLog",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "trackingNumber",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "releasedBy",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "receivedBy",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "reasonForChange",
+              "type": "string"
+            }
+          ],
+          "internalType": "struct Log",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "isAvailable",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "setAvailable",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "setTaken",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_taker",
+          "type": "address"
+        }
+      ],
+      "name": "setGiverTaker",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "resetGiverTaker",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getTaker",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getGiver",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]
+}

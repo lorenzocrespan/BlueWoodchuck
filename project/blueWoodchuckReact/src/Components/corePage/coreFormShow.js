@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';                    // React hooks.
 import Web3 from 'web3';                                        // Web3 library.
-import { getFormAddress, getFormABI } from '../../abi/abi';    // Smart contract ABI.
+import { getFormAddress, getFormABI, getSpecificABI } from '../../abi/abi';    // Smart contract ABI.
 import { useParams } from 'react-router-dom';
 // Import - Components
 import DownloadPopup from "./formShowComponent/DownloadPopup";
@@ -10,12 +10,15 @@ import QRCodeCanvas from "qrcode.react";
 
 function ShowContractInfo() {
 
+    let { id } = useParams();
+
     const isConsoleActive = true;                                               // Enable/Disable console debug.
     // NOTE:    The double print of log is due to "React.StrictMode" in index.js.
     //          It is used to check the entire application for potential problems.
 
     const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7575');       // Connect to blockchain.
     const FormContract = new web3.eth.Contract(getFormABI(), getFormAddress()); // Connect to smart contract.
+    const FormSpecific = new web3.eth.Contract(getSpecificABI(), id); // Connect to smart contract.
 
     const [account, setAccount] = useState();                                   // Account address.
     const [contract, setContract] = useState();                                 // Contract data.
@@ -25,6 +28,8 @@ function ShowContractInfo() {
 
     const [downloadPopup, setDownloadPopup] = useState(false);    // Variable to show the popup modal.
     const [freeFormPopup, setFreeFormPopup] = useState(false);    // Variable to show the popup modal.
+
+    const [contractAvailable, setContractAvailable] = useState(false);
 
     // useEffect hook to load the account address.
     // It is called only once when the component is mounted.
@@ -46,7 +51,6 @@ function ShowContractInfo() {
             console.log(networkId);
             setNetworkId(networkId);
         }
-
         loadAccountAddress();
         readForm();
 
@@ -55,7 +59,8 @@ function ShowContractInfo() {
     useEffect(() => {
         console.log("Raw form", form.length);
         if (form.length == 0) return;
-        console.log("coreFormShow", form.chainOfCustody[0]);
+        // Set the form specific contract.
+        checkAvailable();
     }, [form]);
 
     // Button to read a form from the blockchain.
@@ -68,9 +73,6 @@ function ShowContractInfo() {
         setForm(await FormContract.methods.readFormAddress(id).call({ from: account }));
         console.debug("form", form);
     }
-
-
-    let { id } = useParams();
 
 
     // Function to show and close the download popup modal.
@@ -91,6 +93,20 @@ function ShowContractInfo() {
         setFreeFormPopup(false);
     }
 
+    const checkAvailable = async () => {
+        console.debug("ID", id);
+        console.debug("FormSpecific", FormSpecific);
+
+        await FormContract.methods.isAFormAvailable(id).call().then((result) => {
+            if(result) setContractAvailable(true);
+            else setContractAvailable(false);
+        });
+        // wait for the form specific contract to be set.
+        // contractAvailable = await FormSpecific.methods.isAvailable().call().then((result) => {
+        //     console.debug("result", result);
+        // });
+    }
+
     return (
         <div className="min-h-screen flex flex-col gap-3 sm:p-4 dark:bg-gray-100 dark:text-gray-100 ">
             <DownloadPopup
@@ -100,6 +116,9 @@ function ShowContractInfo() {
             <FreeFormPopup
                 onClose={popupCloseFreeFormHandler}
                 errorPopup={freeFormPopup}
+                idForm = {id}
+                FormContract = {FormContract}
+                account = {account}
             />
             <div className="container flex flex-col justify-between h-auto mx-auto bg-blue-900 p-10 gap-5 rounded-md">
                 <div className="flex flex-row space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
@@ -107,13 +126,15 @@ function ShowContractInfo() {
                         <p>Scheda form</p>
                     </div>
                     <div className='basis-1/2 flex flex-row justify-end gap-2'>
-                        <span className="px-3 py-1 font-semibold rounded-xl dark:bg-amber-500 dark:text-gray-900">
-                            <span>Disponibile</span>
-                        </span>
-                        o
-                        <span className="px-3 py-1 font-semibold rounded-xl dark:bg-amber-500 dark:text-gray-900">
-                            <span>Non disponibile</span>
-                        </span>
+                        {contractAvailable ?
+                            <span className="px-3 py-1 font-semibold rounded-xl dark:bg-amber-500 dark:text-gray-900">
+                                <span>Disponibile</span>
+                            </span>
+                            :
+                            <span className="px-3 py-1 font-semibold rounded-xl dark:bg-amber-500 dark:text-gray-900">
+                                <span>Non disponibile</span>
+                            </span>
+                        }
                     </div>
                 </div>
                 <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">

@@ -12,6 +12,16 @@ function getDataForm() {
 }
 
 /**
+ * Get the data of getSpecificABI
+ * 
+ */
+function getDataSpecificForm() {
+  // Get the file
+  // const path = require('path');
+  return require("./Specific.json");
+}
+
+/**
  * Get the address of the deployed contract
  * 
  * @returns {string} The address of the deployed contract
@@ -28,5 +38,10 @@ export function getFormAddress() {
  */
 export function getFormABI() {
   // Read and parse the file
-  return getDataForm().abi;;
+  return getDataForm().abi;
+}
+
+export function getSpecificABI() {
+  // Read and parse the file
+  return getDataSpecificForm().abi;
 }

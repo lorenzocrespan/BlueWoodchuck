@@ -14,6 +14,12 @@ function FreeFormPopup(props) {
         setErrorPopup(props.errorPopup);
     }, [props.errorPopup]);
 
+    const setFormAvailable = async () => {
+        console.debug(props);
+        await props.FormContract.methods.releaseForm(props.idForm).send({ from: props.account });
+        closeHandler();
+    }
+
     return (
         <div>
             {errorPopup ? (
@@ -31,7 +37,7 @@ function FreeFormPopup(props) {
                                 Attenzione, renderendo disponibile il contratto, chiunque potrà accedervi ed ottenerne la proprietà. Sei sicuro di voler procedere?
                             </p>
                             <div className="flex flex-col justify-end gap-3 mt-6 sm:flex-row">
-                                <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={closeHandler}>Accetta</button>
+                                <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={setFormAvailable}>Accetta</button>
                                 <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={closeHandler}>Annulla</button>
                             </div>
                         </div>
