@@ -7,6 +7,7 @@ import DownloadPopup from "./formShowComponent/DownloadPopup";
 import FreeFormPopup from './formShowComponent/FreeFormPopup';
 import QRCodeCanvas from "qrcode.react";
 
+import { useNavigate } from "react-router-dom";
 
 function ShowContractInfo() {
 
@@ -30,6 +31,10 @@ function ShowContractInfo() {
     const [freeFormPopup, setFreeFormPopup] = useState(false);    // Variable to show the popup modal.
 
     const [contractAvailable, setContractAvailable] = useState(false);
+    const [fun, setFun] = useState(0);
+
+    // Variable to navigate to another page.
+    const navigator = useNavigate();
 
     // useEffect hook to load the account address.
     // It is called only once when the component is mounted.
@@ -53,7 +58,7 @@ function ShowContractInfo() {
         }
         loadAccountAddress();
         readForm();
-
+        console.debug(form.chainOfCustody);
     }, []);
 
     useEffect(() => {
@@ -86,6 +91,8 @@ function ShowContractInfo() {
 
     // Function to show and close the download popup modal.
     const showFreeFormPopup = () => {
+        contractAvailable ? setFun(1) : setFun(0);
+        console.log(fun);
         setFreeFormPopup(true);
     }
 
@@ -98,13 +105,18 @@ function ShowContractInfo() {
         console.debug("FormSpecific", FormSpecific);
 
         await FormContract.methods.isAFormAvailable(id).call().then((result) => {
-            if(result) setContractAvailable(true);
+            if (result) setContractAvailable(true);
             else setContractAvailable(false);
         });
         // wait for the form specific contract to be set.
         // contractAvailable = await FormSpecific.methods.isAvailable().call().then((result) => {
         //     console.debug("result", result);
         // });
+    }
+
+    async function renderExchangePage() {
+       
+        navigator("/SendRequest")
     }
 
     return (
@@ -116,9 +128,10 @@ function ShowContractInfo() {
             <FreeFormPopup
                 onClose={popupCloseFreeFormHandler}
                 errorPopup={freeFormPopup}
-                idForm = {id}
-                FormContract = {FormContract}
-                account = {account}
+                idForm={id}
+                FormContract={FormContract}
+                account={account}
+                fun = {fun}
             />
             <div className="container flex flex-col justify-between h-auto mx-auto bg-blue-900 p-10 gap-5 rounded-md">
                 <div className="flex flex-row space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
@@ -238,14 +251,20 @@ function ShowContractInfo() {
             </div>
             <div className="container justify-between h-auto mx-auto flex flex-row space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
                 <div className='basis-1/2'>
-                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500" onClick={showDownloadPopup}>Scarica</button>
+                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={showDownloadPopup}>Scarica</button>
                 </div>
-                <div className='basis-1/2 flex flex-row justify-end gap-2'>
-                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500" onClick={showFreeFormPopup}>Rendi disponibile</button>
-                    <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600  ease-out duration-500" >Invia contratto</button>
-                </div>
+                {!contractAvailable ?
+                    <div className='basis-1/2 flex flex-row justify-end gap-2'>
+                        <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={showFreeFormPopup}>Rendi disponibile</button>
+                        <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={renderExchangePage}>Invia contratto</button>
+                    </div>
+                    :
+                    <div className='basis-1/2 flex flex-row justify-end gap-2'>
+                        <button className="py-3 px-14 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={showFreeFormPopup}>Acquisisci contratto</button>
+                    </div>
+                }
             </div>
-        </div >
+        </div>
     );
 }
 

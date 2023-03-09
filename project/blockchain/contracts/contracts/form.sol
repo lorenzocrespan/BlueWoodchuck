@@ -89,12 +89,12 @@ contract Form {
     }
 
     function setAvailable() public {
-        require(lastLog().receivedBy == msg.sender);
+        // require(lastLog().receivedBy == msg.sender);
         available = true;
     }
 
     function setTaken() public {
-        require(lastLog().receivedBy == msg.sender);
+        // require(lastLog().receivedBy == msg.sender);
         available = false;
     }
 

@@ -152,7 +152,7 @@ contract FormFactory {
     function releaseForm(address _formAddress) public {
         require(findForm(_formAddress).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
         findForm(_formAddress).setAvailable(); // form is now marked as available
-        // removeAddressInAUserList(msg.sender, _formAddress); // and its address is removed from msg.sender list
+        removeAddressInAUserList(msg.sender, _formAddress); // and its address is removed from msg.sender list
     }
 
     /**
