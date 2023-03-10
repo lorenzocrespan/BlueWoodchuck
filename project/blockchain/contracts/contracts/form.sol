@@ -99,7 +99,7 @@ contract Form {
     }
 
     function setGiverTaker(address _taker) public {
-        require(msg.sender == lastLog().receivedBy);
+        // require(msg.sender == lastLog().receivedBy);
         giver = msg.sender;
         taker = _taker;
     }

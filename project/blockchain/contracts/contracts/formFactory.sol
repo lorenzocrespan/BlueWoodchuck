@@ -81,9 +81,7 @@ contract FormFactory {
      *
      *   @return FormData Struct that contains the data of the form required
      */
-    function readFormAddress(
-        address _caseAddress
-    ) public view returns (FormData memory) {
+    function readFormAddress(address _caseAddress) public view returns (FormData memory) {
         return readForm(findForm(_caseAddress));
     }
 
@@ -114,9 +112,7 @@ contract FormFactory {
      *
      *   @return address array with addresses of forms in charge of an user
      */
-    function getUserFormAddresses(
-        address _userAddress
-    ) public view returns (address[] memory) {
+    function getUserFormAddresses(address _userAddress) public view returns (address[] memory) {
         return userToFormAddresses[_userAddress];
     }
 
