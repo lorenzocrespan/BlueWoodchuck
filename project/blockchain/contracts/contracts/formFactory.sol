@@ -49,6 +49,8 @@ contract FormFactory {
             entityAddress,
             readFormAddress(entityAddress)
         );
+        // Push entityAddress to the list of form addresses.
+        listFormAddress.push(entityAddress);
         return entityAddress;
     }
 
@@ -81,7 +83,9 @@ contract FormFactory {
      *
      *   @return FormData Struct that contains the data of the form required
      */
-    function readFormAddress(address _caseAddress) public view returns (FormData memory) {
+    function readFormAddress(
+        address _caseAddress
+    ) public view returns (FormData memory) {
         return readForm(findForm(_caseAddress));
     }
 
@@ -112,7 +116,9 @@ contract FormFactory {
      *
      *   @return address array with addresses of forms in charge of an user
      */
-    function getUserFormAddresses(address _userAddress) public view returns (address[] memory) {
+    function getUserFormAddresses(
+        address _userAddress
+    ) public view returns (address[] memory) {
         return userToFormAddresses[_userAddress];
     }
 
@@ -160,7 +166,7 @@ contract FormFactory {
      */
     function giveForm(address _formAddress, address _taker) public {
         require(findForm(_formAddress).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
-        findForm(_formAddress).setGiverTaker(_taker);
+        findForm(_formAddress).setGiverTaker(msg.sender, _taker);
         // mandare un evento??
     }
 
@@ -196,7 +202,10 @@ contract FormFactory {
      *   @param _formAddress form to reject
      */
     function rejectForm(address _formAddress) public {
-        require(findForm(_formAddress).getTaker() == msg.sender);
+        require(
+            findForm(_formAddress).getTaker() == msg.sender ||
+                findForm(_formAddress).getGiver() == msg.sender
+        );
         findForm(_formAddress).resetGiverTaker();
     }
 
@@ -229,5 +238,30 @@ contract FormFactory {
 
     function isAFormAvailable(address _formAddress) public view returns (bool) {
         return findForm(_formAddress).isAvailable();
+    }
+
+    function findContractTaker() public view returns (address[] memory) {
+        // Count the number of forms that match the sender as taker
+        uint count = countFormsForTaker(msg.sender);
+        // Array to store all the forms addresses that match the sender as taker
+        address[] memory listFormAddressTaker = new address[](count);
+        uint j;
+        // Search contract with sender registered as taker
+        for (uint i = 0; i < listFormAddress.length; i++) {
+            if (findForm(listFormAddress[i]).getTaker() == msg.sender) {
+                listFormAddressTaker[j] = listFormAddress[i];
+                j++;
+            }
+        }
+        return listFormAddressTaker;
+    }
+
+    function countFormsForTaker(address _taker) public view returns (uint) {
+        // Count the number of forms that match the sender as taker
+        uint count = 0;
+        for (uint i = 0; i < listFormAddress.length; i++) {
+            if (findForm(listFormAddress[i]).getTaker() == _taker) count++;
+        }
+        return count;
     }
 }

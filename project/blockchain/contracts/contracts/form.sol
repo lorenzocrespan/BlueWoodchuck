@@ -65,6 +65,8 @@ contract Form {
         data.forensicAgentContactInformation = _numbers[4];
 
         data.hashValue = _hashValue;
+        taker = address(0);
+        giver = address(0);
     }
 
     /**
@@ -98,14 +100,15 @@ contract Form {
         available = false;
     }
 
-    function setGiverTaker(address _taker) public {
+    function setGiverTaker(address _giver, address _taker) public {
         // require(msg.sender == lastLog().receivedBy);
-        giver = msg.sender;
+        giver = _giver;
         taker = _taker;
     }
 
-    function resetGiverTaker() public{
-        require(giver == msg.sender || taker == msg.sender);
+    function resetGiverTaker() public {
+        // require(giver == msg.sender || taker == msg.sender);
+        // reset giver and taker
         giver = address(0);
         taker = address(0);
     }

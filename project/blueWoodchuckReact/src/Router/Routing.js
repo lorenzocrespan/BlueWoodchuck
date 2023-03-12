@@ -8,6 +8,7 @@ import SendRequest from "../Components/corePage/coreSendRequest";
 import CoreSearch from "../Components/corePage/coreSearch";
 import ShowContractInfo from "../Components/corePage/coreFormShow";
 import ListContractPageView from "../Components/corePage/coreFormList";
+import CoreRequest from "../Components/corePage/coreRequest";
 // Import - Default Components (Header and Footer)
 import Header from "../Components/defaultComponent/Header";
 import Footer from "../Components/defaultComponent/Footer";
@@ -38,6 +39,7 @@ export default function Routing() {
                     <Route path="/listForm/contractShow/:id" element={<ShowContractInfo />} />
                     <Route path="/newForm" element={<NewForm />} />
                     <Route path="/SendRequest" element={<SendRequest />} />
+                    <Route path="/Requests" element={<CoreRequest />} />
                     <Route path="/Search" element={<CoreSearch />} />
                 </Route>
                 <Route path="*" element={<Core404 />} />
