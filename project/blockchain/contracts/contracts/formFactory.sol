@@ -264,4 +264,29 @@ contract FormFactory {
         }
         return count;
     }
+
+    function findContractByDate(uint _from) public view returns (address[] memory) {
+        // Count the number of forms that match the sender as taker
+        uint count = countFormsBasedOnDate(_from);
+        // Array to store all the forms addresses that match the sender as taker
+        address[] memory listFormAddressReturned = new address[](count);
+        uint j;
+        // Search contract with sender registered as taker
+        for (uint i = 0; i < listFormAddress.length; i++) {
+            if (findForm(listFormAddress[i]).readForm().date >= _from) {
+                listFormAddressReturned[j] = listFormAddress[i];
+                j++;
+            }
+        }
+        return listFormAddressReturned;
+    }
+
+    function countFormsBasedOnDate(uint _from) public view returns (uint) {
+        uint count = 0;
+        for (uint i = 0; i < listFormAddress.length; i++) {
+            if (findForm(listFormAddress[i]).readForm().date >= _from)
+                count++;
+        }
+        return count;
+    }
 }

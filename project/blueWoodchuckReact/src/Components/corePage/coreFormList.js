@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';                    // React hooks.
 import Web3 from 'web3';                                        // Web3 library.
 import { getFormAddress, getFormABI } from '../../abi/abi';    // Smart contract ABI.
 import ListContract from './commonComponent/formListSection';
-import RecentActivity from './homeComponent/activitySection';
-import UserInfo from './homeComponent/infoUserSection';
 
 function ListContractPageView() {
 
@@ -47,53 +45,6 @@ function ListContractPageView() {
     window.ethereum.on('accountsChanged', () => {
         setIsChange(!isChange);
     });
-
-    let addressForm;
-
-    // Button to add a new form to the blockchain.
-    const addForm = async () => {
-        // Add form to blockchain.
-        if (isConsoleActive) console.debug("Add new form request from account: ", account);
-        // call(), send() and estimateGas() are the three methods to interact with the blockchain.
-        // call() is used to read data from the blockchain.
-        // send() is used to write data to the blockchain.
-        // estimateGas() is used to estimate the gas needed to write data to the blockchain.
-        const result = await FormContract.methods.createForm(
-            Array.from([10, 2, 3388796778, 1675156832, 3244098990]),
-            Array.from(["Spam delivery", "Found in office", "HDD", "John Evil Smith",
-                "The HDD contains a database of email addresses and a message from a Nigerian prince",
-                "Matilde Savior Jackson", "Cloning"]),
-            web3.utils.asciiToHex("idk")
-        ).send({ from: account });
-        if (isConsoleActive) console.debug("Result of createForm: ", result);
-    }
-
-
-    // Button to read a form from the blockchain.
-    const readForm = async () => {
-        // Read form from blockchain.
-        console.debug("readForm");
-        const accounts = await web3.eth.requestAccounts();
-        const account = accounts[0];
-        console.debug("account", account);
-        const result = await FormContract.methods.readFormAddress(addressForm).call({ from: account });
-        console.debug("result", result);
-    }
-
-    // Subscribe to events.
-    FormContract.events.newForm()
-        .on("connected", (subscriptionId) => {
-            // https://web3js.readthedocs.io/en/v1.2.11/web3-eth-subscribe.html#
-            // console.log(subscriptionId);
-        })
-        .on('data', (event) => {
-            console.debug("FormCreated", event.returnValues);
-            addressForm = event.returnValues[1];
-        })
-        .on('changed', (event) => {
-            // remove event from local database
-        })
-        .on('error', console.error);
 
     return (
         <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12 dark:bg-gray-100 dark:text-gray-100 ">
