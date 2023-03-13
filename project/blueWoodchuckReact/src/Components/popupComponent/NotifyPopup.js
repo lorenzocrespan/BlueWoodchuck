@@ -36,7 +36,7 @@ function NotifyPopup(props) {
                             <span className="font-bold text-amber-500">{props.titlePopup}</span>
                             <span>{props.textPopup}</span>
                         </div>
-                        <button className="px-4 flex items-center text-xs uppercase tracking-wide text-gray-400 border-amber-500 hover:text-amber-500" onClick={closeHandler}>Nascondi</button>
+                        <button className="px-4 flex items-center text-xs uppercase tracking-wide text-gray-200 border-amber-500 hover:text-amber-500" onClick={closeHandler}>Nascondi</button>
                     </div>
                 </div>
             ) : null}

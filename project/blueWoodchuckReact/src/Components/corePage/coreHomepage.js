@@ -58,8 +58,9 @@ function CoreHomepage() {
                 networkId={networkId}
             />
             <ListContract
-                FormContract={FormFactoryContract}
+                FormFactoryContract={FormFactoryContract}
                 account={account}
+                title="Lista form in carico"
             />
             <RecentActivity />
         </div>

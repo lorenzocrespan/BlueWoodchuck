@@ -121,7 +121,7 @@ function SendRequest() {
                         </div>
                     </div>
 
-                    <h3 className="mb-5 text-lg font-medium text-gray-900  text-white">Contratti:</h3>
+                    <h3 className="mb-5 text-lg font-medium text-white">Contratti:</h3>
 
                     <ul className="flex flex-col w-full gap-6">
                         {
