@@ -49,7 +49,7 @@ function RecentActivity() {
     };
 
     return (
-        <div className="container mx-auto sm:p-4 dark:text-gray-100 bg-blue-900 p-10 rounded-md">
+        <div className="container mx-auto sm:p-4  text-gray-100 bg-blue-900 p-10 rounded-md">
             <h2 className="mb-4 text-2xl font-semibold leading-tight">Attività recenti</h2>
 
             <div className="overflow-x-auto">

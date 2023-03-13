@@ -1,7 +1,7 @@
 // Import - React
 import { useEffect, useState } from 'react';
 // Import - Web3 and Smart Contract
-import Web3 from 'web3';                                    
+import Web3 from 'web3';
 import { getFormAddress, getFormABI } from '../../abi/abi';
 
 function NewForm() {
@@ -11,7 +11,7 @@ function NewForm() {
     const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7575');       // Connect to blockchain.
     const FormContract = new web3.eth.Contract(getFormABI(), getFormAddress()); // Connect to smart contract.
     const [account, setAccount] = useState();                                   // Account address.
-    
+
     // useEffect hook to load the account address.
     // It is called only once when the component is mounted.
     useEffect(() => {
@@ -68,9 +68,9 @@ function NewForm() {
     return (
         // Add the Header component.
         <div className='bg-gray-100'>
-            <section className="p-6 dark:text-gray-50">
+            <section className="p-6  text-gray-50">
                 <form className="container flex flex-col mx-auto space-y-6 rounded-md ng-untouched ng-pristine ng-valid">
-                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm dark:bg-blue-900">
+                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm  bg-blue-900">
                         <div className="space-y-2 space-x-8 col-span-full lg:col-span-1">
                             <p className="font-bold underline decoration-2 decoration-amber-500 underline-offset-4">Informazioni caso</p>
                             <p className="text-sm">Inserire le informazioni inerenti al caso di riferimento. Le informazioni richieste sono obbligatorie.</p>
@@ -86,7 +86,7 @@ function NewForm() {
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm dark:bg-blue-900">
+                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm  bg-blue-900">
                         <div className="space-y-2 space-x-8 col-span-full lg:col-span-1">
                             <p className="font-bold underline decoration-2 decoration-amber-500 underline-offset-4">Informazioni oggetto acquisito</p>
                             <p className="text-sm">Inserire le informazioni inerenti all'oggetto acquisito. Le informazioni richieste sono obbligatorie.</p>
@@ -118,7 +118,7 @@ function NewForm() {
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm dark:bg-blue-900">
+                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm  bg-blue-900">
                         <div className="space-y-2 space-x-8 col-span-full lg:col-span-1">
                             <p className="font-bold underline decoration-2 decoration-amber-500 underline-offset-4">Informazioni proprietario dell'oggetto</p>
                             <p className="text-sm">Inserire le informazioni inerenti all'oggetto acquisito. Le informazioni richieste sono obbligatorie.</p>
@@ -134,7 +134,7 @@ function NewForm() {
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm dark:bg-blue-900">
+                    <fieldset className="grid grid-cols-4 gap-2 p-10 rounded-md shadow-sm  bg-blue-900">
                         <div className="space-y-2 space-x-8 col-span-full lg:col-span-1">
                             <p className="font-bold underline decoration-2 decoration-amber-500 underline-offset-4">Informazioni perito</p>
                             <p className="text-sm">Inserire le informazioni inerenti all'oggetto acquisito. Le informazioni richieste sono obbligatorie.</p>

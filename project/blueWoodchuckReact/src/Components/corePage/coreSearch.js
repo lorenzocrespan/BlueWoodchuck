@@ -81,7 +81,7 @@ function CoreSearch() {
     );
 
     return (
-        <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12 dark:bg-gray-100 dark:text-gray-100 ">
+        <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12  bg-gray-100  text-gray-100 ">
             <div className="container flex flex-col justify-between h-auto mx-auto bg-blue-900 p-10 rounded-md">
 
                 <div className="flex items-center p-4">

@@ -30,7 +30,7 @@ function UserInfo(props) {
     return (
         <div className="container flex justify-between h-auto mx-auto bg-blue-900 p-10 rounded-md">
             <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
-                <img src={require("../../../Asset/Images/blueWoodchuckLogo.jpg")} alt="" className="self-center flex-shrink-0 w-24 h-24 rounded-full md:justify-self-start dark:bg-gray-500 dark:border-amber-600 border-2" />
+                <img src={require("../../../Asset/Images/blueWoodchuckLogo.jpg")} alt="" className="self-center flex-shrink-0 w-24 h-24 rounded-full md:justify-self-start  bg-gray-500  border-amber-600 border-2" />
                 <table className="min-w-full">
                     <tbody className="text-lg font-semibold text-center md:text-left">
                         <tr>

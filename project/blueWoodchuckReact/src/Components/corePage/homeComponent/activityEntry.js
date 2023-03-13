@@ -14,13 +14,13 @@ function TitleEntry() {
 function BodyEntry(props) {
 
     return (
-        <tr className="border-b border-opacity-20 dark:border-gray-700 ">
+        <tr className="border-b border-opacity-20  border-gray-700 ">
             <td className="p-3">INV-0001</td>
             <td className="p-3">John Doe</td>
             <td className="p-3">2020-01-01</td>
             <td className="p-3 text-right">$ 1,000.00</td>
             <td className="p-3 text-right">
-                <span className="px-3 py-1 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">
+                <span className="px-3 py-1 font-semibold rounded-md  bg-violet-400  text-gray-900">
                     <span>Pending</span>
                 </span>
             </td>

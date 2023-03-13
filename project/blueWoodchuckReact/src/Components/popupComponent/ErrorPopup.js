@@ -27,7 +27,7 @@ function ErrorPopup(props) {
                             <h2 className="flex items-center gap-2 text-xl font-extrabold leading-tight tracking-wide">
                                 {props.title}
                             </h2>
-                            <p className=" font-medium dark:text-blue-800">
+                            <p className=" font-medium  text-blue-800">
                                 {props.body}
                             </p>
                             <div className="flex flex-col justify-end gap-3 mt-6 sm:flex-row">

@@ -87,7 +87,7 @@ function SendRequest() {
 
         // Wait popup event to send the contract.
         e.preventDefault();
-        
+
     }
 
     const popupCloseFreeFormHandler = () => {
@@ -95,12 +95,12 @@ function SendRequest() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12 dark:bg-gray-100 dark:text-gray-100 ">
+        <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12  bg-gray-100  text-gray-100 ">
             <form id='myform'>
                 <FreeFormPopup
                     onClose={popupCloseFreeFormHandler}
                     errorPopup={freeFormPopup}
-                    FormContract = {FormContract}
+                    FormContract={FormContract}
                     idForm={contractsInChargeSelectedFiltered}
                     account={account}
                     taker={taker}
@@ -121,7 +121,7 @@ function SendRequest() {
                         </div>
                     </div>
 
-                    <h3 className="mb-5 text-lg font-medium text-gray-900 dark:text-white">Contratti:</h3>
+                    <h3 className="mb-5 text-lg font-medium text-gray-900  text-white">Contratti:</h3>
 
                     <ul className="flex flex-col w-full gap-6">
                         {

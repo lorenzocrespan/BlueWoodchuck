@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Core404() {
 
@@ -10,10 +10,10 @@ function Core404() {
     }
 
     return (
-        <section className="flex items-center h-screen p-16 dark:bg-gray-200 dark:text-blue-900">
+        <section className="flex items-center h-screen p-16  bg-gray-200  text-blue-900">
             <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
                 <div className="max-w-md text-center">
-                    <h2 className="mb-8 font-extrabold text-9xl dark:text-gray-200">
+                    <h2 className="mb-8 font-extrabold text-9xl  text-gray-200">
                         <span className="text-amber-600">404</span>
                     </h2>
                     <p className="mb-8 text-2xl font-semibold md:text-3xl">Ci dispiace, ma la pagina che stai cercando non esiste.</p>

@@ -115,12 +115,12 @@ function ShowContractInfo() {
     }
 
     async function renderExchangePage() {
-       
+
         navigator("/SendRequest")
     }
 
     return (
-        <div className="min-h-screen flex flex-col gap-3 sm:p-4 dark:bg-gray-100 dark:text-gray-100 ">
+        <div className="min-h-screen flex flex-col gap-3 sm:p-4  bg-gray-100  text-gray-100 ">
             <DownloadPopup
                 onClose={popupCloseDownloadHandler}
                 downloadPopup={downloadPopup}
@@ -131,7 +131,7 @@ function ShowContractInfo() {
                 idForm={id}
                 FormContract={FormContract}
                 account={account}
-                fun = {fun}
+                fun={fun}
             />
             <div className="container flex flex-col justify-between h-auto mx-auto bg-blue-900 p-10 gap-5 rounded-md">
                 <div className="flex flex-row space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
@@ -140,11 +140,11 @@ function ShowContractInfo() {
                     </div>
                     <div className='basis-1/2 flex flex-row justify-end gap-2'>
                         {contractAvailable ?
-                            <span className="px-3 py-1 font-semibold rounded-xl dark:bg-amber-500 dark:text-gray-900">
+                            <span className="px-3 py-1 font-semibold rounded-xl  bg-amber-500  text-gray-900">
                                 <span>Disponibile</span>
                             </span>
                             :
-                            <span className="px-3 py-1 font-semibold rounded-xl dark:bg-amber-500 dark:text-gray-900">
+                            <span className="px-3 py-1 font-semibold rounded-xl  bg-amber-500  text-gray-900">
                                 <span>Non disponibile</span>
                             </span>
                         }
@@ -153,7 +153,7 @@ function ShowContractInfo() {
                 <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
                     <QRCodeCanvas
                         id="QRCodeForm"
-                        className='self-top flex-shrink-0 md:justify-self-start dark:border-blue-800 border-2'
+                        className='self-top flex-shrink-0 md:justify-self-start  border-blue-800 border-2'
                         size={256}
                         level={"H"}
                         fgColor='#F59E0B'
@@ -235,10 +235,10 @@ function ShowContractInfo() {
                             <div className="container max-w-5xl mx-auto">
                                 <div className="grid gap-4 sm:grid-cols-12">
                                     <div className="relative col-span-12  sm:col-span-9">
-                                        <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before:dark:bg-gray-100">
-                                            <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:dark:bg-amber-500">
+                                        <div className="col-span-12 space-y-12 relative px-4 sm:col-span-8 sm:space-y-8 sm:before:absolute sm:before:top-2 sm:before:bottom-0 sm:before:w-0.5 sm:before:-left-3 before: bg-gray-100">
+                                            <div className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before: bg-amber-500">
                                                 <h3 className="text-xl font-semibold tracking-wide">{form.chainOfCustody ? form.chainOfCustody[0].reasonForChange : ""}</h3>
-                                                <time className="text-xs tracking-wide uppercase dark:text-gray-400">{form.chainOfCustody ? form.chainOfCustody[0].timestamp : ""}</time>
+                                                <time className="text-xs tracking-wide uppercase  text-gray-400">{form.chainOfCustody ? form.chainOfCustody[0].timestamp : ""}</time>
                                                 <p className="mt-3">{form.chainOfCustody ? form.chainOfCustody[0].releasedBy : ""} - {form.chainOfCustody ? form.chainOfCustody[0].receivedBy : ""}</p>
                                             </div>
                                         </div>

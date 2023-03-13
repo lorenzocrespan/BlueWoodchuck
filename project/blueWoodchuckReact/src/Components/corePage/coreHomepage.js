@@ -47,7 +47,7 @@ function CoreHomepage() {
     });
 
     return (
-        <div className="min-h-screen flex flex-col gap-3 sm:p-4 dark:bg-gray-100 dark:text-gray-100 ">
+        <div className="min-h-screen flex flex-col gap-3 sm:p-4  bg-gray-100  text-gray-100 ">
             <UserInfo
                 account={account}
                 contract={contract}

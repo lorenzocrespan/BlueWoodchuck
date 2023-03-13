@@ -35,7 +35,7 @@ function CoreRequest() {
     });
 
     return (
-        <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12 dark:bg-gray-100 dark:text-gray-100 ">
+        <div className="min-h-screen flex flex-col gap-10 p-4 sm:p-12  bg-gray-100  text-gray-100 ">
             <ListRequest
                 FormContract={FormContract}
                 account={account}
