@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 
 function ErrorPopup(props) {
 
+    // Enable/Disable console debug.
+    const isConsoleActive = false;
     // Variable to show the popup modal.
     const [errorPopup, setErrorPopup] = useState(false);
 
     useEffect(() => {
+        if (isConsoleActive) console.debug("ErrorPopup", "Rilevata modifica alla variabile errorPopup, cambio delle stato di visualizzazione del componente");
         // If the parent component sends the data to show the popup modal (errorPopup = true), show it.
         setErrorPopup(props.errorPopup);
     }, [props.errorPopup]);
@@ -23,11 +26,11 @@ function ErrorPopup(props) {
                 <div>
                     <div className="opacity-90 fixed inset-0 z-10 bg-black" />
                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                        <div className="flex flex-col max-w-md gap-2 p-6 rounded-md shadow-md bg-gray-300 text-blue-900 ">
-                            <h2 className="flex items-center gap-2 text-xl font-extrabold leading-tight tracking-wide">
+                        <div className="flex flex-col max-w-md gap-2 p-6 rounded-md shadow-md bg-gray-300">
+                            <h2 className="flex items-center gap-2 text-xl font-extrabold leading-tight tracking-wide text-amber-600">
                                 {props.title}
                             </h2>
-                            <p className=" font-medium  text-blue-800">
+                            <p className=" font-medium  text-blue-900">
                                 {props.body}
                             </p>
                             <div className="flex flex-col justify-end gap-3 mt-6 sm:flex-row">
