@@ -108,7 +108,7 @@ function Header() {
     };
 
     return (
-        <header className="p-4 bg-blue-900 text-gray-100">
+        <header className="p-5 bg-blue-900 text-gray-100">
             <div className="container flex justify-between mx-auto text-lg">
                 <div className="flex">
                     <ul className="items-stretch space-x-4 flex">
