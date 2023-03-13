@@ -38,9 +38,9 @@ export default function Routing() {
                     <Route path="/listForm" element={<ListContractPageView />} />
                     <Route path="/listForm/contractShow/:id" element={<ShowContractInfo />} />
                     <Route path="/newForm" element={<NewForm />} />
-                    <Route path="/SendRequest" element={<SendRequest />} />
-                    <Route path="/Requests" element={<CoreRequest />} />
-                    <Route path="/Search" element={<CoreSearch />} />
+                    <Route path="/exchangeForm" element={<SendRequest />} />
+                    <Route path="/requestForm" element={<CoreRequest />} />
+                    <Route path="/advanceSearch" element={<CoreSearch />} />
                 </Route>
                 <Route path="*" element={<Core404 />} />
             </Routes>
