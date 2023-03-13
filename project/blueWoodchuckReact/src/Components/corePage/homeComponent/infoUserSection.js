@@ -1,10 +1,29 @@
-import React from "react";
+// Import - React
+import { useState } from 'react';
+// Import - Components
+import NotifyPopup from "../../popupComponent/NotifyPopup";
 
 function UserInfo(props) {
+
+    // Enable/Disable console debug.
+    const isConsoleActive = false;
+    // Variable to show the popup modal.
+    const [notifyPopup, setNotifyPopup] = useState(false);
+    const [titlePopup, setTitlePopup] = useState("Success");
+    const [textPopup, setTextPopup] = useState("Vitae nulla eligendi dignissimos culpa doloribus.");
+
+    // Function to close the popup modal.
+    const popupCloseHandler = (dataHandler) => {
+        setNotifyPopup(dataHandler);
+    };
 
     // onClick copy to clipboard.
     const copyToClipboard = (elemToCopy) => {
         navigator.clipboard.writeText(elemToCopy);
+        // Setup and show popup.
+        setTitlePopup("Copiato con successo");
+        setTextPopup("L'elemento " + elemToCopy + " è stato copiato.");
+        setNotifyPopup(true);
     }
 
     // Get network name from network id.
@@ -28,31 +47,39 @@ function UserInfo(props) {
     }
 
     return (
-        <div className="container flex justify-between h-auto mx-auto bg-blue-900 p-10 rounded-md">
-            <div className="flex flex-col space-y-4 md:space-y-0 md:space-x-6 md:flex-row">
-                <img src={require("../../../Asset/Images/blueWoodchuckLogo.jpg")} alt="" className="self-center flex-shrink-0 w-24 h-24 rounded-full md:justify-self-start  bg-gray-500  border-amber-600 border-2" />
-                <table className="min-w-full">
-                    <tbody className="text-lg font-semibold text-center md:text-left">
-                        <tr>
-                            <td className="text-xl">Utente: </td>
-                            <td className="px-3 hover:text-amber-500 ease-out duration-500" onClick={() => copyToClipboard(props.account)}>{props.account}</td>
-                        </tr>
-                        <tr>
-                            <td className="text-xl">Rete attuale: </td>
-                            <td className="px-3 hover:text-amber-500 ease-out duration-500" onClick={() => copyToClipboard(props.networkId)}> {getNetworkName(props.networkId)}</td>
-                        </tr>
-                        <tr>
-                            <td className="text-xl">Bilancio attuale: </td>
-                            <td className="px-3 hover:text-amber-500 ease-out duration-500" onClick={() => copyToClipboard(props.balance)}>{props.balance} ETH</td>
-                        </tr>
-                        <tr>
-                            <td className="text-xl">Contratto di riferimento: </td>
-                            <td className="px-3 hover:text-amber-500 ease-out duration-500" onClick={() => copyToClipboard(props.contract)}>{props.contract}</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <>
+            <div className="container flex justify-between h-auto mx-auto bg-blue-900 p-12 rounded-md">
+                <div className="flex flex-row gap-10">
+                    <img src={require("../../../Asset/Images/blueWoodchuckLogo.jpg")} alt="" className="self-center flex-shrink-0 w-28 h-28 rounded-full md:justify-self-start bg-gray-500  border-amber-600 border-4"/>
+                    <table className="min-w-full">
+                        <tbody className="text-lg font-semibold text-center md:text-left">
+                            <tr>
+                                <td className="text-xl">Utente: </td>
+                                <td className="px-5 hover:text-amber-500 ease-out duration-500 cursor-pointer" onClick={() => copyToClipboard(props.account)}>{props.account}</td>
+                            </tr>
+                            <tr>
+                                <td className="text-xl">Rete attuale: </td>
+                                <td className="px-5 hover:text-amber-500 ease-out duration-500 cursor-pointer" onClick={() => copyToClipboard(props.networkId)}> {getNetworkName(props.networkId)}</td>
+                            </tr>
+                            <tr>
+                                <td className="text-xl">Bilancio attuale: </td>
+                                <td className="px-5 hover:text-amber-500 ease-out duration-500 cursor-pointer" onClick={() => copyToClipboard(props.balance)}>{props.balance} ETH</td>
+                            </tr>
+                            <tr>
+                                <td className="text-xl">Contratto di riferimento: </td>
+                                <td className="px-5 hover:text-amber-500 ease-out duration-500 cursor-pointer" onClick={() => copyToClipboard(props.contract)}>{props.contract}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+            <NotifyPopup
+                onClose={popupCloseHandler}
+                notifyPopup={notifyPopup}
+                titlePopup={titlePopup}
+                textPopup={textPopup}
+            />
+        </>
     )
 }
 
