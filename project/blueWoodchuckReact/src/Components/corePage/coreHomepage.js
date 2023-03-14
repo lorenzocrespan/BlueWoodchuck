@@ -23,7 +23,7 @@ function CoreHomepage() {
     const [isChange, setIsChange] = useState(false);
 
     useEffect(() => {
-        const loadAccountAddress = async () => {
+        const loadAccountData = async () => {
             // Request and set account access if needed.
             const accounts = await web3.eth.requestAccounts();
             setAccount(accounts[0]);
@@ -43,7 +43,7 @@ function CoreHomepage() {
                 console.debug("coreHomepage.js - networkId", networkId);
             }
         }
-        loadAccountAddress();
+        loadAccountData();
     }, [isChange]);
 
     // Listen metamask account change.
