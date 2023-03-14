@@ -29,8 +29,7 @@ pragma solidity ^0.8.17;
 
         string contentDescription;              // Description of the evidence
         uint contentOwnerContactInformation;    // Contact information of the owner of the evidence
-        string forensicAgent;                     // Name of the forensic agent
-        string creationMethod;                    // Method of creation of the evidence
+        string forensicAgent;                   // Name of the forensic agent
 
         bytes32 hashValue;                      // Hash value of the evidence
         uint date;                              // Date of the evidence
@@ -49,14 +48,13 @@ contract Form {
         // _numbers = [_caseNumber, _itemNumber, _contentOwnerContactInformation, _date,
         //             _forensicAgentContactInformation]
         // _strings = [_caseName, _reasonObtained, _evidenceTypeManufacturer, _owner, _contentDescription,
-        //             _forensicAgent, _creationMethod]
+        //             _forensicAgent]
         data.caseName = _strings[0];
         data.reasonObtained = _strings[1];
         data.evidenceTypeManufacturer = _strings[2];
         data.owner = _strings[3];
         data.contentDescription = _strings[4];
         data.forensicAgent = _strings[5];
-        data.creationMethod = _strings[6];
 
         data.caseNumber = _numbers[0];
         data.itemNumber = _numbers[1];

@@ -33,7 +33,7 @@ function ListContract(props) {
     );
 
     return (
-        <ul className="flex flex-col container justify-between mx-auto bg-blue-900 p-12 rounded-md">
+        <ul className="flex flex-col container justify-between mx-auto bg-blue-900 p-12 gap-4 rounded-md">
             <h2 className="mb-4 text-2xl font-semibold">{props.title}</h2>
             {
                 formInCharge.length === 0
