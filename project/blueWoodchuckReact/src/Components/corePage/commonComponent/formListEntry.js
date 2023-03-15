@@ -29,8 +29,8 @@ function ContractEntry(props) {
                     <h3 className="mb-1 ml-8 font-semibold md:ml-0 xl:col-start-3 xl:col-span-8 text-gray-200">Contratto: {props.id ? props.id : "Non disponibile"}</h3>
                     <time className="row-start-1 md:col-start-1 xl:col-span-2 text-gray-300">{dataForm.date ? new Date(dataForm.date * 1000).toLocaleDateString("it-IT") : "Non disponibile"}</time>
                     <p className="ml-8 col-start-12 ">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-8 h-8">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </p>
                     <p className="ml-8 md:col-start-2 xl:col-start-3 xl:col-span-9 md:ml-0 text-gray-300">{dataForm.contentDescription ? dataForm.contentDescription : "Non disponibile"}</p>
