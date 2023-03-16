@@ -102,7 +102,7 @@ function SendRequest() {
                 title="Trasferimento form"
             />
             <section className="p-12">
-                <form id='myform' className="container flex flex-col mx-auto space-y-6 rounded-md ng-untouched ng-pristine ng-valid">
+                <form id='myform' className="min-h-screen container flex flex-col mx-auto space-y-6 rounded-md ng-untouched ng-pristine ng-valid">
                     <div className="bg-blue-900 p-10 space-y-6 rounded-md">
                         <div className="w-full flex flex-row mx-auto p-5">
                             <div className="w-full p-6">
@@ -133,7 +133,6 @@ function SendRequest() {
                         <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={showFreeFormPopup}>Invia richiesta</button>
                     </div>
                 </form>
-
             </section>
         </div>
 

@@ -48,8 +48,8 @@ function FreeFormPopup(props) {
                                 {listItems}
                             </ul>
                             <div className="flex flex-col justify-end gap-3 mt-6 sm:flex-row">
-                                <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={sendContract}>Conferma</button>
-                                <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={closeHandler}>Annulla</button>
+                                <button className="h-10 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={sendContract}>Conferma</button>
+                                <button className="h-10 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={closeHandler}>Annulla</button>
                             </div>
                         </div>
                     </div>

@@ -30,11 +30,7 @@ contract FormFactory {
      *   @param _strings All textual information in the form
      *   @param _hashValue Hash value of the evidence
      */
-    function createForm(
-        uint[] memory _numbers,
-        string[] memory _strings,
-        bytes32 _hashValue
-    ) public returns (address) {
+    function createForm(uint[] memory _numbers, string[] memory _strings, bytes32 _hashValue) public returns (address) {
         // Generation of new address for the form.
         address entityAddress = createAddress();
         // Creation of the new Form directly in the mapping object
@@ -44,11 +40,7 @@ contract FormFactory {
         );
         userToFormAddresses[msg.sender].push(entityAddress);
         // Emit the event newForm.
-        emit newForm(
-            _numbers[0],
-            entityAddress,
-            readFormAddress(entityAddress)
-        );
+        emit newForm(_numbers[0], entityAddress, readFormAddress(entityAddress));
         // Push entityAddress to the list of form addresses.
         listFormAddress.push(entityAddress);
         return entityAddress;
@@ -83,9 +75,7 @@ contract FormFactory {
      *
      *   @return FormData Struct that contains the data of the form required
      */
-    function readFormAddress(
-        address _caseAddress
-    ) public view returns (FormData memory) {
+    function readFormAddress(address _caseAddress) public view returns (FormData memory) {
         return readForm(findForm(_caseAddress));
     }
 
@@ -116,9 +106,7 @@ contract FormFactory {
      *
      *   @return address array with addresses of forms in charge of an user
      */
-    function getUserFormAddresses(
-        address _userAddress
-    ) public view returns (address[] memory) {
+    function getUserFormAddresses(address _userAddress) public view returns (address[] memory) {
         return userToFormAddresses[_userAddress];
     }
 
@@ -164,9 +152,9 @@ contract FormFactory {
      *
      *   @param _taker address of the future owner of the form
      */
-    function giveForm(address _formAddress, address _taker) public {
+    function giveForm(address _formAddress, address _taker) public returns (bool){
         require(findForm(_formAddress).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
-        findForm(_formAddress).setGiverTaker(msg.sender, _taker);
+        return findForm(_formAddress).setGiverTaker(msg.sender, _taker);
         // mandare un evento??
     }
 
@@ -240,15 +228,16 @@ contract FormFactory {
         return findForm(_formAddress).isAvailable();
     }
 
-    function findContractTaker() public view returns (address[] memory) {
+    function findContractTaker(address _taker) public view returns (address[] memory) {
         // Count the number of forms that match the sender as taker
-        uint count = countFormsForTaker(msg.sender);
+        uint count = countFormsForTaker(_taker);
+        if (count == 0) return new address[](0);
         // Array to store all the forms addresses that match the sender as taker
         address[] memory listFormAddressTaker = new address[](count);
-        uint j;
+        uint j = 0;
         // Search contract with sender registered as taker
         for (uint i = 0; i < listFormAddress.length; i++) {
-            if (findForm(listFormAddress[i]).getTaker() == msg.sender) {
+            if (findForm(listFormAddress[i]).getTaker() == _taker) {
                 listFormAddressTaker[j] = listFormAddress[i];
                 j++;
             }

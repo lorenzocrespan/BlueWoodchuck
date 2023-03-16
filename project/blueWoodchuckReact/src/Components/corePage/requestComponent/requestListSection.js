@@ -1,47 +1,117 @@
-import React, { useState, useEffect } from 'react';
+// Import - React
+import { useEffect, useState } from 'react';
+// Import - Components
 import ContractEntry from "./requestListEntry";
 import EmptyContractList from './requestListEmpty';
+import AcceptPopup from './requestAcceptPopup';
 
 
 function ListRequest(props) {
 
-    const isConsoleActive = true;     // Enable/Disable console debug.
-
-    const [contractsInCharge, setContractsInCharge] = useState([]);
+    // Enable/Disable console debug.
+    const isConsoleActive = true;
+    // Variable to save the list of forms in pending for the current user.
+    const [contractsInPendingSend, setContractsInPendingSend] = useState([]);
+    const [contractsInPendingReceive, setContractsInPendingReceive] = useState([]);
+    // Variable to set the popup modal (show, title and body).            
+    const [acceptPopup, setAcceptPopup] = useState(false);
+    const [title, setTitle] = useState("Coferma presa in carico");
+    // Contract in evaluation.
+    const [id, setId] = useState("0x0000000000000000000000000000000000000000");
 
     useEffect(() => {
-        if (props.account !== undefined) getUserFormsAddresses();
+        // getUserFormsToSend();
+        getUserFormsToReceive();
     }, [props.account]);
 
-    const listItems = contractsInCharge.map((data, index) =>
+    // Obtain the list of contracts in pending for the current user (send).
+    const getUserFormsToSend = async () => {
+        // Get the list of contracts in pending.
+        // const count = await props.FormFactoryContract.methods.countFormsForTaker(props.account).call();
+        // const contractsInPendingSend = await props.FormFactoryContract.methods.findContractTaker(props.account).call();
+        if (isConsoleActive) {
+            // console.debug("requestListSection.js - Taker count: ", count);
+            console.debug("requestListSection.js - Taker contracts: ", contractsInPendingSend);
+        }
+        setContractsInPendingSend(contractsInPendingSend);
+    }
+
+    // Create a list of contracts in pending for the current user (receive).
+    const getUserFormsToReceive = async () => {
+        // Get the list of contracts in pending.
+        const count = await props.FormFactoryContract.methods.countFormsForTaker(props.account).call();
+        const contractsInPendingReceive = await props.FormFactoryContract.methods.findContractTaker(props.account).call();
+        if (isConsoleActive) {
+            console.debug("requestListSection.js - Taker count: ", count);
+            console.debug("requestListSection.js - Taker contracts: ", contractsInPendingReceive);
+        }
+        setContractsInPendingReceive(contractsInPendingReceive);
+    }
+
+    // Function to close the popup modal.
+    const popupCloseHandler = async (dataHandler) => {
+        if (dataHandler !== false) {
+            console.log("popupCloseHandler - dataHandler: ", dataHandler);
+            await props.FormFactoryContract.methods.acceptForm(id, dataHandler).send({ from: props.account });
+        }
+        setAcceptPopup(false);
+    };
+
+    // Function to open the popup modal.
+    const popupOpenHandler = (dataHandler) => {
+        setId(dataHandler);
+        setAcceptPopup(true);
+    };
+
+    const listItemsToSend = contractsInPendingSend.map((data, index) =>
         <ContractEntry
             key={index}
-            FormContract={props.FormContract}
+            FormContract={props.FormFactoryContract}
             account={props.account}
             id={data}
         />
     );
 
-    // Obtain the list of contracts in charge for the current user.
-    const getUserFormsAddresses = async () => {
-        // Get the list of contracts in charge.
-        const contractsInCharge = await props.FormContract.methods.findContractTaker().call();
-        if (isConsoleActive) console.debug("Contracts in pending: ", contractsInCharge);
-       
-
-        // Set the list of contracts in charge.
-        setContractsInCharge(contractsInCharge);
-    }
+    const listItemsToReceive = contractsInPendingReceive.map((data, index) =>
+        <ContractEntry
+            key={index}
+            FormContract={props.FormFactoryContract}
+            account={props.account}
+            id={data}
+            onOpen={popupOpenHandler}
+        />
+    );
 
     return (
-        <ul className="flex flex-col container justify-between mx-auto lg:p-8 bg-blue-900 p-10 rounded-md">
-            <h2 className="mb-4 text-2xl font-semibold">Lista contratti in carico</h2>
-            {
-                contractsInCharge.length === 0
-                    ? <EmptyContractList />
-                    : listItems
-            }
-        </ul>
+        <>
+            <AcceptPopup
+                onClose={popupCloseHandler}
+                acceptPopup={acceptPopup}
+                title={title}
+            />
+            <ul className="flex flex-col container justify-between mx-auto lg:p-8 bg-blue-900 p-10 rounded-md">
+                <h2 className="mb-4 text-2xl font-semibold">Lista contratti in invio</h2>
+                {
+                    contractsInPendingSend.length === 0
+                        ?
+                        <EmptyContractList
+                            textSection="Non è stato trovato alcun form in attesa di accettazione."
+                        />
+                        : listItemsToSend
+                }
+            </ul>
+            <ul className="flex flex-col container justify-between mx-auto lg:p-8 bg-blue-900 p-10 rounded-md">
+                <h2 className="mb-4 text-2xl font-semibold">Lista contratti in arrivo</h2>
+                {
+                    contractsInPendingReceive.length === 0
+                        ?
+                        <EmptyContractList
+                            textSection="Non è stato trovato alcun form in attesa di accettazione."
+                        />
+                        : listItemsToReceive
+                }
+            </ul>
+        </>
     )
 }
 
