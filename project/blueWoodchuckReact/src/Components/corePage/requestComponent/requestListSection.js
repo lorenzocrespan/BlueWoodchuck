@@ -20,17 +20,17 @@ function ListRequest(props) {
     const [id, setId] = useState("0x0000000000000000000000000000000000000000");
 
     useEffect(() => {
-        // getUserFormsToSend();
+        getUserFormsToSend();
         getUserFormsToReceive();
     }, [props.account]);
 
     // Obtain the list of contracts in pending for the current user (send).
     const getUserFormsToSend = async () => {
         // Get the list of contracts in pending.
-        // const count = await props.FormFactoryContract.methods.countFormsForTaker(props.account).call();
-        // const contractsInPendingSend = await props.FormFactoryContract.methods.findContractTaker(props.account).call();
+        const contractsInPendingSend = await props.FormFactoryContract.methods.findContractGiver(props.account).call();
         if (isConsoleActive) {
-            // console.debug("requestListSection.js - Taker count: ", count);
+            const count = await props.FormFactoryContract.methods.countFormsForGiver(props.account).call();
+            console.debug("requestListSection.js - Taker count: ", count);
             console.debug("requestListSection.js - Taker contracts: ", contractsInPendingSend);
         }
         setContractsInPendingSend(contractsInPendingSend);
@@ -39,9 +39,9 @@ function ListRequest(props) {
     // Create a list of contracts in pending for the current user (receive).
     const getUserFormsToReceive = async () => {
         // Get the list of contracts in pending.
-        const count = await props.FormFactoryContract.methods.countFormsForTaker(props.account).call();
         const contractsInPendingReceive = await props.FormFactoryContract.methods.findContractTaker(props.account).call();
         if (isConsoleActive) {
+            const count = await props.FormFactoryContract.methods.countFormsForTaker(props.account).call();
             console.debug("requestListSection.js - Taker count: ", count);
             console.debug("requestListSection.js - Taker contracts: ", contractsInPendingReceive);
         }
@@ -50,10 +50,7 @@ function ListRequest(props) {
 
     // Function to close the popup modal.
     const popupCloseHandler = async (dataHandler) => {
-        if (dataHandler !== false) {
-            console.log("popupCloseHandler - dataHandler: ", dataHandler);
-            await props.FormFactoryContract.methods.acceptForm(id, dataHandler).send({ from: props.account });
-        }
+        if (dataHandler !== false) await props.FormFactoryContract.methods.acceptForm(id, dataHandler).send({ from: props.account });
         setAcceptPopup(false);
     };
 
@@ -89,7 +86,7 @@ function ListRequest(props) {
                 acceptPopup={acceptPopup}
                 title={title}
             />
-            <ul className="flex flex-col container justify-between mx-auto lg:p-8 bg-blue-900 p-10 rounded-md">
+            <ul className="flex flex-col container justify-between mx-auto bg-blue-900 p-10 rounded-md gap-5">
                 <h2 className="mb-4 text-2xl font-semibold">Lista contratti in invio</h2>
                 {
                     contractsInPendingSend.length === 0
@@ -100,7 +97,7 @@ function ListRequest(props) {
                         : listItemsToSend
                 }
             </ul>
-            <ul className="flex flex-col container justify-between mx-auto lg:p-8 bg-blue-900 p-10 rounded-md">
+            <ul className="flex flex-col container justify-between mx-auto bg-blue-900 p-10 rounded-md gap-5">
                 <h2 className="mb-4 text-2xl font-semibold">Lista contratti in arrivo</h2>
                 {
                     contractsInPendingReceive.length === 0

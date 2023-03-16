@@ -10,7 +10,6 @@ function AcceptPopup(props) {
 
     useEffect(() => {
         if (isConsoleActive) console.debug("AcceptPopup", "Rilevata modifica alla variabile acceptPopup, cambio delle stato di visualizzazione del componente");
-        console.log(props.acceptPopup);
         // If the parent component sends the data to show the popup modal (acceptPopup = true), show it.
         setAcceptPopup(props.acceptPopup);
     }, [props.acceptPopup]);
@@ -26,7 +25,6 @@ function AcceptPopup(props) {
         setAcceptPopup(false);
         // Get data inside the input field.
         const inputField = document.getElementById("acceptReason");
-        console.debug("AcceptPopup", "inputField: ", inputField.value);
         // Send data to the parent component.
         props.onClose(inputField.value);
     };

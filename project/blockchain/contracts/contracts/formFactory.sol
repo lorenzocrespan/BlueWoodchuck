@@ -152,8 +152,8 @@ contract FormFactory {
      *
      *   @param _taker address of the future owner of the form
      */
-    function giveForm(address[] _formAddresses, address _taker) public{
-        for(int i=0; i<_formAddresses.length; i++){
+    function giveForm(address[] memory _formAddresses, address _taker) public{
+        for(uint i=0; i<_formAddresses.length; i++){
             require(findForm(_formAddresses[i]).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
             findForm(_formAddresses[i]).setGiverTaker(msg.sender, _taker);
         }
@@ -169,19 +169,8 @@ contract FormFactory {
     function acceptForm(address _formAddress, string memory _reason) public {
         require(findForm(_formAddress).getTaker() == msg.sender); // run only if current owner is msg.sender
         userToFormAddresses[msg.sender].push(_formAddress); // the form is now added to msg.sender owned forms
-        findForm(_formAddress).pushLog(
-            Log( // push of a new log in the chain of custody
-                findForm(_formAddress).lastLog().trackingNumber + 1,
-                block.timestamp,
-                findForm(_formAddress).lastLog().receivedBy,
-                msg.sender,
-                _reason
-            )
-        );
-        removeAddressInAUserList(
-            findForm(_formAddress).getGiver(),
-            _formAddress
-        );
+        findForm(_formAddress).pushLog(Log(findForm(_formAddress).lastLog().trackingNumber + 1, block.timestamp, findForm(_formAddress).lastLog().receivedBy, msg.sender, _reason));
+        removeAddressInAUserList(findForm(_formAddress).getGiver(), _formAddress);
         findForm(_formAddress).resetGiverTaker();
     }
 
@@ -205,10 +194,7 @@ contract FormFactory {
      *
      *   @param _formAddress address of the form we want to remove from _userAddress
      */
-    function removeAddressInAUserList(
-        address _userAddress,
-        address _formAddress
-    ) private {
+    function removeAddressInAUserList(address _userAddress, address _formAddress) private {
         require(userToFormAddresses[_userAddress].length > 0);
 
         uint userAddressesLength = userToFormAddresses[_userAddress].length;
@@ -251,6 +237,32 @@ contract FormFactory {
         uint count = 0;
         for (uint i = 0; i < listFormAddress.length; i++) {
             if (findForm(listFormAddress[i]).getTaker() == _taker) count++;
+        }
+        return count;
+    }
+
+    function findContractGiver(address _giver) public view returns (address[] memory) {
+        // Count the number of forms that match the sender as taker
+        uint count = countFormsForGiver(_giver);
+        if (count == 0) return new address[](0);
+        // Array to store all the forms addresses that match the sender as taker
+        address[] memory listFormAddressGiver = new address[](count);
+        uint j = 0;
+        // Search contract with sender registered as taker
+        for (uint i = 0; i < listFormAddress.length; i++) {
+            if (findForm(listFormAddress[i]).getGiver() == _giver) {
+                listFormAddressGiver[j] = listFormAddress[i];
+                j++;
+            }
+        }
+        return listFormAddressGiver;
+    }
+
+    function countFormsForGiver(address _giver) public view returns (uint) {
+        // Count the number of forms that match the sender as taker
+        uint count = 0;
+        for (uint i = 0; i < listFormAddress.length; i++) {
+            if (findForm(listFormAddress[i]).getGiver() == _giver) count++;
         }
         return count;
     }
