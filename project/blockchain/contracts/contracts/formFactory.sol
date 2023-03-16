@@ -148,14 +148,15 @@ contract FormFactory {
     /**
      *   @dev Function that makes a form available for a given user, if msg.sender is the current owner.
      *
-     *   @param _formAddress address of the form to give to a user
+     *   @param _formAddresses addresses of the form to give to a user
      *
      *   @param _taker address of the future owner of the form
      */
-    function giveForm(address _formAddress, address _taker) public returns (bool){
-        require(findForm(_formAddress).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
-        return findForm(_formAddress).setGiverTaker(msg.sender, _taker);
-        // mandare un evento??
+    function giveForm(address[] _formAddresses, address _taker) public{
+        for(int i=0; i<_formAddresses.length; i++){
+            require(findForm(_formAddresses[i]).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
+            findForm(_formAddresses[i]).setGiverTaker(msg.sender, _taker);
+        }
     }
 
     /**
