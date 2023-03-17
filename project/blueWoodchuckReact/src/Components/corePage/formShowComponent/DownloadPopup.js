@@ -28,22 +28,30 @@ function DownloadPopup(props) {
         const newCanvas = document.createElement('canvas');
         const context = newCanvas.getContext('2d');
 
-        newCanvas.width = 320;
-        newCanvas.height = 320;
+        newCanvas.width = 700;
+        newCanvas.height = 270;
 
-        // create white background and center the text
-        context.font = '14px Roboto';
+        // Create white background
         context.fillStyle = 'white';
         context.textBaseline = 'middle';
-        context.textAlign = 'center';
-        context.fillRect(0, 0, 320, 320);
-
-        // create style for text inside canvas
+        context.fillRect(0, 0, newCanvas.width, newCanvas.height);
+        // Create border for card with 5px from edge
+        context.beginPath();
+        context.lineWidth = "2";
+        context.strokeStyle = "#4A4A4A";
+        context.rect(5, 5, newCanvas.width - 10, newCanvas.height - 10);
+        context.stroke();
+        // Create test on the right side of the card no Arial font or Roboto
+        context.font = 'bold 16px Helvetica';
         context.fillStyle = '#4A4A4A';
-        context.fillText('Scan Here to Order', newCanvas.width / 2, 20);
-        // copy oldCanvas to newCanvas
-        context.drawImage(oldCanvas, 35, 35, 250, 250);
-        context.fillText('Thank You, Have a nice day ', newCanvas.width / 2, 305);
+        const borderText = 266;
+        context.fillText("Nome caso: " + props.form.caseName, borderText, 80);
+        context.fillText("Numero caso: " + props.form.caseNumber, borderText, 100);
+        context.fillText("Numero oggetto: " + props.form.itemNumber, borderText, 120);
+        context.fillText("Codice form: ", borderText, 160);
+        context.fillText(props.id, borderText, 180);
+        // Copy oldCanvas to newCanvas
+        context.drawImage(oldCanvas, 8, 8, 256, 256);
 
         const image = newCanvas.toDataURL('image/png');
         const anchor = document.createElement('a');
@@ -53,7 +61,6 @@ function DownloadPopup(props) {
         anchor.click();
         document.body.removeChild(anchor);
     };
-
 
     return (
         <div>
@@ -72,7 +79,11 @@ function DownloadPopup(props) {
                                 Quale formato preferisci?
                             </p>
                             <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500" onClick={downloadQRCode}>Scarica il QR Code</button>
-                            <PDFDownloadLink document={<PDFBlueWoodchuck />} fileName="somename.pdf">
+                            <PDFDownloadLink document={
+                                <PDFBlueWoodchuck
+                                    form={props.form}
+                                    id={props.id}
+                                />} fileName="somename.pdf">
                                 {({ blob, url, loading, error }) => (<button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-900 hover:bg-amber-600 ease-out duration-500">Scarica il documento in PDF</button>)
                                 }
                             </PDFDownloadLink>
@@ -87,5 +98,4 @@ function DownloadPopup(props) {
         </div>
     );
 }
-
 export default DownloadPopup;

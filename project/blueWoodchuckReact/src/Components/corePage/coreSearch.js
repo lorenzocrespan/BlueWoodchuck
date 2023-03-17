@@ -82,5 +82,4 @@ function CoreSearch() {
         </div>
     );
 }
-
 export default CoreSearch;
