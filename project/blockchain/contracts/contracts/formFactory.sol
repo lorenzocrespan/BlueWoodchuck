@@ -21,7 +21,7 @@ contract FormFactory {
     // Mapping to store the addresses of the forms currently in charge of every user.
     mapping(address => address[]) private userToFormAddresses;
     // Array to store the addresses of the forms for the evidence of the cases.
-    address[] private listFormAddress; // TODO: private?
+    address[] private listFormAddress;
 
     /**
      *   @dev Function to create a new form for the evidence of the case.
