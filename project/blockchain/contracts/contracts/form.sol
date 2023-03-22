@@ -91,7 +91,7 @@ contract Form {
         available = true;
     }
 
-    function setTaken() public {
+    function setTaken(address _sender) public {
         require(_sender == lastLog().receivedBy);
         available = false;
     }
