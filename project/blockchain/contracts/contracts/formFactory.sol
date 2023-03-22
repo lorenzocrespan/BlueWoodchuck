@@ -130,7 +130,7 @@ contract FormFactory {
             )
         );
         userToFormAddresses[msg.sender].push(_formAddress); // the form is now added to msg.sender owned forms
-        findForm(_formAddress).setTaken(); // and is marked as not available, no one could take it now
+        findForm(_formAddress).setTaken(msg.sender); // and is marked as not available, no one could take it now
     }
 
     /**
@@ -141,7 +141,7 @@ contract FormFactory {
      */
     function releaseForm(address _formAddress) public {
         require(findForm(_formAddress).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
-        findForm(_formAddress).setAvailable(); // form is now marked as available
+        findForm(_formAddress).setAvailable(msg.sender); // form is now marked as available
         removeAddressInAUserList(msg.sender, _formAddress); // and its address is removed from msg.sender list
     }
 
@@ -171,7 +171,7 @@ contract FormFactory {
         userToFormAddresses[msg.sender].push(_formAddress); // the form is now added to msg.sender owned forms
         findForm(_formAddress).pushLog(Log(findForm(_formAddress).lastLog().trackingNumber + 1, block.timestamp, findForm(_formAddress).lastLog().receivedBy, msg.sender, _reason));
         removeAddressInAUserList(findForm(_formAddress).getGiver(), _formAddress);
-        findForm(_formAddress).resetGiverTaker();
+        findForm(_formAddress).resetGiverTaker(msg.sender);
     }
 
     /**
@@ -184,7 +184,7 @@ contract FormFactory {
             findForm(_formAddress).getTaker() == msg.sender ||
                 findForm(_formAddress).getGiver() == msg.sender
         );
-        findForm(_formAddress).resetGiverTaker();
+        findForm(_formAddress).resetGiverTaker(msg.sender);
     }
 
     /**

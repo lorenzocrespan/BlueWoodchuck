@@ -86,16 +86,19 @@ contract Form {
         return available;
     }
 
-    function setAvailable() public {
+    function setAvailable(address _sender) public {
+        require(_sender == lastLog().receivedBy);
         available = true;
     }
 
     function setTaken() public {
+        require(_sender == lastLog().receivedBy);
         available = false;
     }
 
     event giverTakerSet(address giver, address taker);
     function setGiverTaker(address _giver, address _taker) public returns(bool) {
+        require(_giver == lastLog().receivedBy);
         giver = _giver;
         taker = _taker;
         emit giverTakerSet(giver, taker);
@@ -103,8 +106,8 @@ contract Form {
     }
 
     event resetDone(address giver, address taker);
-    function resetGiverTaker() public {
-        // require(giver == msg.sender || taker == msg.sender);
+    function resetGiverTaker(address _sender) public {
+        require(giver == _sender || taker == _sender);
         // reset giver and taker
         giver = address(0);
         taker = address(0);
