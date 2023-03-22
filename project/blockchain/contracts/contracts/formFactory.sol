@@ -85,20 +85,7 @@ contract FormFactory {
      *   @return address randomly generated
      */
     function createAddress() private view returns (address) {
-        return
-            address(
-                uint160(
-                    uint(
-                        keccak256(
-                            abi.encodePacked(
-                                block.timestamp,
-                                block.difficulty,
-                                msg.sender
-                            )
-                        )
-                    )
-                )
-            );
+        return address(uint160(uint(keccak256(abi.encodePacked(block.timestamp,block.difficulty,msg.sender)))));
     }
 
     /**
@@ -148,15 +135,13 @@ contract FormFactory {
     /**
      *   @dev Function that makes a form available for a given user, if msg.sender is the current owner.
      *
-     *   @param _formAddresses addresses of the form to give to a user
+     *   @param _formAddress address of the form to give to a user
      *
      *   @param _taker address of the future owner of the form
      */
-    function giveForm(address[] memory _formAddresses, address _taker) public{
-        for(uint i=0; i<_formAddresses.length; i++){
-            require(findForm(_formAddresses[i]).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
-            findForm(_formAddresses[i]).setGiverTaker(msg.sender, _taker);
-        }
+    function giveForm(address _formAddress, address _taker) public{
+        require(findForm(_formAddress).lastLog().receivedBy == msg.sender); // run only if current owner is msg.sender
+        findForm(_formAddress).setGiverTaker(msg.sender, _taker);
     }
 
     /**
@@ -215,9 +200,23 @@ contract FormFactory {
         return findForm(_formAddress).isAvailable();
     }
 
+    function countForms(address _address, uint _type) private view returns (uint) { // 0 = giver, 1 = taker
+        // Count the number of forms that match the sender as taker
+        uint count = 0;
+        for (uint i = 0; i < listFormAddress.length; i++) {
+            if(_type == 1) {
+                if (findForm(listFormAddress[i]).getTaker() == _address) count++;
+            }
+            else {
+                if (findForm(listFormAddress[i]).getGiver() == _address) count++;
+            }
+        }
+        return count;
+    }
+
     function findContractTaker(address _taker) public view returns (address[] memory) {
         // Count the number of forms that match the sender as taker
-        uint count = countFormsForTaker(_taker);
+        uint count = countForms(_taker, 1);
         if (count == 0) return new address[](0);
         // Array to store all the forms addresses that match the sender as taker
         address[] memory listFormAddressTaker = new address[](count);
@@ -232,18 +231,9 @@ contract FormFactory {
         return listFormAddressTaker;
     }
 
-    function countFormsForTaker(address _taker) public view returns (uint) {
-        // Count the number of forms that match the sender as taker
-        uint count = 0;
-        for (uint i = 0; i < listFormAddress.length; i++) {
-            if (findForm(listFormAddress[i]).getTaker() == _taker) count++;
-        }
-        return count;
-    }
-
     function findContractGiver(address _giver) public view returns (address[] memory) {
         // Count the number of forms that match the sender as taker
-        uint count = countFormsForGiver(_giver);
+        uint count = countForms(_giver, 0);
         if (count == 0) return new address[](0);
         // Array to store all the forms addresses that match the sender as taker
         address[] memory listFormAddressGiver = new address[](count);
@@ -256,15 +246,6 @@ contract FormFactory {
             }
         }
         return listFormAddressGiver;
-    }
-
-    function countFormsForGiver(address _giver) public view returns (uint) {
-        // Count the number of forms that match the sender as taker
-        uint count = 0;
-        for (uint i = 0; i < listFormAddress.length; i++) {
-            if (findForm(listFormAddress[i]).getGiver() == _giver) count++;
-        }
-        return count;
     }
 
     function findContractByDate(uint _from) public view returns (address[] memory) {
