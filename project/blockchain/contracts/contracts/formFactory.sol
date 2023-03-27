@@ -181,16 +181,12 @@ contract FormFactory {
      */
     function removeAddressInAUserList(address _userAddress, address _formAddress) private {
         require(userToFormAddresses[_userAddress].length > 0);
-
         uint userAddressesLength = userToFormAddresses[_userAddress].length;
-
         for (uint i = 0; i < userAddressesLength; i++) {
             // look into the addresses linked to _userAddress
             if (userToFormAddresses[_userAddress][i] == _formAddress) {
                 // copy the last element in the index we want to remove
-                userToFormAddresses[_userAddress][i] = userToFormAddresses[
-                    _userAddress
-                ][userAddressesLength - 1];
+                userToFormAddresses[_userAddress][i] = userToFormAddresses[_userAddress][userAddressesLength - 1];
                 userToFormAddresses[_userAddress].pop(); // remove the last element
                 return;
             }
