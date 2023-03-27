@@ -193,10 +193,26 @@ contract FormFactory {
         }
     }
 
+    /**
+     *   @dev Function to know if a form is available or not.
+     *
+     *   @param _formAddress address of the form
+     *
+     *   @return bool true if available, false otherwise
+     */
     function isAFormAvailable(address _formAddress) public view returns (bool) {
         return findForm(_formAddress).isAvailable();
     }
 
+    /**
+     *   @dev Function to get how many forms meet the requirements for a user.
+     *
+     *   @param _address address of the user
+     *
+     *   @param _type 0 if looking for giver, 1 for taker
+     *
+     *   @return uint count of how many forms meet the requirements for a user
+     */
     function countForms(address _address, uint _type) private view returns (uint) { // 0 = giver, 1 = taker
         // Count the number of forms that match the sender as taker
         uint count = 0;
@@ -211,6 +227,13 @@ contract FormFactory {
         return count;
     }
 
+    /**
+     *   @dev Function to get in how many forms the user is marked as taker.
+     *
+     *   @param _taker address of the user
+     *
+     *   @return address[] addresses of forms where the user is marked as taker
+     */
     function findContractTaker(address _taker) public view returns (address[] memory) {
         // Count the number of forms that match the sender as taker
         uint count = countForms(_taker, 1);
@@ -228,6 +251,13 @@ contract FormFactory {
         return listFormAddressTaker;
     }
 
+    /**
+     *   @dev Function to get in how many forms the user is marked as giver.
+     *
+     *   @param _giver address of the user
+     *
+     *   @return address[] addresses of forms where the user is marked as giver
+     */
     function findContractGiver(address _giver) public view returns (address[] memory) {
         // Count the number of forms that match the sender as taker
         uint count = countForms(_giver, 0);
@@ -245,6 +275,13 @@ contract FormFactory {
         return listFormAddressGiver;
     }
 
+    /**
+     *   @dev Function to get in how many forms a user have been signed after a certain date.
+     *
+     *   @param _from date to count from
+     *
+     *   @return address[] addresses of forms where the user is marked as taker
+     */
     function findContractByDate(uint _from) public view returns (address[] memory) {
         // Count the number of forms that match the sender as taker
         uint count = countFormsBasedOnDate(_from);
@@ -261,6 +298,13 @@ contract FormFactory {
         return listFormAddressReturned;
     }
 
+    /**
+     *   @dev Function to get how many forms have been signed after a certain date.
+     *
+     *   @param _from date to count from
+     *
+     *   @return uint count of forms from a certain date
+     */
     function countFormsBasedOnDate(uint _from) public view returns (uint) {
         uint count = 0;
         for (uint i = 0; i < listFormAddress.length; i++) {

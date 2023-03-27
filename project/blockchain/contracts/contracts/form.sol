@@ -74,29 +74,63 @@ contract Form {
         return data;
     }
 
+    /**
+    *   @dev Function to push a log at the bottom of the chain of custody.
+    *
+    *   @param _log Log that needs to be pushed
+    */
     function pushLog(Log memory _log) public {
         data.chainOfCustody.push(_log);
     }
 
+    /**
+    *   @dev Function the last log of the chain of custody.
+    *
+    *   @return Log last log
+    */
     function lastLog() public view returns (Log memory) {
         return data.chainOfCustody[data.chainOfCustody.length - 1];
     }
 
+    /**
+    *   @dev Function that returns a boolean to know if a form is available or not.
+    *
+    *   @return bool 1 if available, 0 otherwise
+    */
     function isAvailable() public view returns(bool) {
         return available;
     }
 
+    /**
+    *   @dev Function that marks a form as available.
+    *
+    *   @param _sender address of the sender, that must be the last receiver in the chain of custody (current owner)
+    */
     function setAvailable(address _sender) public {
         require(_sender == lastLog().receivedBy);
         available = true;
     }
 
+    /**
+    *   @dev Function that marks a form as taken.
+    *
+    *   @param _sender address of the sender, that must be the last receiver in the chain of custody (current owner)
+    */
     function setTaken(address _sender) public {
         require(_sender == lastLog().receivedBy);
         available = false;
     }
 
     event giverTakerSet(address giver, address taker);
+    /**
+    *   @dev Function that marks in a form the giver and the taker.
+    *
+    *   @param _giver address of the sender, that must be the last receiver in the chain of custody (current owner)
+    *
+    *   @param _taker address of the eventual taker
+    *
+    *   @return bool
+    */
     function setGiverTaker(address _giver, address _taker) public returns(bool) {
         require(_giver == lastLog().receivedBy);
         giver = _giver;
@@ -106,6 +140,11 @@ contract Form {
     }
 
     event resetDone(address giver, address taker);
+    /**
+    *   @dev Function that resets the giver and the taker in a form.
+    *
+    *   @param _sender address of the sender
+    */
     function resetGiverTaker(address _sender) public {
         require(giver == _sender || taker == _sender);
         // reset giver and taker
@@ -114,10 +153,20 @@ contract Form {
         emit resetDone(giver, taker);
     }
 
+    /**
+    *   @dev Function that returns the current taker.
+    *
+    *   @return address of the taker
+    */
     function getTaker() view public returns(address){
         return taker;
     }
 
+    /**
+    *   @dev Function that returns the current giver.
+    *
+    *   @return address of the giver
+    */
     function getGiver() view public returns(address){
         return giver;
     }
