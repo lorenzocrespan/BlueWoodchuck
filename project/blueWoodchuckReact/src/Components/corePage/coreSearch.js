@@ -26,14 +26,16 @@ function CoreSearch() {
     // Search contract by data.
     // TODO: Update the search function to search by other parameters.
     const searchContract = async () => {
+        var mytime = Date.now()
         if(isConsoleActive) console.debug("Search function called.");
         // Get information from input
         // const search = document.getElementById("Search").value;
         const date = Math.floor(new Date(dateValue) / 1000);
         const contractsFound = await FormFactoryContract.methods.findContractByDate(date).call();
         // const count = await FormFactoryContract.methods.countFormsBasedOnDate(date).call();
-        console.debug("Contracts fount: ", contractsFound);
-
+        console.debug("Contracts found: ", contractsFound);
+        // mytime -= Date().toLocaleString()
+        console.debug(mytime - Date.now())
         // Set the list of contracts in charge.
         setContractsFound(contractsFound);
         setSearchResultBool(true);
