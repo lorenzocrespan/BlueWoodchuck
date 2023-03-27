@@ -1,56 +1,58 @@
-import { useEffect, useState } from 'react';                    // React hooks.
-import Web3 from 'web3';                                        // Web3 library.
-import { getFormAddress, getFormABI, getSpecificABI } from '../../abi/abi';    // Smart contract ABI.
-import { useParams } from 'react-router-dom';
+// Import - React and React Router
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+// Import - Web3 & Smart Contract ABI
+import Web3 from 'web3';
+import { getFormAddress, getFormABI } from '../../abi/abi';
 // Import - Components
 import DownloadPopup from "./formShowComponent/DownloadPopup";
 import FreeFormPopup from './formShowComponent/FreeFormPopup';
 import QRCodeCanvas from "qrcode.react";
 
-import { useNavigate } from "react-router-dom";
-
 function ShowContractInfo() {
 
+    // Enable/Disable console debug.
+    const isConsoleActive = false;
+    // Connect to blockchain and smart contract.
+    const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7575');
+    const FormFactoryContract = new web3.eth.Contract(getFormABI(), getFormAddress());
+    // Account information.
+    const [account, setAccount] = useState("0x0000000000000000000000000000000000000000");                                 // Account address.
+    const [form, setForm] = useState([]);
+    // Connection status.
     let { id } = useParams();
-
-    const isConsoleActive = true;                                               // Enable/Disable console debug.
-    // NOTE:    The double print of log is due to "React.StrictMode" in index.js.
-    //          It is used to check the entire application for potential problems.
-
-    const web3 = new Web3(Web3.givenProvider || 'http://127.0.0.1:7575');       // Connect to blockchain.
-    const FormContract = new web3.eth.Contract(getFormABI(), getFormAddress()); // Connect to smart contract.
-    const FormSpecific = new web3.eth.Contract(getSpecificABI(), id); // Connect to smart contract.
-
-    const [account, setAccount] = useState();                                   // Account address.
-    const [form, setForm] = useState([]);                      // Connection status.
-
-    const [downloadPopup, setDownloadPopup] = useState(false);    // Variable to show the popup modal.
-    const [freeFormPopup, setFreeFormPopup] = useState(false);    // Variable to show the popup modal.
-
+    // Variable to show the popup modal.
+    const [downloadPopup, setDownloadPopup] = useState(false);
+    const [freeFormPopup, setFreeFormPopup] = useState(false);
+    // Variable to change the form badge.
     const [contractAvailable, setContractAvailable] = useState(false);
+    // Variable to show the chain of custody.
+    const [listItems, setListItems] = useState();
     const [fun, setFun] = useState(0);
-
+    // Variable to set title and message of the popup modal.
+    const [title, setTitle] = useState("");
+    const [message, setMessage] = useState("");
     // Variable to navigate to another page.
     const navigator = useNavigate();
-    const [listItems, setListItems] = useState();
 
     useEffect(() => {
-        console.log("coreFormShow");
         const loadAccountAddress = async () => {
             // Request and set account access if needed.
             const accounts = await web3.eth.requestAccounts();
             setAccount(accounts[0]);
-            if (isConsoleActive) console.debug("account", accounts[0]);
+            if (isConsoleActive) {
+                console.debug("coreFormShow.js - account", accounts[0]);
+            }
+        }
+        const readForm = async () => {
+            setForm(await FormFactoryContract.methods.readFormAddress(id).call({ from: account }));
         }
         loadAccountAddress();
         readForm();
-        console.debug(form.chainOfCustody);
     }, []);
 
     useEffect(() => {
-        console.log("Raw form", form.length);
         if (form.length == 0) return;
-        // Set the form specific contract.
         checkAvailable();
         setListItems(form.chainOfCustody.map((item, index) =>
             <div key={index} className="flex flex-col sm:relative sm:before:absolute sm:before:top-2 sm:before:w-4 sm:before:h-4 sm:before:rounded-full sm:before:left-[-35px] sm:before:z-[1] before:bg-amber-500">
@@ -68,16 +70,6 @@ function ShowContractInfo() {
             </div >));
     }, [form]);
 
-    // Button to read a form from the blockchain.
-    const readForm = async () => {
-        // Read form from blockchain.
-        console.debug("readForm");
-        const accounts = await web3.eth.requestAccounts();
-        const account = accounts[0];
-        console.debug("account", account);
-        setForm(await FormContract.methods.readFormAddress(id).call({ from: account }));
-        console.debug("form", form.chainOfCustody);
-    }
 
     // Function to show and close the download popup modal.
     const showDownloadPopup = () => {
@@ -91,7 +83,6 @@ function ShowContractInfo() {
     // Function to show and close the download popup modal.
     const showFreeFormPopup = () => {
         contractAvailable ? setFun(1) : setFun(0);
-        console.log(fun);
         setFreeFormPopup(true);
     }
 
@@ -100,20 +91,22 @@ function ShowContractInfo() {
     }
 
     const checkAvailable = async () => {
-        console.debug("ID", id);
-        console.debug("FormSpecific", FormSpecific);
-
-        await FormContract.methods.isAFormAvailable(id).call().then((result) => {
-            if (result) setContractAvailable(true);
-            else setContractAvailable(false);
+        await FormFactoryContract.methods.isAFormAvailable(id).call().then((result) => {
+            if (result) {
+                setContractAvailable(true);
+                setTitle("Acquisizione del contratto");
+                setMessage("Attenzione, stai per acquisire il contratto. Sei sicuro di voler procedere?");
+            } else {
+                setContractAvailable(false);
+                setTitle("Rendi disponibile il contratto");
+                setMessage("Attenzione, renderendo disponibile il contratto, chiunque potrà accedervi ed ottenerne la proprietà. Sei sicuro di voler procedere?");
+            }
         });
     }
 
     async function renderExchangePage() {
         navigator("/exchangeForm")
     }
-
-
 
     return (
         <div className="min-h-screen flex flex-col gap-3 sm:p-4  bg-gray-100  text-gray-100 ">
@@ -127,9 +120,11 @@ function ShowContractInfo() {
                 onClose={popupCloseFreeFormHandler}
                 errorPopup={freeFormPopup}
                 idForm={id}
-                FormContract={FormContract}
+                FormContract={FormFactoryContract}
                 account={account}
                 fun={fun}
+                title={title}
+                message={message}
             />
             <div className="container flex flex-col justify-between h-auto mx-auto bg-blue-900 p-10 gap-5 rounded-md">
                 <div className="flex flex-row">

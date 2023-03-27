@@ -15,8 +15,9 @@ function FreeFormPopup(props) {
     }, [props.errorPopup]);
 
     const setFormAvailable = async () => {
-        console.log(props.fun)
-        console.log("setFormAvailable");
+        console.log("setFormAvailable Call");
+        console.log("idForm: " + props.idForm);
+        console.log("account: " + props.account);
         await props.FormContract.methods.releaseForm(props.idForm).send({ from: props.account });
         closeHandler();
     }
@@ -38,10 +39,10 @@ function FreeFormPopup(props) {
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-6 h-6 fill-current shrink-0  text-amber-600">
                                     <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" />
                                 </svg>
-                                Rendi disponibile il contratto
+                                {props.title}
                             </h2>
                             <p className=" font-medium  text-blue-800">
-                                Attenzione, renderendo disponibile il contratto, chiunque potrà accedervi ed ottenerne la proprietà. Sei sicuro di voler procedere?
+                                {props.message}
                             </p>
                             <div className="flex flex-col justify-end gap-3 mt-6 sm:flex-row">
                                 <button className="h-12 px-4 font-semibold rounded-md self-center text-white bg-blue-800 hover:bg-amber-600 ease-out duration-500" onClick={props.fun ? getForm : setFormAvailable}>Conferma</button>
