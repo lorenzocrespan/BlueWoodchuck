@@ -18,10 +18,12 @@ function FreeFormPopup(props) {
         e.preventDefault();
         // TODO: Check correct format for taker and sender
         
-        let idFormArray = [];
+        // let idFormArray = [];
         // Make props.idForm an array of strings
-        for (let i = 0; i < props.idForm.length; i++) idFormArray.push(props.idForm[i].id);
-        await props.FormContract.methods.giveForm(idFormArray, props.taker).send({ from: props.account });
+        // for (let i = 0; i < props.idForm.length; i++) idFormArray.push(props.idForm[i].id);
+        // await props.FormContract.methods.giveForm(idFormArray, props.taker).send({ from: props.account });
+        let idForm = props.idForm[0].id;
+        await props.FormContract.methods.giveForm(idForm, props.taker).send({ from: props.account });
         // wait event completion to close the popup
         closeHandler();
     }

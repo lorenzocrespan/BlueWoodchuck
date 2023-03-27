@@ -15,8 +15,9 @@ function FreeFormPopup(props) {
     }, [props.errorPopup]);
 
     const setFormAvailable = async () => {
-        console.log(props.fun)
-        console.log("setFormAvailable");
+        console.log("setFormAvailable Call");
+        console.log("idForm: " + props.idForm);
+        console.log("account: " + props.account);
         await props.FormContract.methods.releaseForm(props.idForm).send({ from: props.account });
         closeHandler();
     }

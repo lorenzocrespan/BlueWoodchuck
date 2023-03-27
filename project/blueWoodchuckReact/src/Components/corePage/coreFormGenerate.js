@@ -103,7 +103,7 @@ function NewForm() {
                             </div>
                             <div className="space-y-3 col-span-full sm:col-span-3">
                                 <label className="font-medium text-amber-500">Numero caso *</label>
-                                <input id="caseNumber" type="number" placeholder="20220103001" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
+                                <input id="caseNumber" type="number" placeholder="20220000" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
                             </div>
                         </div>
                     </fieldset>
@@ -119,7 +119,7 @@ function NewForm() {
                             </div>
                             <div className="space-y-2 col-span-full sm:col-span-3">
                                 <label className="font-medium text-amber-500">Tipologia dell'oggetto *</label>
-                                <input id="evidenceTypeManufacturer" type="text" placeholder="Last name" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
+                                <input id="evidenceTypeManufacturer" type="text" placeholder="Coltello" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
                             </div>
                             <div className="space-y-2 col-span-full">
                                 <label className="font-medium text-amber-500">Ragioni dell'acquisizione *</label>
@@ -139,11 +139,11 @@ function NewForm() {
                         <div className="grid grid-cols-6 gap-10 col-span-full lg:col-span-3">
                             <div className="space-y-2 col-span-full sm:col-span-3">
                                 <label className="font-medium text-amber-500">Nominativo proprietario *</label>
-                                <input id="owner" type="text" placeholder="Pippo" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
+                                <input id="owner" type="text" placeholder="Luca Bianchi" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
                             </div>
                             <div className="space-y-2 col-span-full">
                                 <label className="font-medium text-amber-500">Contatti proprietario *</label>
-                                <input id="contentOwnerContactInformation" type="number" placeholder="20220103001" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
+                                <input id="contentOwnerContactInformation" type="number" placeholder="3378451352" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
                             </div>
                         </div>
                     </fieldset>
@@ -155,11 +155,11 @@ function NewForm() {
                         <div className="grid grid-cols-6 gap-10 col-span-full lg:col-span-3">
                             <div className="space-y-2 col-span-full sm:col-span-3">
                                 <label className="font-medium text-amber-500">Nominativo perito *</label>
-                                <input id="forensicAgent" type="text" placeholder="Pippo" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
+                                <input id="forensicAgent" type="text" placeholder="Mario Rossi" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
                             </div>
                             <div className="space-y-2 col-span-full">
                                 <label className="font-medium text-amber-500">Contatti perito *</label>
-                                <input id="forensicAgentContactInformation" type="number" placeholder="20220103001" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
+                                <input id="forensicAgentContactInformation" type="number" placeholder="3378451122" className="w-full text-lg rounded-md border-white focus:border-amber-500 focus:ring-2 focus:ring-amber-500 text-blue-900 placeholder:border-gray-700 placeholder:focus:text-amber-500 ease-out duration-500" required />
                             </div>
                         </div>
                     </fieldset>

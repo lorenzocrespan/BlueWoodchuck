@@ -91,7 +91,6 @@ function ShowContractInfo() {
     // Function to show and close the download popup modal.
     const showFreeFormPopup = () => {
         contractAvailable ? setFun(1) : setFun(0);
-        console.log(fun);
         setFreeFormPopup(true);
     }
 
@@ -100,9 +99,6 @@ function ShowContractInfo() {
     }
 
     const checkAvailable = async () => {
-        console.debug("ID", id);
-        console.debug("FormSpecific", FormSpecific);
-
         await FormContract.methods.isAFormAvailable(id).call().then((result) => {
             if (result) setContractAvailable(true);
             else setContractAvailable(false);
@@ -112,8 +108,6 @@ function ShowContractInfo() {
     async function renderExchangePage() {
         navigator("/exchangeForm")
     }
-
-
 
     return (
         <div className="min-h-screen flex flex-col gap-3 sm:p-4  bg-gray-100  text-gray-100 ">
