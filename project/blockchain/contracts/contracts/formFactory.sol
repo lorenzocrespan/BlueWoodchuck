@@ -192,6 +192,7 @@ contract FormFactory {
                     _userAddress
                 ][userAddressesLength - 1];
                 userToFormAddresses[_userAddress].pop(); // remove the last element
+                return;
             }
         }
     }
