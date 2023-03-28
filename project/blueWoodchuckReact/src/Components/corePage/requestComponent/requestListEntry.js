@@ -36,7 +36,7 @@ function ContractEntry(props) {
         <li>
             <article>
                 <div className="grid p-5 overflow-hidden border rounded-xl grid-cols-12 hover:border-amber-500 ease-in-out duration-500">
-                    <h3 className="mb-1 ml-8 font-semibold md:ml-0 xl:col-start-3 xl:col-span-8 text-gray-200">Nome caso: {dataForm.caseName ? dataForm.caseName : "Non disponibile"}</h3>
+                    <h3 className="mb-1 ml-8 font-semibold md:ml-0 xl:col-start-3 xl:col-span-8 text-gray-200">Nome caso: {dataForm.caseName ? dataForm.caseName : "Non disponibile"}  (Numero artefatto: {dataForm.itemNumber ? dataForm.itemNumber : "Non disponibile"}) </h3>
                     <h3 className="mb-1 ml-8 font-semibold md:ml-0 xl:col-start-3 xl:col-span-8 text-gray-200">Contratto: {props.id ? props.id : "Non disponibile"}</h3>
                     <time className="row-start-1 md:col-start-1 xl:col-span-2 text-gray-300">{dataForm.date ? new Date(dataForm.date * 1000).toLocaleDateString("it-IT") : "Non disponibile"}</time>
                     {
