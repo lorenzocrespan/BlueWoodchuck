@@ -28,11 +28,7 @@ function ListRequest(props) {
     const getUserFormsToSend = async () => {
         // Get the list of contracts in pending.
         const contractsInPendingSend = await props.FormFactoryContract.methods.findContractGiver(props.account).call();
-        if (isConsoleActive) {
-            const count = await props.FormFactoryContract.methods.countFormsForGiver(props.account).call();
-            console.debug("requestListSection.js - Taker count: ", count);
-            console.debug("requestListSection.js - Taker contracts: ", contractsInPendingSend);
-        }
+        
         setContractsInPendingSend(contractsInPendingSend);
     }
 
@@ -40,11 +36,7 @@ function ListRequest(props) {
     const getUserFormsToReceive = async () => {
         // Get the list of contracts in pending.
         const contractsInPendingReceive = await props.FormFactoryContract.methods.findContractTaker(props.account).call();
-        if (isConsoleActive) {
-            const count = await props.FormFactoryContract.methods.countFormsForTaker(props.account).call();
-            console.debug("requestListSection.js - Taker count: ", count);
-            console.debug("requestListSection.js - Taker contracts: ", contractsInPendingReceive);
-        }
+        
         setContractsInPendingReceive(contractsInPendingReceive);
     }
 

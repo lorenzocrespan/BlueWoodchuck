@@ -16,8 +16,6 @@ function FreeFormPopup(props) {
 
     const sendContract = async (e) => {
         e.preventDefault();
-        // TODO: Check correct format for taker and sender
-        
         // let idFormArray = [];
         // Make props.idForm an array of strings
         // for (let i = 0; i < props.idForm.length; i++) idFormArray.push(props.idForm[i].id);
